@@ -11,14 +11,22 @@
     "bootstrap": "^4.4.1",
     "child_process": "^1.0.2",
     "electron-is-dev": "^1.2.0",
+    "glob": "^7.1.6",
+    "immutable": "^4.0.0-rc.12",
+    "import-glob": "^1.5.0",
+    "path": "^0.12.7",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.1",
     "react-bootstrap-range-slider": "^0.3.2",
     "react-dom": "^16.13.1",
     "react-icons": "^3.10.0",
+    "react-planner": "^2.0.6",
+    "react-redux": "5.0.7",
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.4.1",
-    "sudo-prompt": "^9.2.1"
+    "require-glob": "^3.2.0",
+    "sudo-prompt": "^9.2.1",
+    "three": "^0.116.1"
   },
   "devDependencies": {
     "electron": "^8.2.5",
@@ -46,7 +54,10 @@
   },
   "build": {
     "appId": "com.covid.designer",
-    "target": ["deb", "rpm"],
+    "target": [
+      "deb",
+      "rpm"
+    ],
     "files": [
       "build/**/*",
       "node_modules/**/*"
