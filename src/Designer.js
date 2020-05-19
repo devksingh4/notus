@@ -5,23 +5,24 @@ import MyCatalog from './catalog/mycatalog';
 import {Map} from 'immutable';
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
+import 'bootstrap/dist/css/bootstrap.css';
 
 import {
   Models as PlannerModels,
   reducer as PlannerReducer,
   ReactPlanner,
   Plugins as PlannerPlugins,
-} from 'react-planner';
+} from 'react-planner-electron';
 
 //define state
 let AppState = Map({
-  'react-planner': new PlannerModels.State()
+  'react-planner-electron': new PlannerModels.State()
 });
  
 //define reducer
 let reducer = (state, action) => {
   state = state || AppState;
-  state = state.update('react-planner', plannerState => PlannerReducer(plannerState, action));
+  state = state.update('react-planner-electron', plannerState => PlannerReducer(plannerState, action));
   return state;
 };
  
@@ -29,8 +30,7 @@ let store = createStore(reducer, null, window.devToolsExtension ? window.devTool
  
 let plugins = [
   PlannerPlugins.Keyboard(),
-  PlannerPlugins.Autosave('react-planner_v0'),
-  PlannerPlugins.ConsoleDebugger(),
+  PlannerPlugins.Autosave('react-planner-electron_v0'),
 ];
 function Designer() {
   return (
@@ -42,16 +42,17 @@ function Designer() {
         </Container>
       </Jumbotron>
       <Provider store={store}>
-      <Container>
+      <Container className='overflow-hidden'>
       <ReactPlanner
         catalog={MyCatalog}
         width={1000}
         height={1000}
         plugins={plugins}
-        stateExtractor={state => state.get('react-planner')}
+        stateExtractor={state => state.get('react-planner-electron')}
       />
       </Container>
     </Provider>
+    <Jumbotron></Jumbotron>
     </div>
   );
 }

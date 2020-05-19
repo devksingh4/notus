@@ -3,6 +3,7 @@ const path = require('path');
 const url = require('url');
 const isDev = require('electron-is-dev');
 
+var fs = require('fs');
 
 const { exec } = require('child_process');
 
@@ -42,4 +43,11 @@ app.on('activate', () => {
   if (mainWindow === null) {
     createWindow();
   }
+});
+
+
+ipcMain.on('layout-data', (event, arg) => {
+  console.log(arg);
+  fs.writeFile('data.json', JSON.stringify(arg), () => {console.log("written")});
+  event.returnValue = "received";
 });
