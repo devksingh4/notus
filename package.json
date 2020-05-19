@@ -27,7 +27,7 @@
     "reactstrap": "^8.4.1",
     "require-glob": "^3.2.0",
     "sudo-prompt": "^9.2.1",
-    "three": "^0.116.1"
+    "three": "0.94.0"
   },
   "devDependencies": {
     "electron": "^8.2.5",

@@ -1,4 +1,4 @@
-const {app, shell, Notification, BrowserWindow, electron, dialog, ipcMain} = require('electron');
+const {app, shell, Notification, BrowserWindow, electron, dialog, ipcMain, session } = require('electron');
 const path = require('path');
 const url = require('url');
 const isDev = require('electron-is-dev');
@@ -35,7 +35,8 @@ app.on('browser-window-created', async () => {
 
 app.on('ready', createWindow);
 
-app.on('window-all-closed', () => {
+app.on('window-all-closed', async () => {
+    await session.defaultSession.clearStorageData();
     app.quit();
 });
 
