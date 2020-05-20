@@ -15,7 +15,7 @@ class Person {
             self.inf = 0
         }
     }
-    inc(){ // function called every time increment
+    inc(delta_time){ // function called every time increment
         
     }
     get x(){
