@@ -7593,6 +7593,13 @@ lru-cache@^5.1.1:
   dependencies:
     yallist "^3.0.2"
 
+"lstream@>= 0.0.1":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/lstream/-/lstream-0.0.4.tgz#d637764ea33a929bd00f34d2a23c2256d0d5fb5b"
+  integrity sha1-1jd2TqM6kpvQDzTSojwiVtDV+1s=
+  dependencies:
+    readable-stream ">= 1.0.2"
+
 make-dir@^2.0.0, make-dir@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/make-dir/-/make-dir-2.1.0.tgz#5f0310e18b8be898cc07009295a30ae41e91e6f5"
@@ -8003,6 +8010,13 @@ next-tick@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
   integrity sha1-yobR/ogoFpsBICCOPchCS524NCw=
+
+nf@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/nf/-/nf-0.0.3.tgz#b0f135fb442605baccbd989674e0470771c9265e"
+  integrity sha1-sPE1+0QmBbrMvZiWdOBHB3HJJl4=
+  dependencies:
+    lstream ">= 0.0.1"
 
 nice-try@^1.0.4:
   version "1.0.5"
@@ -10138,7 +10152,7 @@ read-pkg@^3.0.0:
     string_decoder "~1.1.1"
     util-deprecate "~1.0.1"
 
-readable-stream@^3.0.6, readable-stream@^3.1.1, readable-stream@^3.6.0:
+"readable-stream@>= 1.0.2", readable-stream@^3.0.6, readable-stream@^3.1.1, readable-stream@^3.6.0:
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-3.6.0.tgz#337bbda3adc0706bd3e024426a286d4b4b2c9198"
   integrity sha512-BViHy7LKeTz4oNnkcLJ+lVSL6vpiFeX6/d3oSH8zCW7UxP2onchk+vTGB143xuFjHS3deTgkKoXXymXqymiIdA==
