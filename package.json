@@ -46,7 +46,7 @@
     "eject": "react-scripts eject",
     "electron": "electron .",
     "electron-start": "node src/start-react",
-    "react-start": "BROWSER=none react-scripts start",
+    "react-start": "react-scripts start",
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
     "postinstall": "install-app-deps"
