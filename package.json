@@ -14,7 +14,6 @@
     "glob": "^7.1.6",
     "immutable": "^4.0.0-rc.12",
     "import-glob": "^1.5.0",
-    "nf": "^0.0.3",
     "path": "^0.12.7",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.1",
