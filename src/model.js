@@ -11,8 +11,8 @@ class Person {
     infect(p_aerosol, d_aerosol){ // p is probability constant for infection, d is density
         var check = Math.random();
         var chance = (1-p_aerosol)**(size * d_aerosol)
-        if(check > chance && self.inf == False){
-            self.inf = 0
+        if(check > chance && this.inf == False){
+            this.inf = 0
         }
     }
     inc(delta_time){ // function called every time increment
@@ -40,10 +40,10 @@ class Person {
         return this.size;
     }
     set x(nx){
-        self.x = nx;
+        this.x = nx;
     }
     set y(ny){
-        self.y = ny;
+        this.y = ny;
     }
     set inf(ninf){
         this.inf = ninf;
