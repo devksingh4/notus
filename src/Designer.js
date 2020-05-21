@@ -7,6 +7,13 @@ import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.css';
 
+// import {
+//   Models as PlannerModels,
+//   reducer as PlannerReducer,
+//   ReactPlanner,
+//   Plugins as PlannerPlugins,
+// } from '/home/dsingh/source/react-planner';
+
 import {
   Models as PlannerModels,
   reducer as PlannerReducer,
