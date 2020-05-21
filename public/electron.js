@@ -1,9 +1,8 @@
-const {app, shell, Notification, BrowserWindow, electron, dialog, ipcMain, session } = require('electron');
+const {app, shell, BrowserWindow, dialog, ipcMain, session } = require('electron');
 const model = require('../src/model.js');
 const path = require('path');
 const isDev = require('electron-is-dev');
 
-const fs = require('fs');
 let mainWindow;
 
 function createWindow() {
