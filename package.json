@@ -38,6 +38,7 @@
     "eslint-plugin-react-hooks": "^1.6.1",
     "file-loader": "4.3.0",
     "fs-extra": "^8.1.0",
+    "gl-matrix": "^3.3.0",
     "glob": "^7.1.6",
     "html-webpack-plugin": "^4.3.0",
     "identity-obj-proxy": "3.0.0",
@@ -81,7 +82,8 @@
     "webpack": "4.42.0",
     "webpack-dev-server": "3.10.3",
     "webpack-manifest-plugin": "2.2.0",
-    "workbox-webpack-plugin": "4.3.1"
+    "workbox-webpack-plugin": "4.3.1",
+    "workerpool": "^6.0.0"
   },
   "devDependencies": {
     "electron": "^8.2.5",
