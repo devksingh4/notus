@@ -21,6 +21,13 @@ class Square {
     this.nCoronaParticles -= nparticles;
   }
 
+  get x(){
+    return this.x;
+  }
+  get y(){
+    return this.y;
+  }
+
   cough(nparticles, newDirection) {
     var weightedNew = glMatrix.vec2.create();
     var weightedOld = glMatrix.vec2.create();
