@@ -10,8 +10,8 @@ class Person {
     }
     infect(p_aerosol, d_aerosol){ // p is probability constant for infection, d is density
         var check = Math.random();
-        var chance = (1-p_aerosol)**(size * d_aerosol)
-        if(check > chance && this.inf == False){
+        var chance = (1-p_aerosol)**(this.size * d_aerosol)
+        if(check > chance && this.inf === false){
             this.inf = 0
         }
     }
