@@ -202,8 +202,8 @@ export default {
 
   info: {
     tag: ['furnishings', 'metal'],
-    title: "aluminum radiator",
-    description: "aluminum radiator",
+    title: "air intake",
+    description: "air intake",
     image: require('./ModernStyleRadiator.png')
   },
 

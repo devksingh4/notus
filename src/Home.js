@@ -7,8 +7,8 @@ function Home() {
     <div className="Home">
       <Jumbotron fluid>
         <Container>
-          <h1>COVID-19 Room Planning</h1>
-          <p></p>
+          <h1>COVID Room Designer</h1>
+          <p>Modeling the spread of COVID-19 in various room layouts</p>
         </Container>
       </Jumbotron>
       <Bricks props={[{name: "Designer"}]}/>
