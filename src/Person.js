@@ -1,4 +1,4 @@
-export default class Person {
+module.exports = class Person {
     constructor(nx, ny, ninf, ntargetx, ntargety, nkaren, size){ // coords are in meters, the karen modifier indicates the level of stubborness to anti-plague measures
         this.x = nx;
         this.y = ny;
@@ -59,5 +59,8 @@ export default class Person {
     }
     set size(nsize){
         this.size = nsize;
+    }
+    toString() {
+        return `${this.x}, ${this.y}, ${this.inf}, ${this.targetx}, ${this.targety}, ${this.karen}, ${this.size}`;
     }
 }

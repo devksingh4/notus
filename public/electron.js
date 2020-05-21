@@ -1,23 +1,22 @@
 const {app, shell, Notification, BrowserWindow, electron, dialog, ipcMain, session } = require('electron');
+const model = require('../src/model.js');
 const path = require('path');
-const url = require('url');
 const isDev = require('electron-is-dev');
 
-var fs = require('fs');
-
-const { exec } = require('child_process');
-
+const fs = require('fs');
 let mainWindow;
 
 function createWindow() {
   mainWindow = new BrowserWindow({width: 900, height: 680,   webPreferences: {
-    nodeIntegration: true
+    nodeIntegration: true,
+    allowRendererProcessReuse: true,
   }});
-  mainWindow.setAutoHideMenuBar(true);
   if (isDev) {
     mainWindow.loadURL('http://localhost:3000')
+    mainWindow.autoHideMenuBar = false;
   } else {
     mainWindow.loadFile(path.join(__dirname, '../build/index.html'))
+    mainWindow.autoHideMenuBar = true;
   }
   mainWindow.on('closed', () => mainWindow = null);
   mainWindow.webContents.on("new-window", function(event, url) {
@@ -28,7 +27,6 @@ function createWindow() {
 
 
 app.on('browser-window-created', async () => {
-
 })
 
 
@@ -36,9 +34,13 @@ app.on('browser-window-created', async () => {
 app.on('ready', createWindow);
 
 app.on('window-all-closed', async () => {
-    await session.defaultSession.clearStorageData();
-    app.quit();
-});
+  await session.defaultSession.clearStorageData();
+  // On macOS it is common for applications and their menu bar
+  // to stay active until the user quits explicitly with Cmd + Q
+  if (process.platform !== 'darwin') {
+    app.quit()
+  }
+})
 
 app.on('activate', () => {
   if (mainWindow === null) {
@@ -47,8 +49,14 @@ app.on('activate', () => {
 });
 
 
-ipcMain.on('layout-data', (event, arg) => {
-  console.log(arg);
-  fs.writeFile('data.json', JSON.stringify(arg), () => {console.log("written")});
-  event.returnValue = "received";
+ipcMain.on('layout-data', async (event, arg) => {
+  const success = await model.process(arg.output);
+  if (!success) {
+    const options  = {
+      buttons: ["OK"],
+      message: "There was an error processing your data. Please try again."
+     }
+     await dialog.showMessageBox(mainWindow, options, () => {})
+  }
+  event.returnValue = "done"
 });
