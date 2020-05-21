@@ -1,7 +1,9 @@
 const glMatrix = require("gl-matrix")
 
 class Square {
-  constructor(sideLength) {
+  constructor(x, y, sideLength) {
+    this.x = x;
+    this.y = y;
     this.nCoronaParticles = 0;
     this.coronaVel = glMatrix.vec2.create();
     this.sideLength = sideLength;
