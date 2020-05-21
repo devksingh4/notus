@@ -107,3 +107,6 @@ build/
 
 #VS Code files
 .vscode
+
+# electron build files
+room-designer-linux-x64/
