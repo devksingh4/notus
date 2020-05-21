@@ -1,7 +1,9 @@
 const glMatrix = require("gl-matrix")
 const wpool = require("workerpool")
 class Square {
-  constructor(sideLength) {
+  constructor(x, y, sideLength) {
+    this.x = x;
+    this.y = y;
     this.nCoronaParticles = 0;
     this.coronaVel = glMatrix.vec2.create();
     this.sideLength = sideLength;
@@ -16,6 +18,13 @@ class Square {
   }
   set removeParticles(nparticles) {
     this.nCoronaParticles -= nparticles;
+  }
+
+  get x(){
+    return this.x;
+  }
+  get y(){
+    return this.y;
   }
 
   cough(nparticles, newDirection) {
