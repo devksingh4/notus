@@ -7,19 +7,19 @@ class Square {
     this.sideLength = sideLength;
   }
 
-  function getNCoronaParticles() {
+  get getNCoronaParticles() {
     return this.nCoronaParticles;
   }
 
-  function getDirection() {
+  get getDirection() {
     return this.coronaVel;
   }
 
-  function removeParticles(nparticles) {
+  set removeParticles(nparticles) {
     this.nCoronaParticles -= nparticles;
   }
 
-  function cough(nparticles, newDirection) {
+  cough(nparticles, newDirection) {
     var weightedNew = glMatrix.vec2.create();
     var weightedOld = glMatrix.vec2.create();
     var momentumSum = glMatrix.vec2.create();
@@ -30,8 +30,8 @@ class Square {
     glMatrix.vec2.divide(this.coronaVel, momentumSum, weightedNew + weightedOld);
   }
 
-  function tickstage0(dt) {
-    var numLeave = Math.max(this.coronaVel.len() * dt / this.sideLength, 1) * nparticles;
+  tickstage0(dt) {
+    var numLeave = Math.max(this.coronaVel.len() * dt / this.sideLength, 1) * this.nCoronaParticles;
     var nUD = numLeave * (this.coronaVel[1]) / (this.coronaVel[0] + this.coronaVel[1]);
     var nLR = numLeave - nUD;
     if (nUD >= 0 && nLR >= 0) {
@@ -45,12 +45,12 @@ class Square {
     }
   }
 
-  function tickstage1(dt, dispersalConst) {
+  tickstage1(dt, dispersalConst) {
     var move = dt * dispersalConst * this.nCoronaParticles;
     return [move, move, move, move];
   }
 
-  function tickstage2(dt, wrConst, airForce) {
+  tickstage2(dt, wrConst, airForce) {
     //f_wr = cv^2, f=ma, a = dv/dt
     var normVel;
     glMatrix.vec2.normalize(normVel, glMatrix.vec2.clone(this.coronaVel));
@@ -63,3 +63,5 @@ class Square {
     glMatrix.vec2.add(this.coronaVel, this.coronaVel, distAirForce);
   }
 }
+
+module.exports.Square = Square;
