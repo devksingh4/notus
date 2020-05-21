@@ -1,9 +1,7 @@
 const glMatrix = require("gl-matrix")
 const wpool = require("workerpool")
 class Square {
-  constructor(x, y, sideLength) {
-    this.x = x;
-    this.y = y;
+  constructor(sideLength) {
     this.nCoronaParticles = 0;
     this.coronaVel = glMatrix.vec2.create();
     this.sideLength = sideLength;
@@ -20,12 +18,6 @@ class Square {
     this.nCoronaParticles -= nparticles;
   }
 
-  get x(){
-    return this.x;
-  }
-  get y(){
-    return this.y;
-  }
 
   cough(nparticles, newDirection) {
     var weightedNew = glMatrix.vec2.create();
