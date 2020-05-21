@@ -18,7 +18,6 @@ class Square {
     this.nCoronaParticles -= nparticles;
   }
 
-
   cough(nparticles, newDirection) {
     var weightedNew = glMatrix.vec2.create();
     var weightedOld = glMatrix.vec2.create();
@@ -143,19 +142,20 @@ class AirGrid {
         var col = i % this.grid[0].length;
         var row = Math.floor(i / this.grid[0].length);
         try {
-          this.grid[row - 1][col].cough(t0upd[i][0], this.grid[row][col].getVelocity());
+          this.grid[row - 1][col].cough(upd[i][0], this.grid[row][col].getVelocity());
         } catch (e) {}
         try {
-          this.grid[row][col + 1].cough(t0upd[i][1], this.grid[row][col].getVelocity());
+          this.grid[row][col + 1].cough(upd[i][1], this.grid[row][col].getVelocity());
         } catch (e) {}
         try {
-          this.grid[row + 1][col].cough(t0upd[i][2], this.grid[row][col].getVelocity());
+          this.grid[row + 1][col].cough(upd[i][2], this.grid[row][col].getVelocity());
         } catch (e) {}
         try {
-          this.grid[row][col - 1].cough(t0upd[i][3], this.grid[row][col].getVelocity());
+          this.grid[row][col - 1].cough(upd[i][3], this.grid[row][col].getVelocity());
         } catch (e) {}
       }));
       return Promise.all(promises).then((val) => {
+        this.grid[row][col].removeParticles(upd[i][3]+upd[i][2]+upd[i][1]+upd[i][0])
         pool.terminate()
         return val;
       })
