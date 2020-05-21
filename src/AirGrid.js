@@ -62,6 +62,9 @@ class Square {
     glMatrix.vec2.mul(distAirForce, airForce, dt/this.nCoronaParticles);
     glMatrix.vec2.add(this.coronaVel, this.coronaVel, distAirForce);
   }
+  toString() {
+    return `Has side length ${this.sideLength} with ${this.nCoronaParticles} Coronavirus Particles. Velocity is ${this.coronaVel}.`
+  }
 }
 
 module.exports.Square = Square;
