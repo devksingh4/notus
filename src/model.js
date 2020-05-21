@@ -40,24 +40,24 @@ class Person {
         return this.size;
     }
     set x(nx){
-        self.x = nx;
+        this.x = nx;
     }
     set y(ny){
-        self.y = ny;
+        this.y = ny;
     }
-    get inf(ninf){
+    set inf(ninf){
         this.inf = ninf;
     }
-    get targetx(ntargetx){
+    set targetx(ntargetx){
         this.targetx = ntargetx;
     }
-    get targety(ntargety){
+    set targety(ntargety){
         this.targety = ntargety;
     }
-    get karen(nkaren){
+    set karen(nkaren){
         this.karen = nkaren;
     }
-    get size(nsize){
+    set size(nsize){
         this.size = nsize;
     }
 }
