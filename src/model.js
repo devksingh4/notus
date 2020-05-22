@@ -21,16 +21,15 @@ function sA(r, x, y){
 	}
 
 	if (y > r) {
-		y = r;
-    
+        y = r;
+    }
     if (x*x + y*y > r*r) {
-		a = r*r*Math.asin(x/r) + x*Math.sqrt(r*r-x*x) + r*r*Math.asin(y/r) + y*Math.sqrt(r*r-y*y) - r*r*Math.PI;
-		a *= 0.5;
-	} else {
-		a = x*y;
-	}
-	return a;
-}
+        a = r*r*Math.asin(x/r) + x*Math.sqrt(r*r-x*x) + r*r*Math.asin(y/r) + y*Math.sqrt(r*r-y*y) - r*r*Math.PI;
+        a *= 0.5;
+    } else {
+        a = x*y;
+    }
+    return a;
 }
 /*
 Given P_rect_top_left(x1, y1), P_rect_bottom_right(x2, y2), 
@@ -41,6 +40,7 @@ const calc = (x1, y1, x2, y2, mx, my, r) => {
     x1-=mx; x2-=mx; y1-=my; y2-=my;
 	return sA(r, x2, y1) - sA(r, x1, y1) - sA(r, x2, y2) + sA(r, x1, y2);
 }
+
 function sim(config){
     let grid = populate(width, height, sideLength, dispersalConst, wr);
 
@@ -50,6 +50,7 @@ function sim(config){
         
     }
 }
+
 function populate(width, height, sideLength, dispersalConst, wr){
     return new AirGrid(width, height, sideLength, dispersalConst, wr);
 }
