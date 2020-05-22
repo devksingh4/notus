@@ -1,6 +1,6 @@
 {
   "name": "covid-room-designer",
-  "version": "0.1.0",
+  "version": "0.2.1-hf1",
   "description": "Modeling the spread of COVID-19 to create various safer room layouts.",
   "author": "The COVID Room Designer Team <dev@singhk.dev> (https://github.com/devksingh4/covid-hackathon",
   "private": false,
@@ -38,6 +38,7 @@
     "eslint-plugin-react-hooks": "^1.6.1",
     "file-loader": "4.3.0",
     "fs-extra": "^8.1.0",
+    "gl-matrix": "^3.3.0",
     "glob": "^7.1.6",
     "html-webpack-plugin": "^4.3.0",
     "identity-obj-proxy": "3.0.0",
@@ -81,7 +82,8 @@
     "webpack": "4.42.0",
     "webpack-dev-server": "3.10.3",
     "webpack-manifest-plugin": "2.2.0",
-    "workbox-webpack-plugin": "4.3.1"
+    "workbox-webpack-plugin": "4.3.1",
+    "workerpool": "^6.0.0"
   },
   "devDependencies": {
     "electron": "^8.2.5",
@@ -109,14 +111,14 @@
     "extends": "react-app"
   },
   "build": {
+    "productName": "COVID Room Designer",
     "appId": "com.covid.designer",
+    "mac": {
+      "category": "Office"
+    },
     "linux": {
       "category": "Office"
     },
-    "target": [
-      "deb",
-      "rpm"
-    ],
     "files": [
       "build/**/*",
       "node_modules/**/*",
