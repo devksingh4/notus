@@ -1,6 +1,6 @@
 {
   "name": "covid-room-designer",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Modeling the spread of COVID-19 to create various safer room layouts.",
   "author": "The COVID Room Designer Team <dev@singhk.dev> (https://github.com/devksingh4/covid-hackathon",
   "private": false,
@@ -111,6 +111,7 @@
     "extends": "react-app"
   },
   "build": {
+    "productName": "COVID Room Designer",
     "appId": "com.covid.designer",
     "linux": {
       "category": "Office"
