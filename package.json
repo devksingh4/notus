@@ -114,7 +114,7 @@
     "productName": "Notus",
     "appId": "com.notus",
     "win": {
-      "icon": "icon=assets/icons/win/icon.ico"
+      "icon": "assets/icons/win/icon.ico"
     },
 
     "mac": {
