@@ -1,5 +1,6 @@
 const glMatrix = require("gl-matrix")
 const wpool = require("workerpool")
+const mapParallel = require('./MapParallel.js').default;
 class Square {
   constructor(sideLength) {
     this.nCoronaParticles = 0;
@@ -153,46 +154,46 @@ class AirGrid {
   get getGrid() {
     return this.grid;
   }
-  var tickCell0 = function(xydt) {
+  tickCell0 = function(xydt) {
     const x = xydt[0];
     const y = xydt[1];
     const dt = xydt[2];
     return this.grid.y.x.tickstage0(dt);
   }
-  var tickCell1 = function(xydt) {
+  tickCell1 = function(xydt) {
     const x = xydt[0];
     const y = xydt[1];
     const dt = xydt[2];
     return this.grid.y.x.tickstage1(dt, this.dispersalConst);
   }
-  var tickCell2 = function(xydt) {
+  tickCell2 = function(xydt) {
     const x = xydt[0];
     const y = xydt[1];
     const dt = xydt[2];
     return this.grid.y.x.tickstage2(dt, this.wrConst, this.airflowGrid[y][x]);
   }
   tick(dt) {
-    locations = []
+    let locations = []
     //create a grid of locations
     for (var i = 0; i < this.grid.length; i++) {
       for (var j = 0; j < this.grid[i].length; j++) {
         locations.push([i, j, dt])
       }
     }
-    var t0upd = mapParallel(tickCell0, locations.slice())
+    var t0upd = mapParallel(this.tickCell0, locations.slice())
     this.updateGrid(t0upd)
-    var t1upd = mapParallel(tickCell1, locations.slice())
+    var t1upd = mapParallel(this.ickCell1, locations.slice())
     this.updateGrid(t1upd)
-    var t2upd = mapParallel(tickCell2, locations.slice())
+    var t2upd = mapParallel(this.tickCell2, locations.slice())
     this.updateGrid(t2upd)
   }
   updateGrid(upd) {
-    pool = wpool.pool()
-    promises = []
-    for (var i = 0; i < upd.length; i++) {
+    let pool = wpool.pool()
+    let promises = []
+    for (let i = 0; i < upd.length; i++) {
       promises.push(pool.exec(() => {
-        var col = i % this.grid[0].length;
-        var row = Math.floor(i / this.grid[0].length);
+        let col = i % this.grid[0].length;
+        let row = Math.floor(i / this.grid[0].length);
         try {
           this.grid[row - 1][col].cough(upd[i][0], this.grid[row][col].getVelocity());
         } catch (e) {}
