@@ -7,7 +7,7 @@ function Home() {
     <div className="Home">
       <Jumbotron fluid>
         <Container>
-          <h1>COVID Room Designer</h1>
+          <h1>Notus</h1>
           <p>Modeling the spread of COVID-19 in various room layouts</p>
         </Container>
       </Jumbotron>
