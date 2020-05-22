@@ -25,19 +25,20 @@ function sA(r, x, y){
 		y = r;
     
     if (x*x + y*y > r*r) {
-		a = r*r*asin(x/r) + x*sqrt(r*r-x*x) + r*r*asin(y/r) + y*sqrt(r*r-y*y) - r*r*M_PI_2;
+		a = r*r*Math.asin(x/r) + x*Math.sqrt(r*r-x*x) + r*r*Math.asin(y/r) + y*Math.sqrt(r*r-y*y) - r*r*Math.PI;
 		a *= 0.5;
 	} else {
 		a = x*y;
 	}
 	return a;
 }
+}
 /*
 Given P_rect_top_left(x1, y1), P_rect_bottom_right(x2, y2), 
 P_circle_center(mx, my) and radius(r), calc(x1, y1, x2, y2, mx, my, r) 
 returns the area of intersection.
 */
-function calc(){x1, y1, x2, y2, mx, my, r}{ 
+const calc = (x1, y1, x2, y2, mx, my, r) => { 
     x1-=mx; x2-=mx; y1-=my; y2-=my;
 	return sA(r, x2, y1) - sA(r, x1, y1) - sA(r, x2, y2) + sA(r, x1, y2);
 }
