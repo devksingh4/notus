@@ -1,5 +1,6 @@
 const glMatrix = require("gl-matrix")
 const wpool = require("workerpool")
+const mapParallel = require('./MapParallel.js').default;
 class Square {
   constructor(sideLength) {
     this.nCoronaParticles = 0;
@@ -64,16 +65,6 @@ class Square {
   toString() {
     return `Has side length ${this.sideLength} with ${this.nCoronaParticles} Coronavirus Particles. Velocity is ${this.coronaVel}.`
   }
-}
-
-const mapParallel = (func, data) => {
-  var wp = wpool.pool();
-  var promises = data.map(x => wp.exec(func, [x]))
-  var allPromises = Promise.all(promises)
-  return allPromises.then((val) => {
-    wp.terminate();
-    return val;
-  })
 }
 
 class AirGrid {
