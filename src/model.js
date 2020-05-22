@@ -12,7 +12,8 @@ function sim(config){
 
     delta_t = total_t / iters
     for(i = 0; i < iters; i++){
-
+        AirGrid.tick(delta_t);
+        
     }
 }
 function populate(width, height, sideLength, dispersalConst, wr){
