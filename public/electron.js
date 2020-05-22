@@ -9,6 +9,7 @@ function createWindow() {
   mainWindow = new BrowserWindow({width: 900, height: 680,   webPreferences: {
     nodeIntegration: true,
     allowRendererProcessReuse: true,
+    icon: path.join(__dirname, 'assets/icons/png/64x64.png')
   }});
   if (isDev) {
     mainWindow.loadURL('http://localhost:3000')

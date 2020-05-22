@@ -113,11 +113,16 @@
   "build": {
     "productName": "COVID Room Designer",
     "appId": "com.covid.designer",
+    "win": {
+      "icon": "icon=assets/icons/win/icon.ico"
+    },
     "mac": {
-      "category": "Office"
+      "category": "Office",
+      "icon": "assets/icons/mac/icon.icns"
     },
     "linux": {
-      "category": "Office"
+      "category": "Office",
+      "icon": "assets/icons/png/1024x1024.png"
     },
     "files": [
       "build/**/*",
