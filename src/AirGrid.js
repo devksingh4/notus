@@ -20,9 +20,9 @@ class Square {
   }
 
   cough(nparticles, newDirection) {
-    const weightedNew = glMatrix.vec2.create();
-    const weightedOld = glMatrix.vec2.create();
-    const momentumSum = glMatrix.vec2.create();
+    let weightedNew = glMatrix.vec2.create();
+    let weightedOld = glMatrix.vec2.create();
+    let momentumSum = glMatrix.vec2.create();
     //preserve momentum
     glMatrix.vec2.mul(weightedNew, newDirection, nparticles);
     glMatrix.vec2.mul(weightedOld, glMatrix.vec2.clone(this.coronaVel), this.nCoronaParticles);
@@ -31,9 +31,9 @@ class Square {
   }
 
   tickstage0(dt) {
-    let numLeave = Math.max(this.coronaVel.len() * dt / this.sideLength, 1) * this.nCoronaParticles;
-    let nUD = numLeave * (this.coronaVel[1]) / (this.coronaVel[0] + this.coronaVel[1]);
-    let nLR = numLeave * (this.coronaVel[0]) / (this.coronaVel[0] + this.coronaVel[1]);
+    const numLeave = Math.max(this.coronaVel.len() * dt / this.sideLength, 1) * this.nCoronaParticles;
+    const nUD = numLeave * (this.coronaVel[1]) / (this.coronaVel[0] + this.coronaVel[1]);
+    const nLR = numLeave * (this.coronaVel[0]) / (this.coronaVel[0] + this.coronaVel[1]);
     if (nUD >= 0 && nLR >= 0) {
       return [nUD, nLR, 0, 0];
     } else if (nUD >= 0) {
@@ -54,7 +54,7 @@ class Square {
     //f_wr = cv^2, f=ma, a = dv/dt
     let normVel;
     glMatrix.vec2.normalize(normVel, glMatrix.vec2.clone(this.coronaVel));
-    const wrVec = glMatrix.Vec2.create();
+    let wrVec = glMatrix.Vec2.create();
     glMatrix.vec2.mul(wrVec, normVel, this.coronaVel.sqrDist() * wrConst * dt);
     glMatrix.vec2.sub(this.coronaVel, this.coronaVel, wrVec);
     let distAirForce;
@@ -78,9 +78,9 @@ class OccludedSquare extends Square {
     this.areaOcclusion = areaOcclusion;
   }
   tickstage0(dt) {
-    let numLeave = Math.max(this.coronaVel.len() * dt / this.sideLength, 1) * this.nCoronaParticles;
-    let nUD = numLeave * (this.coronaVel[1]) / (this.coronaVel[0] + this.coronaVel[1]);
-    let nLR = numLeave * (this.coronaVel[0]) / (this.coronaVel[0] + this.coronaVel[1]);
+    const numLeave = Math.max(this.coronaVel.len() * dt / this.sideLength, 1) * this.nCoronaParticles;
+    const nUD = numLeave * (this.coronaVel[1]) / (this.coronaVel[0] + this.coronaVel[1]);
+    const nLR = numLeave * (this.coronaVel[0]) / (this.coronaVel[0] + this.coronaVel[1]);
     if (nUD >= 0 && nLR >= 0) {
       const nTop = nUD * this.topOcclusion;
       const nRight = nLR * this.rightOcclusion;
@@ -122,8 +122,8 @@ class OccludedSquare extends Square {
 
 class AirGrid {
   constructor(width, height, sideLength, dispersalConst, wrConst) {
-    let nw = Math.ceil(width / sideLength);
-    let nh = Math.ceil(height / sideLength);
+    const nw = Math.ceil(width / sideLength);
+    const nh = Math.ceil(height / sideLength);
     this.grid = [];
     this.airflowGrid = []
     for (let i = 0; i < nh; i++) {
@@ -209,9 +209,9 @@ class AirGrid {
     const xloc = Math.floor(x / this.sideLength);
     return this.grid[yloc][xloc];
   }
-  getCoordsFromIndices(y, x) {
+   getCoordsFromIndices(y, x) {
     const yloc = (y + .5) * this.sideLength;
-    const xloc =- (x + .5) * this.sideLength;
+    const xloc = (x + .5) * this.sideLength;
     return [xloc, yloc];
   }
   toString(){
@@ -219,4 +219,5 @@ class AirGrid {
   }
 }
 module.exports.Square = Square;
+module.exports.OccludedSquare = OccludedSquare;
 module.exports.AirGrid = AirGrid;
