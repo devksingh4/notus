@@ -75,10 +75,10 @@ class Population {
     get size(){
         return this.pop.length;
     }
-    get pop(index){
+    get_pop(index){
         return this.pop[index];
     }
-    set pop(index, npop){
+    set_pop(index, npop){
         this.pop[index] = npop;
     }
     remove(index){
