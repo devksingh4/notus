@@ -77,37 +77,37 @@ class OccludedSquare extends Square {
     this.leftOcclusion = leftOcclusion;
     this.areaOcclusion = areaOcclusion;
   }
-  tickstage0(){
+  tickstage0() {
     var numLeave = Math.max(this.coronaVel.len() * dt / this.sideLength, 1) * this.nCoronaParticles;
     var nUD = numLeave * (this.coronaVel[1]) / (this.coronaVel[0] + this.coronaVel[1]);
     var nLR = numLeave * (this.coronaVel[0]) / (this.coronaVel[0] + this.coronaVel[1]);
     if (nUD >= 0 && nLR >= 0) {
-      var nTop = nUD*this.topOcclusion;
-      var nRight = nLR*this.rightOcclusion;
-      this.removeParticles(nUD+nLR-nTop-nRight);
-      this.cough(nUD-nTop, glMatrix.fromValues(this.coronaVel[0], -this.coronaVel[1]))
-      this.cough(nLR-nRight, glMatrix.fromValues(-this.coronaVel[0], this.coronaVel[1]))
+      var nTop = nUD * this.topOcclusion;
+      var nRight = nLR * this.rightOcclusion;
+      this.removeParticles(nUD + nLR - nTop - nRight);
+      this.cough(nUD - nTop, glMatrix.fromValues(this.coronaVel[0], -this.coronaVel[1]))
+      this.cough(nLR - nRight, glMatrix.fromValues(-this.coronaVel[0], this.coronaVel[1]))
       return [nTop, nRight, 0, 0];
     } else if (nUD >= 0) {
-      var nTop = nUD*this.topOcclusion;
-      var nLeft = -nLR*this.rightOcclusion;
-      this.removeParticles(nUD+nLR-nTop-nLeft);
-      this.cough(nUD-nTop, glMatrix.fromValues(this.coronaVel[0], -this.coronaVel[1]))
-      this.cough(nLR-nLeft, glMatrix.fromValues(-this.coronaVel[0], this.coronaVel[1]))
+      var nTop = nUD * this.topOcclusion;
+      var nLeft = -nLR * this.rightOcclusion;
+      this.removeParticles(nUD + nLR - nTop - nLeft);
+      this.cough(nUD - nTop, glMatrix.fromValues(this.coronaVel[0], -this.coronaVel[1]))
+      this.cough(nLR - nLeft, glMatrix.fromValues(-this.coronaVel[0], this.coronaVel[1]))
       return [nTop, 0, 0, nLeft];
     } else if (nLR >= 0) {
-      var nBottom = -nUD*this.topOcclusion;
-      var nRight = nLR*this.rightOcclusion;
-      this.removeParticles(nUD+nLR-nBottom-nRight);
-      this.cough(nUD-nBottom, glMatrix.fromValues(this.coronaVel[0], -this.coronaVel[1]))
-      this.cough(nLR-nRight, glMatrix.fromValues(-this.coronaVel[0], this.coronaVel[1]))
+      var nBottom = -nUD * this.topOcclusion;
+      var nRight = nLR * this.rightOcclusion;
+      this.removeParticles(nUD + nLR - nBottom - nRight);
+      this.cough(nUD - nBottom, glMatrix.fromValues(this.coronaVel[0], -this.coronaVel[1]))
+      this.cough(nLR - nRight, glMatrix.fromValues(-this.coronaVel[0], this.coronaVel[1]))
       return [0, nRight, nBottom, 0];
     } else {
-      var nBottom = -nUD*this.topOcclusion;
-      var nLeft = -nLR*this.rightOcclusion;
-      this.removeParticles(nUD+nLR-nBottom-nLeft);
-      this.cough(nUD-nBottom, glMatrix.fromValues(this.coronaVel[0], -this.coronaVel[1]))
-      this.cough(nLR-nLeft, glMatrix.fromValues(-this.coronaVel[0], this.coronaVel[1]))
+      var nBottom = -nUD * this.topOcclusion;
+      var nLeft = -nLR * this.rightOcclusion;
+      this.removeParticles(nUD + nLR - nBottom - nLeft);
+      this.cough(nUD - nBottom, glMatrix.fromValues(this.coronaVel[0], -this.coronaVel[1]))
+      this.cough(nLR - nLeft, glMatrix.fromValues(-this.coronaVel[0], this.coronaVel[1]))
       return [0, 0, nBottom, nLeft];
     }
   }
@@ -119,15 +119,6 @@ class OccludedSquare extends Square {
   }
 }
 
-function mapParallel(func, data) {
-  var wp = wpool.pool();
-  var promises = data.map(x => pool.exec(func, [x]))
-  var allPromises = Promise.all(promises)
-  return allPromises.then((val) => {
-    wp.terminate();
-    return val;
-  })
-}
 
 class AirGrid {
   constructor(width, height, sideLength, dispersalConst, wrConst) {
@@ -158,19 +149,19 @@ class AirGrid {
     const x = xydt[0];
     const y = xydt[1];
     const dt = xydt[2];
-    return this.grid.y.x.tickstage0(dt);
+    return this.grid[y][x].tickstage0(dt);
   }
   tickCell1 = function(xydt) {
     const x = xydt[0];
     const y = xydt[1];
     const dt = xydt[2];
-    return this.grid.y.x.tickstage1(dt, this.dispersalConst);
+    return this.grid[y][x].tickstage1(dt, this.dispersalConst);
   }
   tickCell2 = function(xydt) {
     const x = xydt[0];
     const y = xydt[1];
     const dt = xydt[2];
-    return this.grid.y.x.tickstage2(dt, this.wrConst, this.airflowGrid[y][x]);
+    return this.grid[y][x].tickstage2(dt, this.wrConst, this.airflowGrid[y][x]);
   }
   tick(dt) {
     let locations = []
@@ -206,13 +197,12 @@ class AirGrid {
         try {
           this.grid[row][col - 1].cough(upd[i][3], this.grid[row][col].getVelocity());
         } catch (e) {}
+        this.grid()[row][col].removeParticles(upd[i][3]+upd[i][2]+upd[i][1]+upd[i][0]);
       }));
-      return Promise.all(promises).then((val) => {
-        this.grid[row][col].removeParticles(upd[i][3] + upd[i][2] + upd[i][1] + upd[i][0])
-        pool.terminate()
-        return val;
-      })
     }
+    Promise.all(promises).then((val) => {
+      pool.terminate();
+    });
   }
   get getSquareFromCoords(x, y) {
     yloc = Math.floor(y / this.sideLength);
