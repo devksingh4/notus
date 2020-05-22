@@ -328,13 +328,13 @@ function makeObjectMinLOD() {
 
 
 export default {
-  name: 'canteen table',
+  name: 'Confrence Table',
   prototype: 'items',
 
   info: {
     tag: ['furnishings', 'wood'],
-    title: 'canteen table',
-    description: 'canteen table',
+    title: 'Confrence Table',
+    description: 'Confrence Room Table',
     image: require('./canteen_table.png')
   },
 
