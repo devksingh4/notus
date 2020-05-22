@@ -197,13 +197,13 @@ function makeObjectMinLOD(newWidth,newHeight,newDepth){
 
 
 export default {
-  name: "termosifone_alluminio",
+  name: "air intake",
   prototype: "items",
 
   info: {
-    tag: ['furnishings', 'metal'],
+    tag: ['airflow'],
     title: "air intake",
-    description: "air intake",
+    description: "Point of air intake",
     image: require('./ModernStyleRadiator.png')
   },
 

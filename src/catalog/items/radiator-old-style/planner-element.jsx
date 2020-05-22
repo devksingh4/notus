@@ -201,13 +201,13 @@ function makeObjectMinLOD(WIDTH,HEIGHT) {
 
 
 export default {
-  name: "radiator-old-style",
+  name: "air outflow",
   prototype: "items",
 
   info: {
-    tag: ['furnishings', 'cast iron'],
-    title: "cast iron radiator",
-    description: "cast iron radiator",
+    tag: ['airflow'],
+    title: "Air Outflow",
+    description: "Point of air outflow",
     image: require('./OldStyleRadiator.png')
   },
 
