@@ -92,3 +92,4 @@ class Population {
 }
 
 module.exports.Person = Person;
+module.exports.Population = Population;

@@ -1,4 +1,4 @@
-const Person = require('./Person.js').default;
+const Population = require('./Person.js').Population;
 const AirGrid = require('./AirGrid.js').AirGrid;
 
 module.exports.process = async (data) => {
@@ -44,7 +44,7 @@ const calc = (x1, y1, x2, y2, mx, my, r) => {
 function sim(config, pop_size){
     let grid = populate(width, height, sideLength, dispersalConst, wr);
     var population = [];
-    
+
     delta_t = total_t / iters
     for(i = 0; i < iters; i++){
         AirGrid.tick(delta_t);
