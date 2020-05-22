@@ -49,8 +49,8 @@ app.on('activate', () => {
 
 
 ipcMain.on('layout-data', async (event, arg) => {
-  const success = await model.process(arg.output);
-  if (!success) {
+  const robj = await model.process(arg.output);
+  if (!robj.success) {
     const options  = {
       buttons: ["OK"],
       message: "There was an error processing your data. Please try again."
