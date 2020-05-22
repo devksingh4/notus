@@ -20,9 +20,9 @@ class Square {
   }
 
   cough(nparticles, newDirection) {
-    var weightedNew = glMatrix.vec2.create();
-    var weightedOld = glMatrix.vec2.create();
-    var momentumSum = glMatrix.vec2.create();
+    let weightedNew = glMatrix.vec2.create();
+    let weightedOld = glMatrix.vec2.create();
+    let momentumSum = glMatrix.vec2.create();
     //preserve momentum
     glMatrix.vec2.mul(weightedNew, newDirection, nparticles);
     glMatrix.vec2.mul(weightedOld, glMatrix.vec2.clone(this.coronaVel), this.nCoronaParticles);
@@ -31,9 +31,9 @@ class Square {
   }
 
   tickstage0(dt) {
-    var numLeave = Math.max(this.coronaVel.len() * dt / this.sideLength, 1) * this.nCoronaParticles;
-    var nUD = numLeave * (this.coronaVel[1]) / (this.coronaVel[0] + this.coronaVel[1]);
-    var nLR = numLeave * (this.coronaVel[0]) / (this.coronaVel[0] + this.coronaVel[1]);
+    const numLeave = Math.max(this.coronaVel.len() * dt / this.sideLength, 1) * this.nCoronaParticles;
+    const nUD = numLeave * (this.coronaVel[1]) / (this.coronaVel[0] + this.coronaVel[1]);
+    const nLR = numLeave * (this.coronaVel[0]) / (this.coronaVel[0] + this.coronaVel[1]);
     if (nUD >= 0 && nLR >= 0) {
       return [nUD, nLR, 0, 0];
     } else if (nUD >= 0) {
@@ -46,18 +46,18 @@ class Square {
   }
 
   tickstage1(dt, dispersalConst) {
-    var move = dt * dispersalConst * this.nCoronaParticles;
+    const move = dt * dispersalConst * this.nCoronaParticles;
     return [move, move, move, move];
   }
 
   tickstage2(dt, wrConst, airForce) {
     //f_wr = cv^2, f=ma, a = dv/dt
-    var normVel;
+    let normVel;
     glMatrix.vec2.normalize(normVel, glMatrix.vec2.clone(this.coronaVel));
-    var wrVec = glMatrix.Vec2.create();
+    let wrVec = glMatrix.Vec2.create();
     glMatrix.vec2.mul(wrVec, normVel, this.coronaVel.sqrDist() * wrConst * dt);
     glMatrix.vec2.sub(this.coronaVel, this.coronaVel, wrVec);
-    var distAirForce;
+    let distAirForce;
     //f=ma, a = dv/dt
     glMatrix.vec2.mul(distAirForce, airForce, dt / this.nCoronaParticles);
     glMatrix.vec2.add(this.coronaVel, this.coronaVel, distAirForce);
@@ -78,9 +78,9 @@ class OccludedSquare extends Square {
     this.areaOcclusion = areaOcclusion;
   }
   tickstage0(dt) {
-    var numLeave = Math.max(this.coronaVel.len() * dt / this.sideLength, 1) * this.nCoronaParticles;
-    var nUD = numLeave * (this.coronaVel[1]) / (this.coronaVel[0] + this.coronaVel[1]);
-    var nLR = numLeave * (this.coronaVel[0]) / (this.coronaVel[0] + this.coronaVel[1]);
+    const numLeave = Math.max(this.coronaVel.len() * dt / this.sideLength, 1) * this.nCoronaParticles;
+    const nUD = numLeave * (this.coronaVel[1]) / (this.coronaVel[0] + this.coronaVel[1]);
+    const nLR = numLeave * (this.coronaVel[0]) / (this.coronaVel[0] + this.coronaVel[1]);
     if (nUD >= 0 && nLR >= 0) {
       const nTop = nUD * this.topOcclusion;
       const nRight = nLR * this.rightOcclusion;
@@ -113,8 +113,8 @@ class OccludedSquare extends Square {
   }
 
   tickstage1(dt, dispersalConst) {
-    var multiplier = (4 - this.leftOcclusion - this.rightOcclusion - this.topOcclusion - this.bottomOcclusion) / 4;
-    var move = dt * dispersalConst * this.nCoronaParticles * (1 - this.areaOcclusion) / multiplier;
+    const multiplier = (4 - this.leftOcclusion - this.rightOcclusion - this.topOcclusion - this.bottomOcclusion) / 4;
+    const move = dt * dispersalConst * this.nCoronaParticles * (1 - this.areaOcclusion) / multiplier;
     return [Math.floor(move / (1 - this.topOcclusion)), Math.floor(move / (1 - this.rightOcclusion)), Math.floor(move / (1 - this.bottomOcclusion)), Math.floor(move / (1 - this.leftOcclusion))];
   }
 }
@@ -122,13 +122,13 @@ class OccludedSquare extends Square {
 
 class AirGrid {
   constructor(width, height, sideLength, dispersalConst, wrConst) {
-    var nw = Math.ceil(width / sideLength);
-    var nh = Math.ceil(height / sideLength);
+    const nw = Math.ceil(width / sideLength);
+    const nh = Math.ceil(height / sideLength);
     this.grid = [];
     this.airflowGrid = []
     for (let i = 0; i < nh; i++) {
-      var newSquares = [];
-      var newAir = [];
+      let newSquares = [];
+      let newAir = [];
       for (var j = 0; j < nw; j++) {
         newSquares.push(new Square(sideLength));
         newAir.push(glMatrix.vec2.create());
@@ -166,8 +166,8 @@ class AirGrid {
   tick(dt) {
     let locations = []
     //create a grid of locations
-    for (var i = 0; i < this.grid.length; i++) {
-      for (var j = 0; j < this.grid[i].length; j++) {
+    for (let i = 0; i < this.grid.length; i++) {
+      for (let j = 0; j < this.grid[i].length; j++) {
         locations.push([i, j, dt])
       }
     }
@@ -205,13 +205,13 @@ class AirGrid {
     });
   }
    getSquareFromCoords(x, y) {
-    var yloc = Math.floor(y / this.sideLength);
-    var xloc = Math.floor(x / this.sideLength);
+    const yloc = Math.floor(y / this.sideLength);
+    const xloc = Math.floor(x / this.sideLength);
     return this.grid[yloc][xloc];
   }
    getCoordsFromIndices(y, x) {
-    var yloc = (y + .5) * this.sideLength;
-    var xloc = (x + .5) * this.sideLength;
+    const yloc = (y + .5) * this.sideLength;
+    const xloc = (x + .5) * this.sideLength;
     return [xloc, yloc];
   }
   toString(){
