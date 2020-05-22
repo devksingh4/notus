@@ -20,9 +20,15 @@ class Square {
   }
 
   cough(nparticles, newDirection) {
+<<<<<<< HEAD
     let weightedNew = glMatrix.vec2.create();
     let weightedOld = glMatrix.vec2.create();
     let momentumSum = glMatrix.vec2.create();
+=======
+    const weightedNew = glMatrix.vec2.create();
+    const weightedOld = glMatrix.vec2.create();
+    const momentumSum = glMatrix.vec2.create();
+>>>>>>> da145302188d9599964236c05124bbf2417f9599
     //preserve momentum
     glMatrix.vec2.mul(weightedNew, newDirection, nparticles);
     glMatrix.vec2.mul(weightedOld, glMatrix.vec2.clone(this.coronaVel), this.nCoronaParticles);
@@ -31,9 +37,15 @@ class Square {
   }
 
   tickstage0(dt) {
+<<<<<<< HEAD
     const numLeave = Math.max(this.coronaVel.len() * dt / this.sideLength, 1) * this.nCoronaParticles;
     const nUD = numLeave * (this.coronaVel[1]) / (this.coronaVel[0] + this.coronaVel[1]);
     const nLR = numLeave * (this.coronaVel[0]) / (this.coronaVel[0] + this.coronaVel[1]);
+=======
+    let numLeave = Math.max(this.coronaVel.len() * dt / this.sideLength, 1) * this.nCoronaParticles;
+    let nUD = numLeave * (this.coronaVel[1]) / (this.coronaVel[0] + this.coronaVel[1]);
+    let nLR = numLeave * (this.coronaVel[0]) / (this.coronaVel[0] + this.coronaVel[1]);
+>>>>>>> da145302188d9599964236c05124bbf2417f9599
     if (nUD >= 0 && nLR >= 0) {
       return [nUD, nLR, 0, 0];
     } else if (nUD >= 0) {
@@ -54,7 +66,11 @@ class Square {
     //f_wr = cv^2, f=ma, a = dv/dt
     let normVel;
     glMatrix.vec2.normalize(normVel, glMatrix.vec2.clone(this.coronaVel));
+<<<<<<< HEAD
     let wrVec = glMatrix.Vec2.create();
+=======
+    const wrVec = glMatrix.Vec2.create();
+>>>>>>> da145302188d9599964236c05124bbf2417f9599
     glMatrix.vec2.mul(wrVec, normVel, this.coronaVel.sqrDist() * wrConst * dt);
     glMatrix.vec2.sub(this.coronaVel, this.coronaVel, wrVec);
     let distAirForce;
@@ -78,9 +94,15 @@ class OccludedSquare extends Square {
     this.areaOcclusion = areaOcclusion;
   }
   tickstage0(dt) {
+<<<<<<< HEAD
     const numLeave = Math.max(this.coronaVel.len() * dt / this.sideLength, 1) * this.nCoronaParticles;
     const nUD = numLeave * (this.coronaVel[1]) / (this.coronaVel[0] + this.coronaVel[1]);
     const nLR = numLeave * (this.coronaVel[0]) / (this.coronaVel[0] + this.coronaVel[1]);
+=======
+    let numLeave = Math.max(this.coronaVel.len() * dt / this.sideLength, 1) * this.nCoronaParticles;
+    let nUD = numLeave * (this.coronaVel[1]) / (this.coronaVel[0] + this.coronaVel[1]);
+    let nLR = numLeave * (this.coronaVel[0]) / (this.coronaVel[0] + this.coronaVel[1]);
+>>>>>>> da145302188d9599964236c05124bbf2417f9599
     if (nUD >= 0 && nLR >= 0) {
       const nTop = nUD * this.topOcclusion;
       const nRight = nLR * this.rightOcclusion;
@@ -122,14 +144,23 @@ class OccludedSquare extends Square {
 
 class AirGrid {
   constructor(width, height, sideLength, dispersalConst, wrConst) {
+<<<<<<< HEAD
     const nw = Math.ceil(width / sideLength);
     const nh = Math.ceil(height / sideLength);
+=======
+    let nw = Math.ceil(width / sideLength);
+    let nh = Math.ceil(height / sideLength);
+>>>>>>> da145302188d9599964236c05124bbf2417f9599
     this.grid = [];
     this.airflowGrid = []
     for (let i = 0; i < nh; i++) {
       let newSquares = [];
       let newAir = [];
+<<<<<<< HEAD
       for (var j = 0; j < nw; j++) {
+=======
+      for (let j = 0; j < nw; j++) {
+>>>>>>> da145302188d9599964236c05124bbf2417f9599
         newSquares.push(new Square(sideLength));
         newAir.push(glMatrix.vec2.create());
       }
@@ -171,11 +202,11 @@ class AirGrid {
         locations.push([i, j, dt])
       }
     }
-    var t0upd = mapParallel(this.tickCell0, locations.slice())
+    const t0upd = mapParallel(this.tickCell0, locations.slice())
     this.updateGrid(t0upd)
-    var t1upd = mapParallel(this.ickCell1, locations.slice())
+    const t1upd = mapParallel(this.ickCell1, locations.slice())
     this.updateGrid(t1upd)
-    var t2upd = mapParallel(this.tickCell2, locations.slice())
+    const t2upd = mapParallel(this.tickCell2, locations.slice())
     this.updateGrid(t2upd)
   }
   updateGrid(upd) {
@@ -204,14 +235,24 @@ class AirGrid {
       pool.terminate();
     });
   }
+<<<<<<< HEAD
    getSquareFromCoords(x, y) {
+=======
+  getSquareFromCoords(x, y) {
+>>>>>>> da145302188d9599964236c05124bbf2417f9599
     const yloc = Math.floor(y / this.sideLength);
     const xloc = Math.floor(x / this.sideLength);
     return this.grid[yloc][xloc];
   }
+<<<<<<< HEAD
    getCoordsFromIndices(y, x) {
     const yloc = (y + .5) * this.sideLength;
     const xloc = (x + .5) * this.sideLength;
+=======
+  getCoordsFromIndices(y, x) {
+    const yloc = (y + .5) * this.sideLength;
+    const xloc =- (x + .5) * this.sideLength;
+>>>>>>> da145302188d9599964236c05124bbf2417f9599
     return [xloc, yloc];
   }
   toString(){
