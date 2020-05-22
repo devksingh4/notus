@@ -15,7 +15,7 @@ module.exports = class Person {
             this.inf = 0
         }
     }
-    inc(delta_time){ // function called every time increment
+    tick(delta_time){ // function called every time increment
         
     }
     get x(){
