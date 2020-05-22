@@ -214,7 +214,9 @@ class AirGrid {
     xloc = (x + .5) * sideLength;
     return [xloc, yloc];
   }
-  toString = `Has ${this.grid.length} rows and ${this.grid.length[0]} columns with side length ${this.sideLength}. Dispersal Coefficient is ${this.dispersalConst} and Coefficient of Wind Resistance is ${this.wrConst}`
+  toString(){
+    return `Has ${this.grid.length} rows and ${this.grid.length[0]} columns with side length ${this.sideLength}. Dispersal Coefficient is ${this.dispersalConst} and Coefficient of Wind Resistance is ${this.wrConst}`
+  }
 }
 module.exports.Square = Square;
 module.exports.AirGrid = AirGrid;
