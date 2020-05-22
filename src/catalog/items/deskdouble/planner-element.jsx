@@ -127,13 +127,13 @@ function makeObjectMinLOD() {
 }
 
 export default {
-  name: 'double school desk',
+  name: 'Office desk',
   prototype: 'items',
 
   info: {
     tag: ['furnishings', 'wood'],
-    title: 'double school desk',
-    description: 'double school desk',
+    title: 'Office desk',
+    description: 'Office desk',
     image: require('./deskdouble.png')
   },
 
