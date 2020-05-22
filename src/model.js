@@ -8,7 +8,6 @@ module.exports.process = async (data) => {
     // console.log(p.toString());
     return true;
 };
-
 function sA(r, x, y){
     var a;
     if(x < 0){
@@ -41,4 +40,16 @@ returns the area of intersection.
 const calc = (x1, y1, x2, y2, mx, my, r) => { 
     x1-=mx; x2-=mx; y1-=my; y2-=my;
 	return sA(r, x2, y1) - sA(r, x1, y1) - sA(r, x2, y2) + sA(r, x1, y2);
+}
+function sim(config){
+    let grid = populate(width, height, sideLength, dispersalConst, wr);
+
+    delta_t = total_t / iters
+    for(i = 0; i < iters; i++){
+        AirGrid.tick(delta_t);
+        
+    }
+}
+function populate(width, height, sideLength, dispersalConst, wr){
+    return new AirGrid(width, height, sideLength, dispersalConst, wr);
 }
