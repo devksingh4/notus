@@ -113,13 +113,12 @@
   "build": {
     "productName": "COVID Room Designer",
     "appId": "com.covid.designer",
+    "mac": {
+      "category": "Office"
+    },
     "linux": {
       "category": "Office"
     },
-    "target": [
-      "deb",
-      "rpm"
-    ],
     "files": [
       "build/**/*",
       "node_modules/**/*",
