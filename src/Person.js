@@ -82,7 +82,7 @@ class Population {
         this.pop[index] = npop;
     }
     remove(index){
-        removed = this.pop.splice(index, 1);
+        return this.pop.splice(index, 1);
     }
     tick(dt){
         for(let i = 0; i < this.size(); i++){
