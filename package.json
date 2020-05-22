@@ -5,7 +5,7 @@
   "author": "The COVID Room Designer Team <dev@singhk.dev> (https://github.com/devksingh4/covid-hackathon",
   "private": false,
   "homepage": "./",
-  "main": "build/electron.js",
+  "main": "public/electron.js",
   "extends": null,
   "dependencies": {
     "@babel/core": "7.9.0",
