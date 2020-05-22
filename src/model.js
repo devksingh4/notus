@@ -1,5 +1,5 @@
 const Person = require('./Person.js').default;
-const AirGrid = require('./AirGrid.js');
+const AirGrid = require('./AirGrid.js').AirGrid;
 
 module.exports.process = async (data) => {
     // let square = new AirGrid.Square(3)
