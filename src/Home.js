@@ -11,7 +11,7 @@ function Home() {
           <p>Modeling the spread of COVID-19 in various room layouts</p>
         </Container>
       </Jumbotron>
-      <Bricks props={[{name: "Designer"}]}/>
+      <Bricks props={[{name: "Designer"}, {name: "Configurator"}]}/>
     </div>
   );
 }
