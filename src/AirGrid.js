@@ -31,7 +31,7 @@ class Square {
   }
 
   tickstage0(dt) {
-    const numLeave = Math.max(this.coronaVel.len() * dt / this.sideLength, 1) * this.nCoronaParticles;
+    const numLeave = Math.round(Math.max(this.coronaVel.len() * dt / this.sideLength, 1) * this.nCoronaParticles);
     const nUD = numLeave * (this.coronaVel[1]) / (this.coronaVel[0] + this.coronaVel[1]);
     const nLR = numLeave * (this.coronaVel[0]) / (this.coronaVel[0] + this.coronaVel[1]);
     if (nUD >= 0 && nLR >= 0) {
@@ -46,11 +46,11 @@ class Square {
   }
 
   tickstage1(dt, dispersalConst) {
-    const move = dt * dispersalConst * this.nCoronaParticles;
+    const move = Math.round(dt * dispersalConst * this.nCoronaParticles);
     return [move, move, move, move];
   }
 
-  tickstage2(dt, wrConst, airForce) {
+  tickstage2(dt, wrConst, airForce, halfLife) {
     //f_wr = cv^2, f=ma, a = dv/dt
     let normVel;
     glMatrix.vec2.normalize(normVel, glMatrix.vec2.clone(this.coronaVel));
@@ -61,6 +61,8 @@ class Square {
     //f=ma, a = dv/dt
     glMatrix.vec2.mul(distAirForce, airForce, dt / this.nCoronaParticles);
     glMatrix.vec2.add(this.coronaVel, this.coronaVel, distAirForce);
+    //half life is in seconds
+    this.nCoronaParticles = Math.floor(Math.pow(2, -dt / halfLife) * this.nCoronaParticles);
   }
   toString() {
     return `Has side length ${this.sideLength} with ${this.nCoronaParticles} Coronavirus Particles. Velocity is ${this.coronaVel}.`
@@ -79,32 +81,32 @@ class OccludedSquare extends Square {
   }
   tickstage0(dt) {
     const numLeave = Math.max(this.coronaVel.len() * dt / this.sideLength, 1) * this.nCoronaParticles;
-    const nUD = numLeave * (this.coronaVel[1]) / (this.coronaVel[0] + this.coronaVel[1]);
-    const nLR = numLeave * (this.coronaVel[0]) / (this.coronaVel[0] + this.coronaVel[1]);
+    const nUD = Math.floor(numLeave * (this.coronaVel[1]) / (this.coronaVel[0] + this.coronaVel[1]));
+    const nLR = Math.ceil(numLeave * (this.coronaVel[0]) / (this.coronaVel[0] + this.coronaVel[1]));
     if (nUD >= 0 && nLR >= 0) {
-      const nTop = nUD * this.topOcclusion;
-      const nRight = nLR * this.rightOcclusion;
+      const nTop = Math.round(nUD * this.topOcclusion);
+      const nRight = Math.round(nLR * this.rightOcclusion);
       this.removeParticles(nUD + nLR - nTop - nRight);
       this.cough(nUD - nTop, glMatrix.fromValues(this.coronaVel[0], -this.coronaVel[1]))
       this.cough(nLR - nRight, glMatrix.fromValues(-this.coronaVel[0], this.coronaVel[1]))
       return [nTop, nRight, 0, 0];
     } else if (nUD >= 0) {
-      const nTop = nUD * this.topOcclusion;
-      const nLeft = -nLR * this.rightOcclusion;
+      const nTop = Math.round(nUD * this.topOcclusion);
+      const nLeft = Math.round(-nLR * this.rightOcclusion);
       this.removeParticles(nUD + nLR - nTop - nLeft);
       this.cough(nUD - nTop, glMatrix.fromValues(this.coronaVel[0], -this.coronaVel[1]))
       this.cough(nLR - nLeft, glMatrix.fromValues(-this.coronaVel[0], this.coronaVel[1]))
       return [nTop, 0, 0, nLeft];
     } else if (nLR >= 0) {
-      const nBottom = -nUD * this.topOcclusion;
-      const nRight = nLR * this.rightOcclusion;
+      const nBottom = Math.round(-nUD * this.topOcclusion);
+      const nRight = Math.round(nLR * this.rightOcclusion);
       this.removeParticles(nUD + nLR - nBottom - nRight);
       this.cough(nUD - nBottom, glMatrix.fromValues(this.coronaVel[0], -this.coronaVel[1]))
       this.cough(nLR - nRight, glMatrix.fromValues(-this.coronaVel[0], this.coronaVel[1]))
       return [0, nRight, nBottom, 0];
     } else {
-      const nBottom = -nUD * this.topOcclusion;
-      const nLeft = -nLR * this.rightOcclusion;
+      const nBottom = Math.round(-nUD * this.topOcclusion);
+      const nLeft = Math.round(-nLR * this.rightOcclusion);
       this.removeParticles(nUD + nLR - nBottom - nLeft);
       this.cough(nUD - nBottom, glMatrix.fromValues(this.coronaVel[0], -this.coronaVel[1]))
       this.cough(nLR - nLeft, glMatrix.fromValues(-this.coronaVel[0], this.coronaVel[1]))
@@ -121,7 +123,7 @@ class OccludedSquare extends Square {
 
 
 class AirGrid {
-  constructor(width, height, sideLength, dispersalConst, wrConst) {
+  constructor(width, height, sideLength, dispersalConst, wrConst, halfLife) {
     const nw = Math.ceil(width / sideLength);
     const nh = Math.ceil(height / sideLength);
     this.grid = [];
@@ -134,10 +136,11 @@ class AirGrid {
         newAir.push(glMatrix.vec2.create());
       }
       this.grid.push(newSquares);
-      this.airflowGrid.push(newAir)
+      this.airflowGrid.push(newAir);
     }
-    this.dispersalConst = dispersalConst
-    this.wrConst = wrConst
+    this.dispersalConst = dispersalConst;
+    this.wrConst = wrConst;
+    this.halfLife = halfLife;
   }
   get getAirflow() {
     return this.airflowGrid;
@@ -161,10 +164,10 @@ class AirGrid {
     const x = xydt[0];
     const y = xydt[1];
     const dt = xydt[2];
-    return this.grid[y][x].tickstage2(dt, this.wrConst, this.airflowGrid[y][x]);
+    return this.grid[y][x].tickstage2(dt, this.wrConst, this.airflowGrid[y][x], this.halfLife);
   }
   tick(dt) {
-    let locations = []
+    let locations = [];
     //create a grid of locations
     for (let i = 0; i < this.grid.length; i++) {
       for (let j = 0; j < this.grid[i].length; j++) {
@@ -197,7 +200,7 @@ class AirGrid {
         try {
           this.grid[row][col - 1].cough(upd[i][3], this.grid[row][col].getVelocity());
         } catch (e) {}
-        this.grid()[row][col].removeParticles(upd[i][3]+upd[i][2]+upd[i][1]+upd[i][0]);
+        this.grid()[row][col].removeParticles(upd[i][3] + upd[i][2] + upd[i][1] + upd[i][0]);
       }));
     }
     Promise.all(promises).then((val) => {
@@ -209,12 +212,12 @@ class AirGrid {
     const xloc = Math.floor(x / this.sideLength);
     return this.grid[yloc][xloc];
   }
-   getCoordsFromIndices(y, x) {
+  getCoordsFromIndices(y, x) {
     const yloc = (y + .5) * this.sideLength;
     const xloc = (x + .5) * this.sideLength;
     return [xloc, yloc];
   }
-  toString(){
+  toString() {
     return `Has ${this.grid.length} rows and ${this.grid.length[0]} columns with side length ${this.sideLength}. Dispersal Coefficient is ${this.dispersalConst} and Coefficient of Wind Resistance is ${this.wrConst}`
   }
 }
