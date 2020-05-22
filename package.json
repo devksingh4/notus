@@ -1,6 +1,6 @@
 {
   "name": "covid-room-designer",
-  "version": "0.2.1-hf1",
+  "version": "0.2.2",
   "description": "Modeling the spread of COVID-19 to create various safer room layouts.",
   "author": "The COVID Room Designer Team <dev@singhk.dev> (https://github.com/devksingh4/covid-hackathon",
   "private": false,
