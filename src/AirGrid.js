@@ -32,7 +32,7 @@ class Square {
   tickstage0(dt) {
     var numLeave = Math.max(this.coronaVel.len() * dt / this.sideLength, 1) * this.nCoronaParticles;
     var nUD = numLeave * (this.coronaVel[1]) / (this.coronaVel[0] + this.coronaVel[1]);
-    var nLR = numLeave - nUD;
+    var nLR = numLeave * (this.coronaVel[0]) / (this.coronaVel[0] + this.coronaVel[1]);
     if (nUD >= 0 && nLR >= 0) {
       return [nUD, nLR, 0, 0];
     } else if (nUD >= 0) {
@@ -63,6 +63,58 @@ class Square {
   }
   toString() {
     return `Has side length ${this.sideLength} with ${this.nCoronaParticles} Coronavirus Particles. Velocity is ${this.coronaVel}.`
+  }
+}
+
+class OccludedSquare extends Square {
+  constructor(sideLength, topOcclusion, bottomOcclusion, rightOcclusion, leftOcclusion, areaOcclusion) {
+    //Occlusions are numbers between 0 and 1, the fraction of how much is blocked
+    super(sideLength);
+    this.topOcclusion = topOcclusion;
+    this.bottomOcclusion = bottomOcclusion;
+    this.rightOcclusion = rightOcclusion;
+    this.leftOcclusion = leftOcclusion;
+    this.areaOcclusion = areaOcclusion;
+  }
+  tickstage0(){
+    var numLeave = Math.max(this.coronaVel.len() * dt / this.sideLength, 1) * this.nCoronaParticles;
+    var nUD = numLeave * (this.coronaVel[1]) / (this.coronaVel[0] + this.coronaVel[1]);
+    var nLR = numLeave * (this.coronaVel[0]) / (this.coronaVel[0] + this.coronaVel[1]);
+    if (nUD >= 0 && nLR >= 0) {
+      var nTop = nUD*this.topOcclusion;
+      var nRight = nLR*this.rightOcclusion;
+      this.removeParticles(nUD+nLR-nTop-nRight);
+      this.cough(nUD-nTop, glMatrix.fromValues(this.coronaVel[0], -this.coronaVel[1]))
+      this.cough(nLR-nRight, glMatrix.fromValues(-this.coronaVel[0], this.coronaVel[1]))
+      return [nTop, nRight, 0, 0];
+    } else if (nUD >= 0) {
+      var nTop = nUD*this.topOcclusion;
+      var nLeft = -nLR*this.rightOcclusion;
+      this.removeParticles(nUD+nLR-nTop-nLeft);
+      this.cough(nUD-nTop, glMatrix.fromValues(this.coronaVel[0], -this.coronaVel[1]))
+      this.cough(nLR-nLeft, glMatrix.fromValues(-this.coronaVel[0], this.coronaVel[1]))
+      return [nTop, 0, 0, nLeft];
+    } else if (nLR >= 0) {
+      var nBottom = -nUD*this.topOcclusion;
+      var nRight = nLR*this.rightOcclusion;
+      this.removeParticles(nUD+nLR-nBottom-nRight);
+      this.cough(nUD-nBottom, glMatrix.fromValues(this.coronaVel[0], -this.coronaVel[1]))
+      this.cough(nLR-nRight, glMatrix.fromValues(-this.coronaVel[0], this.coronaVel[1]))
+      return [0, nRight, nBottom, 0];
+    } else {
+      var nBottom = -nUD*this.topOcclusion;
+      var nLeft = -nLR*this.rightOcclusion;
+      this.removeParticles(nUD+nLR-nBottom-nLeft);
+      this.cough(nUD-nBottom, glMatrix.fromValues(this.coronaVel[0], -this.coronaVel[1]))
+      this.cough(nLR-nLeft, glMatrix.fromValues(-this.coronaVel[0], this.coronaVel[1]))
+      return [0, 0, nBottom, nLeft];
+    }
+  }
+
+  tickstage1() {
+    var multiplier = (4 - this.leftOcclusion - this.rightOcclusion - this.topOcclusion - this.bottomOcclusion) / 4;
+    var move = dt * dispersalConst * this.nCoronaParticles * (1 - this.areaOcclusion) / multiplier;
+    return [Math.floor(move / (1 - this.topOcclusion)), Math.floor(move / (1 - this.rightOcclusion)), Math.floor(move / (1 - this.bottomOcclusion)), Math.floor(move / (1 - this.leftOcclusion))];
   }
 }
 
@@ -155,12 +207,23 @@ class AirGrid {
         } catch (e) {}
       }));
       return Promise.all(promises).then((val) => {
-        this.grid[row][col].removeParticles(upd[i][3]+upd[i][2]+upd[i][1]+upd[i][0])
+        this.grid[row][col].removeParticles(upd[i][3] + upd[i][2] + upd[i][1] + upd[i][0])
         pool.terminate()
         return val;
       })
     }
   }
+  get getSquareFromCoords(x, y) {
+    yloc = Math.floor(y / this.sideLength);
+    xloc = Math.floor(x / this.sideLength);
+    return this.grid[yloc][xloc];
+  }
+  get getCoordsFromIndices(y, x) {
+    yloc = (y + .5) * sideLength;
+    xloc = (x + .5) * sideLength;
+    return [xloc, yloc];
+  }
+  toString = `Has ${this.grid.length} rows and ${this.grid.length[0]} columns with side length ${this.sideLength}. Dispersal Coefficient is ${this.dispersalConst} and Coefficient of Wind Resistance is ${this.wrConst}`
 }
 module.exports.Square = Square;
 module.exports.AirGrid = AirGrid;
