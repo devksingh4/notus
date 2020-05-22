@@ -65,4 +65,31 @@ class Person {
     }
 }
 
-module.exports = Person;
+class Population {
+    constructor(pop_size, starting_pos, starting_tar, starting_karen, starting_size){
+        this.pop = [];
+        for(let i = 0; i < pop_size; i++){
+            this.pop.push(new Person(starting_pos[i][0], starting_pos[i][1], starting_tar[i][0], starting_tar[i][1], starting_karen[i], starting_size[i]));
+        }
+    }
+    get size(){
+        return this.pop.length;
+    }
+    get_pop(index){
+        return this.pop[index];
+    }
+    set_pop(index, npop){
+        this.pop[index] = npop;
+    }
+    remove(index){
+        return this.pop.splice(index, 1);
+    }
+    tick(dt){
+        for(let i = 0; i < this.size(); i++){
+            this.pop[i].tick();
+        }
+    }
+}
+
+module.exports.Person = Person;
+module.exports.Population = Population;

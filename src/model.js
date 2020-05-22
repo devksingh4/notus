@@ -1,4 +1,4 @@
-const Person = require('./Person.js').default;
+const Population = require('./Person.js').Population;
 const AirGrid = require('./AirGrid.js').AirGrid;
 
 module.exports.process = async (data) => {
@@ -6,7 +6,7 @@ module.exports.process = async (data) => {
     // console.log(data);
     // let p = new Person(2, 3, 4,5,6,7,8);
     // console.log(p.toString());
-    return false;
+    return {success:false, prob: 0.01};
 };
 function sA(r, x, y){
     var a;
@@ -41,8 +41,9 @@ const calc = (x1, y1, x2, y2, mx, my, r) => {
 	return sA(r, x2, y1) - sA(r, x1, y1) - sA(r, x2, y2) + sA(r, x1, y2);
 }
 
-function sim(config){
+function sim(config, pop_size){
     let grid = populate(width, height, sideLength, dispersalConst, wr);
+    var population = [];
 
     delta_t = total_t / iters
     for(i = 0; i < iters; i++){

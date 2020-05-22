@@ -1,8 +1,8 @@
 {
-  "name": "covid-room-designer",
+  "name": "notus",
   "version": "0.2.2",
   "description": "Modeling the spread of COVID-19 to create various safer room layouts.",
-  "author": "The COVID Room Designer Team <dev@singhk.dev> (https://github.com/devksingh4/covid-hackathon",
+  "author": "The Notus Team <dev@singhk.dev> (https://github.com/devksingh4/covid-hackathon",
   "private": false,
   "homepage": "./",
   "main": "public/electron.js",
@@ -111,11 +111,12 @@
     "extends": "react-app"
   },
   "build": {
-    "productName": "COVID Room Designer",
-    "appId": "com.covid.designer",
+    "productName": "Notus",
+    "appId": "com.notus",
     "win": {
       "icon": "icon=assets/icons/win/icon.ico"
     },
+
     "mac": {
       "category": "Office",
       "icon": "assets/icons/mac/icon.icns"

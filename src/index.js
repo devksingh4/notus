@@ -8,6 +8,7 @@ import {
 // Screens
 import Home from './Home';
 import Designer from './Designer';
+import Configurator from './Configurator';
 
 
 ReactDOM.render(
@@ -16,6 +17,7 @@ ReactDOM.render(
       <div>
         <Route path="/" exact     component={ Home } />
         <Route path="/designer"     component={ Designer } />
+        <Route path="/configurator"     component={ Configurator } />
       </div>
     </HashRouter>
   </React.StrictMode>,
