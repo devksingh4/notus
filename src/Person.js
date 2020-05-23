@@ -1,11 +1,11 @@
 class Person {
-    constructor(nx, ny, ninf, ntargetx, ntargety, nkaren, size, age){ // coords are in meters, the karen modifier indicates the level of stubborness to anti-plague measures
+    constructor(nx, ny, ninf, ntargetx, ntargety, nkren, size, age){ // coords are in meters, the kren modifier indicates the level of compliance to anti-plague measures
         this.x = nx;
         this.y = ny;
         this.inf = ninf;
         this.targetx = ntargetx;
         this.targety = ntargety;
-        this.karen = nkaren;
+        this.kren = nkren;
         this.size = size;
     }
     infect(p_aerosol, d_aerosol){ // p is probability constant for infection, d is density
