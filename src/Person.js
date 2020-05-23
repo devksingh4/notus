@@ -1,5 +1,5 @@
 class Person {
-    constructor(nx, ny, ninf, ntargetx, ntargety, nkaren, size){ // coords are in meters, the karen modifier indicates the level of stubborness to anti-plague measures
+    constructor(nx, ny, ninf, ntargetx, ntargety, nkaren, size, age){ // coords are in meters, the karen modifier indicates the level of stubborness to anti-plague measures
         this.x = nx;
         this.y = ny;
         this.inf = ninf;
@@ -17,6 +17,43 @@ class Person {
     }
     tick(delta_time){ // function called every time increment
         
+    }
+    generate_aerosols(){
+
+        const x = self.inf;
+
+        if(x == false){
+            return 0;
+        }
+
+        const a = 1.1;
+        const b = 9.1;
+        const c = 1.28;
+        const d = 0.31;
+        const k = -6.5;
+        const n = 7.5;
+        const v = 0.5;
+
+        if(x >= 0 && x <= 2/3){
+            const h = n * Math.E**-((x-c)**2/d);
+            return h;
+        }
+        else if(x > 2/3 && x <= 11){
+            const f = n * Math.E**-((x - a)**2 / b);
+            const i = ( 2 * a * n * Math.E**-((a-x)**2/b) )/b - ( 2 * n * x * Math.E**-((a-x)**2/b) )/b;
+            const g = f + k*i + v;
+            return g;
+        }
+        else if(x > 11 && x <= 16){
+            const m = -0.1*x + 1.6;
+            return m;
+        }
+        else if(x > 16){
+            return 0;
+        }
+        else{
+            throw "somehow Person.inf was negative"
+        }
     }
     get x(){
         return this.x;
