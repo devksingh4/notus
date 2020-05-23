@@ -20,7 +20,7 @@ class Person {
     }
     generate_aerosols(){
 
-        const x = self.inf;
+        const x = self.inf / 86400;
 
         if(x == false){
             return 0;
