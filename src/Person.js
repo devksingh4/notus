@@ -18,9 +18,10 @@ class Person {
     tick(delta_time){ // function called every time increment
         
     }
-    generate_aerosols(){
+    generate_aerosols(p, delta_time){
 
         const x = self.inf / 86400;
+        const z = p * delta_time
 
         if(x == false){
             return 0;
@@ -36,17 +37,17 @@ class Person {
 
         if(x >= 0 && x <= 2/3){
             const h = n * Math.E**-((x-c)**2/d);
-            return h;
+            return h/100*z;
         }
         else if(x > 2/3 && x <= 11){
             const f = n * Math.E**-((x - a)**2 / b);
             const i = ( 2 * a * n * Math.E**-((a-x)**2/b) )/b - ( 2 * n * x * Math.E**-((a-x)**2/b) )/b;
             const g = f + k*i + v;
-            return g;
+            return g/100*z;
         }
         else if(x > 11 && x <= 16){
             const m = -0.1*x + 1.6;
-            return m;
+            return m/100*z;
         }
         else if(x > 16){
             return 0;
