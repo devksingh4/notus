@@ -1,5 +1,4 @@
 import React from 'react';
-import Jumbotron from 'react-bootstrap/Jumbotron'
 import Container from 'react-bootstrap/Container'
 import MyCatalog from './catalog/mycatalog';
 import {Map} from 'immutable';
@@ -55,7 +54,6 @@ function Designer() {
       />
       </Container>
     </Provider>
-    <Jumbotron></Jumbotron>
     </div>
   );
 }
