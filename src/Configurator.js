@@ -34,7 +34,8 @@ export default class Configurator extends Component {
         </Form.Group>
         <Button variant="primary" onClick={this.applyChanges}>
           Submit
-        </Button>        
+        </Button>    
+        <span>     </span>    
         <Button variant="danger" onClick={this.setDefaults}>
           Reset to Defaults
         </Button>
