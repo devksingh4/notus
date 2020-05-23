@@ -8,6 +8,7 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.css';
 import './index.css'
+import {ScreenHeader} from './Header'
 
 // import {
 //   Models as PlannerModels,
@@ -40,7 +41,7 @@ class MyPlanner extends React.Component {
   }
 }
 
-const EnhancedPlanner = Dimensions({ elementResize: true, className: 'react-dimensions-wrapper', containerStyle: { height: '95vh', padding: 0, border: 0, margin: 0}})(MyPlanner)
+const EnhancedPlanner = Dimensions({ elementResize: true, className: 'react-dimensions-wrapper', containerStyle: { height: '92vh', padding: 0, border: 0, margin: 0}})(MyPlanner)
 
 //define state
 let AppState = Map({
@@ -63,11 +64,9 @@ let plugins = [
 function Designer() {
   return (
     <div className="Designer">
-      <div style={{ height: '5vh', padding: '1vh', fontSize: '2vh', border: 0, margin: 0, backgroundColor: "#005faf", color: "#ffffff"}}>
-        <p>Room Designer</p>
-      </div>
+      <ScreenHeader name="Room Designer"></ScreenHeader>
       <Provider store={store}>
-        <EnhancedPlanner />
+        <EnhancedPlanner/>
       </Provider>
     </div>
   );
