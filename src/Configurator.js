@@ -53,9 +53,9 @@ export default class Configurator extends Component {
           <Form.Control id="p_infect" type="number" value={this.state.p_infect * 1e4} onChange={this.handleChange} placeholder={this.state.p_infect * 1e4} />
           <Form.Label>Coefficent of particle wind resistance</Form.Label>
           <Form.Control id="cowr" type="number" value={this.state.cowr} onChange={this.handleChange} placeholder={this.state.cowr} />
-          <Form.Label>Replusion of SARS-nCoV-2 particles from each other</Form.Label>
+          <Form.Label>Replusion of SARS-CoV-2 particles from each other</Form.Label>
           <Form.Control id="dispersal" type="number" value={this.state.dispersal} onChange={this.handleChange} placeholder={this.state.dispersal} />
-          <Form.Label>Half life of SARS-nCoV-2 particles</Form.Label>
+          <Form.Label>Half life of SARS-CoV-2 particles</Form.Label>
           <Form.Control id="half_life" type="number" value={this.state.half_life} onChange={this.handleChange} placeholder={this.state.half_life} />
           <Form.Label>Cough velocity</Form.Label>
           <Form.Control id="n_cough" type="number" value={this.state.n_cough} onChange={this.handleChange} placeholder={this.state.n_cough} />
