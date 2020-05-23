@@ -4,6 +4,7 @@ import Container from 'react-bootstrap/Container'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import 'bootstrap/dist/css/bootstrap.css';
+import { ScreenHeader } from './Header';
 const electron = window.require('electron');
 const ipcRenderer  = electron.ipcRenderer;
 
@@ -20,12 +21,7 @@ export default class Configurator extends Component {
   render() {
     return (
       <div className="Configurator">
-      <Jumbotron fluid>
-        <Container>
-          <h1>Room Configurator</h1>
-          <p></p>
-        </Container>
-      </Jumbotron>
+      <ScreenHeader name="Configurator"></ScreenHeader>
       <Container>
         <Form>
         <Form.Group controlId="">

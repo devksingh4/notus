@@ -6,6 +6,7 @@ import {Map} from 'immutable';
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.css';
+import { ScreenHeader } from './Header';
 
 // import {
 //   Models as PlannerModels,
@@ -42,12 +43,7 @@ let plugins = [
 function Designer() {
   return (
     <div className="Designer">
-      <Jumbotron fluid>
-        <Container>
-          <h1>Room Designer</h1>
-          <p></p>
-        </Container>
-      </Jumbotron>
+      <ScreenHeader name="Room Designer"></ScreenHeader>
       <Provider store={store}>
       <Container className='overflow-hidden'>
       <ReactPlanner
