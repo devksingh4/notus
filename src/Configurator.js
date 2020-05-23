@@ -12,7 +12,7 @@ export default class Configurator extends Component {
     return true; 
   }
   setDefaults = () => {
-    this.setState({n_employees: 20, percent_infected: 5, percent_noncompliant: 5, social_distance: 6, p_infect: 0.0001, cowr: .47, dispersal: .1, half_life: 360, n_cough: 1000})
+    this.setState({n_employees: 20, percent_infected: 5, percent_noncompliant: 5, social_distance: 6, p_infect: 0.0001, cowr: .47, dispersal: .1, half_life: 360, n_cough: 1000, v_cough: 1})
     return true;
   }
   handleChange = (e) => {
@@ -57,8 +57,10 @@ export default class Configurator extends Component {
           <Form.Control id="dispersal" type="number" value={this.state.dispersal} onChange={this.handleChange} placeholder={this.state.dispersal} />
           <Form.Label>Half life of SARS-CoV-2 particles</Form.Label>
           <Form.Control id="half_life" type="number" value={this.state.half_life} onChange={this.handleChange} placeholder={this.state.half_life} />
-          <Form.Label>Cough velocity</Form.Label>
+          <Form.Label>Particles of SARS-CoV-2 released in one cough</Form.Label>
           <Form.Control id="n_cough" type="number" value={this.state.n_cough} onChange={this.handleChange} placeholder={this.state.n_cough} />
+          <Form.Label>Velocity of released particles</Form.Label>
+          <Form.Control id="v_cough" type="number" value={this.state.v_cough} onChange={this.handleChange} placeholder={this.state.v_cough} />
         </Form.Group>
         <br/>
         <Button variant="primary" onClick={this.applyChanges}>

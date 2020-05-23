@@ -61,7 +61,7 @@ let plugins = [
 ];
 function Designer() {
   return (
-    <div className="Designer">
+    <div className="Designer" style={{overflow: 'hidden'}}>
       <ScreenHeader name="Room Designer"></ScreenHeader>
       <Provider store={store}>
         <EnhancedPlanner/>
