@@ -29,6 +29,11 @@ function createWindow() {
   eventEmitter.on('robj-display', (probability) => {
     mainWindow.webContents.send('probInfect',probability)
   });
+
+  eventEmitter.on('start-loader', () => {
+    console.log("deet")
+    mainWindow.webContents.send('startloadscreen')
+  });
 }
 
 
@@ -54,9 +59,11 @@ app.on('activate', () => {
   }
 });
 
-
 ipcMain.on('layout-data', async (event, arg) => {
+  event.returnValue = "done"
+  eventEmitter.emit("start-loader")
   const robj = await model.process(arg.output);
+  eventEmitter.emit("robj-display", robj)
   if (!robj.success) {
     const options  = {
       buttons: ["OK"],
@@ -64,6 +71,4 @@ ipcMain.on('layout-data', async (event, arg) => {
      }
      await dialog.showMessageBox(mainWindow, options, () => {})
   }
-  eventEmitter.emit("robj-display", robj)
-  event.returnValue = "done"
 });
