@@ -16,6 +16,24 @@ code {
   height: 100vh;
 }
 
+.vizview {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background: no-repeat rgb(0,95,175);
+}
+
+.vizcard {
+  margin: 20px;
+  padding: 20px;
+}
+
 .loader {
   position: fixed;
   display: flex;

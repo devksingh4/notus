@@ -18,6 +18,7 @@ export default class DesignerTutorial extends Component {
           <Card.Text>
             <i>Insert description here</i>
           </Card.Text>
+          <Card.Img ></Card.Img>
         </Card.Body>
       </Card>
       <br/>

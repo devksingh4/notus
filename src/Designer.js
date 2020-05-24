@@ -5,6 +5,8 @@ import { Map } from 'immutable';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.css';
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button'
 import './index.css'
 import { ScreenHeader } from './Header'
 
@@ -28,20 +30,37 @@ const eventEmitter = new events.EventEmitter();
 
 class MyPlanner extends React.Component {
   state = {
-    loaderActive: false
+    loaderActive: false,
+    vizActive: false
   }
+
 
   componentDidMount() {
     eventEmitter.on("startloader", () => {
       this.setState({
-        loaderActive: true
+        loaderActive: true,
       })
     });
-    eventEmitter.on("stoploader", () => {
+    eventEmitter.on("stoploader", (metrics) => {
       this.setState({
-        loaderActive: false
+        loaderActive: false,
+      })
+      eventEmitter.emit("startviz")
+    });
+    eventEmitter.on("startviz", () => {
+      this.setState({
+        vizActive: true,
       })
     });
+    eventEmitter.on("stopviz", () => {
+      this.setState({
+        vizActive: false,
+      })
+    });
+  }
+
+  closeViz() {
+    eventEmitter.emit("stopviz")
   }
 
   render() {
@@ -55,6 +74,12 @@ class MyPlanner extends React.Component {
           stateExtractor={state => state.get('react-planner-electron')}
         />
         {this.state.loaderActive ? <div className="loader"><div><div className="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><p className="loaderText">Modeling</p></div></div> : null}
+        {this.state.vizActive ? <div className="vizview">
+          <Card className="vizcard">
+            <h3>Vizview Boilerplate</h3>
+            <Button onClick={this.closeViz} style={{backgroundColor: "#005faf", border: 0}}>Close</Button>
+          </Card>
+        </div> : null}
       </div>
     )
   }
@@ -91,8 +116,8 @@ function Designer() {
   );
 }
 
-ipcRenderer.on('probInfect', (event, probability) => {
-  eventEmitter.emit("stoploader")
+ipcRenderer.on('probInfect', (event, metrics) => {
+  eventEmitter.emit("stoploader", metrics)
 })
 
 ipcRenderer.on('startloadscreen', (event) => {
