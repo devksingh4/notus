@@ -40,6 +40,7 @@ export default class Configurator extends Component {
   validateData = (e) => {
     if (e.target.value === "" && !this.state.submitted) {
       this.asyncAlert("No values can be empty.")
+      this.setState({[e.target.id]: this.default[e.target.id]})
       console.log(e.target.id)
       return false; 
     }
