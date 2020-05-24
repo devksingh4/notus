@@ -57,7 +57,7 @@ code {
 .lds-grid div:nth-child(2) {
   top: 8px;
   left: 32px;
-  animation-delay: -0.4s;
+  animation-delay: -0.3s;
 }
 .lds-grid div:nth-child(3) {
   top: 8px;
@@ -67,12 +67,12 @@ code {
 .lds-grid div:nth-child(4) {
   top: 32px;
   left: 8px;
-  animation-delay: -0.4s;
+  animation-delay: -0.5s;
 }
 .lds-grid div:nth-child(5) {
   top: 32px;
   left: 32px;
-  animation-delay: -0.8s;
+  animation-delay: -0.9s;
 }
 .lds-grid div:nth-child(6) {
   top: 32px;
@@ -82,17 +82,17 @@ code {
 .lds-grid div:nth-child(7) {
   top: 56px;
   left: 8px;
-  animation-delay: -0.8s;
+  animation-delay: -1.0s;
 }
 .lds-grid div:nth-child(8) {
   top: 56px;
   left: 32px;
-  animation-delay: -1.2s;
+  animation-delay: -1.3s;
 }
 .lds-grid div:nth-child(9) {
   top: 56px;
   left: 56px;
-  animation-delay: -1.6s;
+  animation-delay: -1.7s;
 }
 @keyframes lds-grid {
   0%, 100% {
