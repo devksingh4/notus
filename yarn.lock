@@ -9903,10 +9903,10 @@ react-overlays@^3.1.2:
     uncontrollable "^7.0.0"
     warning "^4.0.3"
 
-react-planner-electron@2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/react-planner-electron/-/react-planner-electron-2.1.1.tgz#16405e97f20891bb7c704a4fd912e36711c30d32"
-  integrity sha512-Wj+QUYnXr6LDLbk8KSMeMs9K333YIvSAJAeH8N9sqN3yeyLBz2ZFjs7P1OsDcXQbNBDMIHumxinGWxvhDCMGlw==
+react-planner-electron@2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/react-planner-electron/-/react-planner-electron-2.1.2.tgz#d76d5588114b2e649e2a374caee0f3941840e307"
+  integrity sha512-wRIEz7I65oa340AX2UIfQqUKVedc/Xchk588kYVJAPVumkpcXwWe+CvFZCL6DihWhX8aEiD7dchuMroBF//Ksw==
   dependencies:
     "@mapbox/react-range" "0.0.7"
     area-polygon "1.0.1"
