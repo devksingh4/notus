@@ -56,7 +56,7 @@ export default class Configurator extends Component {
       <div className="Configurator">
       <ScreenHeader name="Configurator"></ScreenHeader>
       <Container>
-        <Card style={{padding: 20, margin: 20, backgroundColor: '#28292d'}}>
+        <Card style={{padding: 20, margin: 20, backgroundColor: '#28292d', borderStyle: 'hidden'}}>
         <Form onBlur={this.validateData}>
         <Form.Group style={whiteText}>
           <Form.Label>Number of employees</Form.Label>
