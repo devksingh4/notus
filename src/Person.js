@@ -1,11 +1,11 @@
 class Person {
-    constructor(nx, ny, ninf, ntargetx, ntargety, nkaren, size){ // coords are in meters, the karen modifier indicates the level of stubborness to anti-plague measures
+    constructor(nx, ny, ninf, ntargetx, ntargety, nnon_compliant, size){ // coords are in meters, the non_compliant modifier indicates the level of stubborness to anti-plague measures
         this.x = nx;
         this.y = ny;
         this.inf = ninf;
         this.targetx = ntargetx;
         this.targety = ntargety;
-        this.karen = nkaren;
+        this.non_compliant = nnon_compliant;
         this.size = size;
     }
     infect(p_aerosol, d_aerosol){ // p is probability constant for infection, d is density
@@ -71,8 +71,8 @@ class Person {
     get targety(){
         return this.targety;
     }
-    get karen(){
-        return this.karen;
+    get non_compliant(){
+        return this.non_compliant;
     }
     get size(){
         return this.size;
@@ -92,22 +92,22 @@ class Person {
     set targety(ntargety){
         this.targety = ntargety;
     }
-    set karen(nkaren){
-        this.karen = nkaren;
+    set non_compliant(n_non_compliant){
+        this.non_compliant = n_non_compliant;
     }
     set size(nsize){
         this.size = nsize;
     }
     toString() {
-        return `${this.x}, ${this.y}, ${this.inf}, ${this.targetx}, ${this.targety}, ${this.karen}, ${this.size}`;
+        return `${this.x}, ${this.y}, ${this.inf}, ${this.targetx}, ${this.targety}, ${this.non_compliant}, ${this.size}`;
     }
 }
 
 class Population {
-    constructor(pop_size, starting_pos, starting_tar, starting_karen, starting_size){
+    constructor(pop_size, starting_pos, starting_tar, starting_non_compliant, starting_size){
         this.pop = [];
         for(let i = 0; i < pop_size; i++){
-            this.pop.push(new Person(starting_pos[i][0], starting_pos[i][1], starting_tar[i][0], starting_tar[i][1], starting_karen[i], starting_size[i]));
+            this.pop.push(new Person(starting_pos[i][0], starting_pos[i][1], starting_tar[i][0], starting_tar[i][1], starting_non_compliant[i], starting_size[i]));
         }
     }
     get size(){
