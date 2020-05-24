@@ -2,7 +2,7 @@
   "name": "notus",
   "version": "0.3.0",
   "description": "Modeling the spread of COVID-19 to create various safer room layouts.",
-  "author": "The Notus Team <dev@singhk.dev> (https://github.com/devksingh4/covid-hackathon",
+  "author": "The Notus Team <dev@singhk.dev> (https://github.com/devksingh4/notus)",
   "private": false,
   "homepage": "./",
   "main": "public/electron.js",
