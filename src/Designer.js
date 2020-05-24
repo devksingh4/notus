@@ -6,7 +6,7 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.css';
 import './index.css'
-import {ScreenHeader} from './Header'
+import { ScreenHeader } from './Header'
 
 // import {
 //   Models as PlannerModels,
@@ -22,26 +22,50 @@ import {
   Plugins as PlannerPlugins,
 } from 'react-planner-electron';
 
-const {ipcRenderer} = window.require('electron')
+const { ipcRenderer } = window.require('electron')
+const events = require('events');
+const eventEmitter = new events.EventEmitter();
 
 class MyPlanner extends React.Component {
+  state = {
+    loaderActive: false
+  }
+  
+  componentWillMount() {console.log("componentWillMount")}
+
+  componentDidMount() {
+    eventEmitter.on("startloader", () => {
+      this.setState({
+        loaderActive: true
+      })
+      console.log("starting..." + this.state.loaderActive)
+    });
+    eventEmitter.on("stoploader", () => {
+      this.setState({
+        loaderActive: false
+      })
+      console.log("stopping..." + this.state.loaderActive)
+    });
+    console.log("componentDidMount")
+  }
 
   render() {
     return (
-
-      <ReactPlanner
-        width={this.props.containerWidth}
-        height={this.props.containerHeight}
-        catalog={MyCatalog}
-        plugins={plugins}
-        stateExtractor={state => state.get('react-planner-electron')}
-      />
-
+      <div>
+        <ReactPlanner
+          width={this.props.containerWidth}
+          height={this.props.containerHeight}
+          catalog={MyCatalog}
+          plugins={plugins}
+          stateExtractor={state => state.get('react-planner-electron')}
+        />
+        {this.state.loaderActive ? <div className="loader"></div> : null}
+      </div>
     )
   }
 }
 
-const EnhancedPlanner = Dimensions({ elementResize: true, className: 'react-dimensions-wrapper', containerStyle: { height: '94vh', padding: 0, border: 0, margin: 0}})(MyPlanner)
+const EnhancedPlanner = Dimensions({ elementResize: true, className: 'react-dimensions-wrapper', containerStyle: { height: '94vh', padding: 0, border: 0, margin: 0 } })(MyPlanner)
 
 //define state
 let AppState = Map({
@@ -63,17 +87,22 @@ let plugins = [
 ];
 function Designer() {
   return (
-    <div className="Designer" style={{overflow: 'hidden'}}>
+    <div className="Designer" style={{ overflow: 'hidden' }}>
       <ScreenHeader name="Room Designer"></ScreenHeader>
       <Provider store={store}>
-        <EnhancedPlanner/>
+        <EnhancedPlanner />
       </Provider>
     </div>
   );
 }
 
 ipcRenderer.on('probInfect', (event, probability) => {
-  alert(probability)
+  eventEmitter.emit("stoploader")
+  //alert(probability)
+})
+
+ipcRenderer.on('startloadscreen', (event) => {
+  eventEmitter.emit("startloader")
 })
 
 export default Designer;
