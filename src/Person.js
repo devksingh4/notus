@@ -20,10 +20,10 @@ class Person {
     }
     generate_aerosols(p, delta_time){
 
-        const x = self.inf / 86400;
+        const x = this.inf / 86400;
         const z = p * delta_time
 
-        if(x == false){
+        if(x === false){
             return 0;
         }
 
@@ -53,7 +53,7 @@ class Person {
             return 0;
         }
         else{
-            throw "somehow Person.inf was negative"
+            throw new Error("somehow Person.inf was negative");
         }
     }
     get x(){
