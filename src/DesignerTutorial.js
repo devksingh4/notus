@@ -16,9 +16,8 @@ export default class DesignerTutorial extends Component {
         <Card.Body>
           <Card.Title>What is Notus?</Card.Title>
           <Card.Text>
-            <i>Insert description here</i>
+            <i>Notus is </i>
           </Card.Text>
-          <Card.Img ></Card.Img>
         </Card.Body>
       </Card>
       <br/>

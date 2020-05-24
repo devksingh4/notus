@@ -12,6 +12,12 @@ code {
     monospace;
 }
 
+.flexrow {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+}
+
 .Designer {
   height: 100vh;
 }
