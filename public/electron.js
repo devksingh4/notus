@@ -28,8 +28,8 @@ function createWindow() {
     shell.openExternal(url);
   });
 
-  eventEmitter.on('robj-display', (probability) => {
-    mainWindow.webContents.send('probInfect',probability)
+  eventEmitter.on('robj-display', (data) => {
+    mainWindow.webContents.send('probInfect',data)
   });
 
   eventEmitter.on('start-loader', () => {
@@ -64,7 +64,7 @@ app.on('activate', () => {
 ipcMain.on('layout-data', async (event, arg) => {
   event.returnValue = "done"
   eventEmitter.emit("start-loader")
-  const robj = await model.process(arg.output);
+  const robj = await model.process(arg);
   eventEmitter.emit("robj-display", robj)
   if (!robj.success) {
     const options  = {

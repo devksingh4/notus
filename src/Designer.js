@@ -29,11 +29,10 @@ const events = require('events');
 const eventEmitter = new events.EventEmitter();
 
 class MyPlanner extends React.Component {
-  state = {
-    loaderActive: false,
-    vizActive: false
+  constructor(props) {
+    super(props);
+    this.state= {loaderActive: false, vizActive: false}
   }
-
 
   componentDidMount() {
     eventEmitter.on("startloader", () => {
@@ -46,6 +45,15 @@ class MyPlanner extends React.Component {
         loaderActive: false,
       })
       eventEmitter.emit("startviz")
+    });
+    eventEmitter.on("probInfect", (metrics) => {
+      if (!metrics.success) {
+        this.setState({
+          loaderActive: false,
+          vizActive: false,
+          data: metrics.data
+        })
+      }
     });
     eventEmitter.on("startviz", () => {
       this.setState({
@@ -117,7 +125,7 @@ function Designer() {
 }
 
 ipcRenderer.on('probInfect', (event, metrics) => {
-  eventEmitter.emit("stoploader", metrics)
+  eventEmitter.emit("probInfect", metrics)
 })
 
 ipcRenderer.on('startloadscreen', (event) => {
