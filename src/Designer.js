@@ -1,11 +1,12 @@
 import React from 'react';
-import Container from 'react-bootstrap/Container'
+import Dimensions from 'react-dimensions'
 import MyCatalog from './catalog/mycatalog';
-import {Map} from 'immutable';
-import {createStore} from 'redux';
-import {Provider} from 'react-redux';
+import { Map } from 'immutable';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.css';
-import { ScreenHeader } from './Header';
+import './index.css'
+import {ScreenHeader} from './Header'
 
 // import {
 //   Models as PlannerModels,
@@ -21,41 +22,54 @@ import {
   Plugins as PlannerPlugins,
 } from 'react-planner-electron';
 
+class MyPlanner extends React.Component {
+
+  render() {
+    return (
+
+      <ReactPlanner
+        width={this.props.containerWidth}
+        height={this.props.containerHeight}
+        catalog={MyCatalog}
+        plugins={plugins}
+        stateExtractor={state => state.get('react-planner-electron')}
+      />
+
+    )
+  }
+}
+
+const EnhancedPlanner = Dimensions({ elementResize: true, className: 'react-dimensions-wrapper', containerStyle: { height: '92vh', padding: 0, border: 0, margin: 0}})(MyPlanner)
+
 //define state
 let AppState = Map({
   'react-planner-electron': new PlannerModels.State()
 });
- 
+
 //define reducer
 let reducer = (state, action) => {
   state = state || AppState;
   state = state.update('react-planner-electron', plannerState => PlannerReducer(plannerState, action));
   return state;
 };
- 
+
 let store = createStore(reducer, null, window.devToolsExtension ? window.devToolsExtension() : f => f);
- 
+
 let plugins = [
   PlannerPlugins.Keyboard(),
   PlannerPlugins.Autosave('react-planner-electron_v0'),
 ];
 function Designer() {
   return (
-    <div className="Designer">
+    <div className="Designer" style={{overflow: 'hidden'}}>
       <ScreenHeader name="Room Designer"></ScreenHeader>
       <Provider store={store}>
-      <Container className='overflow-hidden'>
-      <ReactPlanner
-        catalog={MyCatalog}
-        width={1000}
-        height={1000}
-        plugins={plugins}
-        stateExtractor={state => state.get('react-planner-electron')}
-      />
-      </Container>
-    </Provider>
+        <EnhancedPlanner/>
+      </Provider>
     </div>
   );
 }
+
+
 
 export default Designer;

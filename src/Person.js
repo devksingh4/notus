@@ -1,11 +1,11 @@
 class Person {
-    constructor(nx, ny, ninf, ntargetx, ntargety, nkren, size, age){ // coords are in meters, the kren modifier indicates the level of compliance to anti-plague measures
+    constructor(nx, ny, ninf, ntargetx, ntargety, nkaren, size){ // coords are in meters, the karen modifier indicates the level of stubborness to anti-plague measures
         this.x = nx;
         this.y = ny;
         this.inf = ninf;
         this.targetx = ntargetx;
         this.targety = ntargety;
-        this.kren = nkren;
+        this.karen = nkaren;
         this.size = size;
     }
     infect(p_aerosol, d_aerosol){ // p is probability constant for infection, d is density
@@ -23,7 +23,7 @@ class Person {
         const x = this.inf / 86400;
         const z = p * delta_time
 
-        if(x == false){
+        if(x === false){
             return 0;
         }
 
@@ -53,7 +53,7 @@ class Person {
             return 0;
         }
         else{
-            throw "somehow Person.inf was negative"
+            throw new Error("somehow Person.inf was negative");
         }
     }
     get x(){
@@ -120,7 +120,7 @@ class Population {
         this.pop[index] = npop;
     }
     remove(index){
-        removed = this.pop.splice(index, 1);
+        return this.pop.splice(index, 1);
     }
     tick(dt){
         for(let i = 0; i < this.size(); i++){

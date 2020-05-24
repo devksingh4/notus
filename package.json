@@ -1,8 +1,8 @@
 {
   "name": "notus",
-  "version": "0.2.2",
+  "version": "0.3.1",
   "description": "Modeling the spread of COVID-19 to create various safer room layouts.",
-  "author": "The Notus Team <dev@singhk.dev> (https://github.com/devksingh4/covid-hackathon",
+  "author": "The Notus Team <dev@singhk.dev> (https://github.com/devksingh4/notus)",
   "private": false,
   "homepage": "./",
   "main": "public/electron.js",
@@ -62,6 +62,7 @@
     "react-bootstrap": "^1.0.1",
     "react-bootstrap-range-slider": "^0.3.7",
     "react-dev-utils": "^10.2.1",
+    "react-dimensions": "^1.3.1",
     "react-dom": "^16.13.1",
     "react-icons": "^3.10.0",
     "react-planner-electron": "2.0.11",
@@ -105,7 +106,7 @@
     "pack": "electron-builder --dir",
     "dist": "electron-builder -wl",
     "postinstall": "install-app-deps",
-    "predist": "node scripts/build.js"
+    "predist": "npm run-script build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -113,11 +114,16 @@
   "build": {
     "productName": "Notus",
     "appId": "com.notus",
+    "win": {
+      "icon": "assets/icons/win/icon.ico"
+    },
     "mac": {
-      "category": "Office"
+      "category": "Office",
+      "icon": "assets/icons/mac/icon.icns"
     },
     "linux": {
-      "category": "Office"
+      "category": "Office",
+      "icon": "assets/icons/png/1024x1024.png"
     },
     "files": [
       "build/**/*",
