@@ -214,7 +214,9 @@ class AirGrid {
       let diffVec = glMatrix.vec2.create();
       glMatrix.vec2.sub(diffVec, cSq, cInf);
       let addOn = glMatrix.vec2.create();
-      glMatrix.vec2.mul(addOn, diffVec.normalize(), str / diffVec.sqrDist())
+      let dvNorm = glMatrix.vec2.create();
+      glMatrix.vec2.normalize(dvNorm, diffVec)
+      glMatrix.vec2.mul(addOn, dvNorm, str / diffVec.sqrDist())
       glMatrix.vec2.add(outvec, addOn, outvec);
     }
     for (const [coords, str] of Object.entries(this.outflows)) {
@@ -224,7 +226,9 @@ class AirGrid {
       let diffVec = glMatrix.vec2.create();
       glMatrix.vec2.sub(diffVec, cOuf, cSq);
       let addOn = glMatrix.vec2.create();
-      glMatrix.vec2.mul(addOn, diffVec.normalize(), str / diffVec.sqrDist())
+      let dvNorm = glMatrix.vec2.create();
+      glMatrix.vec2.normalize(dvNorm, diffVec)
+      glMatrix.vec2.mul(addOn, dvNorm, str / diffVec.sqrDist())
       glMatrix.vec2.add(outvec, addOn, outvec);
     }
     this.airflowGrid[row][col] = outvec;
@@ -309,6 +313,12 @@ class AirGrid {
     const yloc = Math.floor(y / this.sideLength);
     const xloc = Math.floor(x / this.sideLength);
     return this.grid[yloc][xloc];
+  }
+
+  getSquareIndsFromCoords(x, y) {
+    const yloc = Math.floor(y / this.sideLength);
+    const xloc = Math.floor(x / this.sideLength);
+    return [yloc, xloc];
   }
 
   getCoordsFromIndices(y, x) {
