@@ -7,9 +7,9 @@ import { MdArrowBack } from 'react-icons/md';
 export class ScreenHeader extends Component {
     render() {
       return (
-        <div style={{ flex: 1, height: '8vh', padding: '1vh', fontSize: '2vh', border: 0, margin: 0, backgroundColor: "#005faf", color: "#ffffff", flexDirection: 'row'}}>
-            
-            <Container><Link to="/"><MdArrowBack style={{color: '#ffffff'}}/></Link><p style={{fontSize: '2.5vh'}}>{this.props.name}</p></Container>
+        <div style={{display: 'flex', flex: 1, height: '6vh', padding: '1vh', fontSize: '2vh', border: 0, margin: 0, backgroundColor: "#005faf", color: "#ffffff", flexDirection: 'row'}}>
+            <div style={{marginRight: 5}}><Link to="/"><MdArrowBack style={{color: '#ffffff'}}/></Link></div>
+            <p style={{fontSize: '2.5vh'}}>{this.props.name}</p>
         </div>
       );
     }
