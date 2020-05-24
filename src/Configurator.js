@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Container from 'react-bootstrap/Container'
+import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import 'bootstrap/dist/css/bootstrap.css';
@@ -28,10 +29,10 @@ export default class Configurator extends Component {
   }
   render() {
     return (
-      <div className="Configurator">
+      <div className="Configurator" style={{ backgroundColor: "#28292d", height: "100vh"}}>
       <ScreenHeader name="Configurator"></ScreenHeader>
       <Container>
-        <br/>
+        <Card style={{padding: 20, margin: 20}}>
         <Form>
         <Form.Group>
           <Form.Label>Number of employees</Form.Label>
@@ -60,15 +61,15 @@ export default class Configurator extends Component {
           <Form.Control id="v_cough" type="number" value={this.state.v_cough} onChange={this.handleChange} placeholder={this.state.v_cough} />
         </Form.Group>
         <br/>
-        <Button variant="primary" onClick={this.applyChanges}>
+        <Button style={{backgroundColor: "#005faf", border: 0}} onClick={this.applyChanges}>
           Save
         </Button>    
         <span>     </span>    
-        <Button variant="danger" onClick={this.setDefaults}>
+        <Button style={{backgroundColor: "#af0000", border: 0}} onClick={this.setDefaults}>
           Reset to Defaults
         </Button>
       </Form>
-      <br/><br/>
+      </Card>
     </Container>
     </div>
   );
