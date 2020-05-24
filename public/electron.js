@@ -2,6 +2,8 @@ const {app, shell, BrowserWindow, dialog, ipcMain, session } = require('electron
 const model = require('../src/model.js');
 const path = require('path');
 const isDev = require('electron-is-dev');
+const events = require('events');
+const eventEmitter = new events.EventEmitter();
 
 let mainWindow;
 
@@ -22,6 +24,10 @@ function createWindow() {
   mainWindow.webContents.on("new-window", function(event, url) {
     event.preventDefault();
     shell.openExternal(url);
+  });
+
+  eventEmitter.on('robj-display', (probability) => {
+    mainWindow.webContents.send('probInfect',probability)
   });
 }
 
@@ -58,5 +64,6 @@ ipcMain.on('layout-data', async (event, arg) => {
      }
      await dialog.showMessageBox(mainWindow, options, () => {})
   }
+  eventEmitter.emit("robj-display", robj)
   event.returnValue = "done"
 });
