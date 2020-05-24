@@ -39,7 +39,7 @@ class MyPlanner extends React.Component {
   }
 }
 
-const EnhancedPlanner = Dimensions({ elementResize: true, className: 'react-dimensions-wrapper', containerStyle: { height: '92vh', padding: 0, border: 0, margin: 0}})(MyPlanner)
+const EnhancedPlanner = Dimensions({ elementResize: true, className: 'react-dimensions-wrapper', containerStyle: { height: '94vh', padding: 0, border: 0, margin: 0}})(MyPlanner)
 
 //define state
 let AppState = Map({
