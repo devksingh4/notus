@@ -51,10 +51,10 @@ const calc = (x1, y1, x2, y2, mx, my, r) => {
 
 function sim(config, pop_size){
     let grid = populate(width, height, sideLength, dispersalConst, wr);
-    var population = [];
+    let population = [];
 
-    delta_t = total_t / iters
-    for(i = 0; i < iters; i++){
+    const delta_t = total_t / iters
+    for(let i = 0; i < iters; i++){
         AirGrid.tick(delta_t);
         
     }
