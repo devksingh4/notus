@@ -4344,6 +4344,11 @@ electron@^8.2.5:
     "@types/node" "^12.0.12"
     extract-zip "^1.0.3"
 
+element-resize-event@^2.0.4:
+  version "2.0.9"
+  resolved "https://registry.yarnpkg.com/element-resize-event/-/element-resize-event-2.0.9.tgz#2f5e1581a296eb5275210c141bc56342e218f876"
+  integrity sha1-L14VgaKW61J1IQwUG8VjQuIY+HY=
+
 elliptic@^6.0.0, elliptic@^6.5.2:
   version "6.5.2"
   resolved "https://registry.yarnpkg.com/elliptic/-/elliptic-6.5.2.tgz#05c5678d7173c049d8ca433552224a495d0e3762"
@@ -9840,6 +9845,13 @@ react-dev-utils@^10.2.1:
     strip-ansi "6.0.0"
     text-table "0.2.0"
 
+react-dimensions@^1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/react-dimensions/-/react-dimensions-1.3.1.tgz#89c29bcd48828a74faeb07da1e461e1a354ccc48"
+  integrity sha512-go5vMuGUxaB5PiTSIk+ZfAxLbHwcIgIfLhkBZ2SIMQjaCgnpttxa30z5ijEzfDjeOCTGRpxvkzcmE4Vt4Ppvyw==
+  dependencies:
+    element-resize-event "^2.0.4"
+
 react-dom@^16.13.1:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.13.1.tgz#c1bd37331a0486c078ee54c4740720993b2e0e7f"
@@ -9891,10 +9903,10 @@ react-overlays@^3.1.2:
     uncontrollable "^7.0.0"
     warning "^4.0.3"
 
-react-planner-electron@2.0.11:
-  version "2.0.11"
-  resolved "https://registry.yarnpkg.com/react-planner-electron/-/react-planner-electron-2.0.11.tgz#fd7967ce5cf1da7b0a493fa271607f5a10f79fa7"
-  integrity sha512-vSytitbfHjnErnusi0UXU7m2Bbsw/zZiAEaTiqz9uAudBKB/qT4bb6u6T+QzbtVn8VYOZadrkfX7EkMBL+8r8A==
+react-planner-electron@2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/react-planner-electron/-/react-planner-electron-2.1.1.tgz#16405e97f20891bb7c704a4fd912e36711c30d32"
+  integrity sha512-Wj+QUYnXr6LDLbk8KSMeMs9K333YIvSAJAeH8N9sqN3yeyLBz2ZFjs7P1OsDcXQbNBDMIHumxinGWxvhDCMGlw==
   dependencies:
     "@mapbox/react-range" "0.0.7"
     area-polygon "1.0.1"
