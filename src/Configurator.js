@@ -28,13 +28,14 @@ export default class Configurator extends Component {
     return true;
   }
   render() {
+    const whiteText = {color: 'white'};
     return (
       <div className="Configurator">
       <ScreenHeader name="Configurator"></ScreenHeader>
       <Container>
-        <Card style={{padding: 20, margin: 20}}>
+        <Card style={{padding: 20, margin: 20, backgroundColor: '#28292d'}}>
         <Form>
-        <Form.Group>
+        <Form.Group style={whiteText}>
           <Form.Label>Number of employees</Form.Label>
           <Form.Control id="n_employees" type="number" min="0" value={this.state.n_employees} onChange={this.handleChange} placeholder={this.state.n_employees} />
           <Form.Label>Percent of employees infected</Form.Label>
@@ -44,9 +45,9 @@ export default class Configurator extends Component {
           <Form.Label>Social Distance (employees should stay this many feet away from each other)</Form.Label>
           <Form.Control id="percent_noncompliant" type="number" min="0" max="100" value={this.state.social_distance} onChange={this.handleChange} placeholder={this.state.social_distance} />
         </Form.Group>
-        <hr/>
-        <i>The following options set advanced features of the model and will not change often.</i> <br/>
-        <Form.Group>
+        <hr style={{borderColor: 'white'}}/>
+        <i style={whiteText}>The following options set advanced features of the model and will not change often.</i> <br/>
+        <Form.Group style={whiteText}>
           <Form.Label>Probability of Infection (1e-4)</Form.Label>
           <Form.Control id="p_infect" type="number" value={this.state.p_infect} onChange={this.handleChange} placeholder={this.state.p_infect} />
           <Form.Label>Coefficent of particle wind resistance</Form.Label>
