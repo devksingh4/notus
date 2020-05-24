@@ -53,6 +53,8 @@ class MyPlanner extends React.Component {
           vizActive: false,
           data: metrics.data
         })
+      } else {
+        eventEmitter.emit("stoploader");
       }
     });
     eventEmitter.on("startviz", () => {
