@@ -6,7 +6,7 @@ import './index.css'
 
 function Home() {
   return (
-    <div className="Home" style={{ backgroundColor: "#28292d", height: "100vh"}}>
+    <div className="Home">
       <Jumbotron fluid style={{ backgroundColor: "#005faf" }}>
         <Container>
           <h1 style={{ color: '#ffffff' }}>Notus</h1>

@@ -29,7 +29,7 @@ export default class Configurator extends Component {
   }
   render() {
     return (
-      <div className="Configurator" style={{ backgroundColor: "#28292d", height: "100vh"}}>
+      <div className="Configurator">
       <ScreenHeader name="Configurator"></ScreenHeader>
       <Container>
         <Card style={{padding: 20, margin: 20}}>
