@@ -5,10 +5,10 @@ import Container from 'react-bootstrap/Container'
 function Home() {
   return (
     <div className="Home">
-      <Jumbotron fluid>
+      <Jumbotron fluid style={{backgroundColor: "#005faf"}}>
         <Container>
-          <h1>Notus</h1>
-          <p>Modeling the spread of COVID-19 in various room layouts</p>
+          <h1 style={{color: '#ffffff'}}>Notus</h1>
+          <p style={{color: '#ffffff'}}>Modeling the spread of COVID-19 in various room layouts</p>
         </Container>
       </Jumbotron>
       <Bricks props={[{name: "Designer"}, {name: "Configurator"}]}/>
