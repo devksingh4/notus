@@ -45,7 +45,7 @@ export default class Configurator extends Component {
           <Form.Control id="percent_noncompliant" type="number" min="0" max="100" value={this.state.social_distance} onChange={this.handleChange} placeholder={this.state.social_distance} />
         </Form.Group>
         <hr/>
-        <i>The following options set advanced features of the model and will not change often.</i> <br/><br/>
+        <i>The following options set advanced features of the model and will not change often.</i> <br/>
         <Form.Group>
           <Form.Label>Probability of Infection (1e-4)</Form.Label>
           <Form.Control id="p_infect" type="number" value={this.state.p_infect} onChange={this.handleChange} placeholder={this.state.p_infect} />
