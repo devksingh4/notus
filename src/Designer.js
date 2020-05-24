@@ -30,23 +30,18 @@ class MyPlanner extends React.Component {
   state = {
     loaderActive: false
   }
-  
-  componentWillMount() {console.log("componentWillMount")}
 
   componentDidMount() {
     eventEmitter.on("startloader", () => {
       this.setState({
         loaderActive: true
       })
-      console.log("starting..." + this.state.loaderActive)
     });
     eventEmitter.on("stoploader", () => {
       this.setState({
         loaderActive: false
       })
-      console.log("stopping..." + this.state.loaderActive)
     });
-    console.log("componentDidMount")
   }
 
   render() {
