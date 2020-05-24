@@ -41,7 +41,6 @@ export default class Configurator extends Component {
     if (e.target.value === "" && !this.state.submitted) {
       this.asyncAlert("No values can be empty.")
       this.setState({[e.target.id]: this.default[e.target.id]})
-      console.log(e.target.id)
       return false; 
     }
     if (parseInt(e.target.min, 10) > parseInt(e.target.value, 10) || parseInt(e.target.max, 10) < parseInt(e.target.value, 10)) {

@@ -33,7 +33,6 @@ function createWindow() {
   });
 
   eventEmitter.on('start-loader', () => {
-    console.log("deet")
     mainWindow.webContents.send('startloadscreen')
   });
 }
