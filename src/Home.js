@@ -14,7 +14,7 @@ function Home() {
         </Container>
       </Jumbotron>
       <Container>
-        <Bricks props={[{ name: "Designer" }, { name: "Configurator" }]} />
+        <Bricks props={[{ name: "Designer", description: "Enter the room designer" }, { name: "Configurator", description: "Set the number of employees, social distance, and other aspects of the model"}, { name: "DesignerTutorial", description: "Learn how to use the room designer" }]} />
       </Container>
     </div>
   );
