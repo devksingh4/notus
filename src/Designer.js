@@ -9,6 +9,7 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button'
 import './index.css'
 import { ScreenHeader } from './Header'
+import ListGroup from 'react-bootstrap/ListGroup'
 
 // import {
 //   Models as PlannerModels,
@@ -51,9 +52,9 @@ class MyPlanner extends React.Component {
         this.setState({
           loaderActive: false,
           vizActive: false,
-          data: metrics.data
         })
       } else {
+        this.setState({simData: metrics.data})
         eventEmitter.emit("stoploader");
       }
     });
@@ -86,7 +87,13 @@ class MyPlanner extends React.Component {
         {this.state.loaderActive ? <div className="loader"><div><div className="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><p className="loaderText">Modeling</p></div></div> : null}
         {this.state.vizActive ? <div className="vizview">
           <Card className="vizcard">
-            <h3>Vizview Boilerplate</h3>
+            <Card.Header as="h3">Results</Card.Header>
+            <Card.Body>
+              <ListGroup variant="flush">
+                <ListGroup.Item>Employee Probability of Infection: {this.state.simData.prob}</ListGroup.Item>
+                <ListGroup.Item>Some other data here...</ListGroup.Item>
+              </ListGroup>
+            </Card.Body>
             <Button onClick={this.closeViz} style={{backgroundColor: "#005faf", border: 0}}>Close</Button>
           </Card>
         </div> : null}
