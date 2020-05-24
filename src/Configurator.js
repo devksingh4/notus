@@ -12,13 +12,10 @@ export default class Configurator extends Component {
     return true; 
   }
   setDefaults = () => {
-    this.setState({n_employees: 20, percent_infected: 5, percent_noncompliant: 5, social_distance: 6, p_infect: 0.0001, cowr: .47, dispersal: .1, half_life: 360, n_cough: 1000, v_cough: 1})
+    this.setState({n_employees: 20, percent_infected: 5, percent_noncompliant: 5, social_distance: 6, p_infect: 1, cowr: .47, dispersal: .1, half_life: 360, n_cough: 1000, v_cough: 1})
     return true;
   }
   handleChange = (e) => {
-    if (e.target.id === "p_infect") {
-      e.target.value/=1e-4
-    }
     this.setState({[e.target.id]: e.target.value})
     return true;
   }
@@ -50,7 +47,7 @@ export default class Configurator extends Component {
         <i>The following options set advanced features of the model and will not change often.</i> <br/><br/>
         <Form.Group>
           <Form.Label>Probability of Infection (1e-4)</Form.Label>
-          <Form.Control id="p_infect" type="number" value={this.state.p_infect * 1e4} onChange={this.handleChange} placeholder={this.state.p_infect * 1e4} />
+          <Form.Control id="p_infect" type="number" value={this.state.p_infect} onChange={this.handleChange} placeholder={this.state.p_infect} />
           <Form.Label>Coefficent of particle wind resistance</Form.Label>
           <Form.Control id="cowr" type="number" value={this.state.cowr} onChange={this.handleChange} placeholder={this.state.cowr} />
           <Form.Label>Replusion of SARS-CoV-2 particles from each other</Form.Label>
