@@ -22,6 +22,8 @@ import {
   Plugins as PlannerPlugins,
 } from 'react-planner-electron';
 
+const {ipcRenderer} = window.require('electron')
+
 class MyPlanner extends React.Component {
 
   render() {
@@ -70,6 +72,8 @@ function Designer() {
   );
 }
 
-
+ipcRenderer.on('probInfect', (event, probability) => {
+  alert(probability)
+})
 
 export default Designer;
