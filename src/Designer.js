@@ -59,7 +59,7 @@ class MyPlanner extends React.Component {
           plugins={plugins}
           stateExtractor={state => state.get('react-planner-electron')}
         />
-        {this.state.loaderActive ? <div className="loader"></div> : null}
+        {this.state.loaderActive ? <div className="loader"><div><div className="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><p className="loaderText">Modeling</p></div></div> : null}
       </div>
     )
   }
@@ -98,7 +98,6 @@ function Designer() {
 
 ipcRenderer.on('probInfect', (event, probability) => {
   eventEmitter.emit("stoploader")
-  //alert(probability)
 })
 
 ipcRenderer.on('startloadscreen', (event) => {
