@@ -16,9 +16,14 @@ function getModelConfig() {
 module.exports.process = async (data) => {
   const modelConfig = getModelConfig(); // n_employees, percent_infected, etc.
   let ag = airGridFromJSON(data, modelConfig, 1);
-  const fsLibrary  = require('fs')
-  let df = "Hello world."
-  fsLibrary.writeFile('newfile.txt', df)
+  const fs = require('fs');
+
+fs.writeFile("C:/users/jlevi/test.txt", "Hey there!", function(err) {
+    if(err) {
+        return console.log(err);
+    }
+    console.log("The file was saved!");
+});
   let pf = new PathFinder(navgationGridFromJSON(data, .1));
   let artsp = []
   let artforgotinf = []
