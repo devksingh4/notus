@@ -198,7 +198,7 @@ class Population {
   get_num_sick() {
     var temp = 0;
     var total = 0;
-    for (let p in this.pop) {
+    for (p in this.pop) {
       if (p.inf > 0) {
         temp++;
       }
