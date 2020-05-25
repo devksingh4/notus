@@ -137,7 +137,8 @@
       "build/**/*",
       "node_modules/**/*",
       "src/**/*",
-      "public/**/*"
+      "public/**/*",
+      "model-config.json"
     ],
     "directories": {
       "buildResources": "assets"
