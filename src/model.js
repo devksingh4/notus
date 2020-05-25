@@ -12,7 +12,7 @@ function getModelConfig() {
     return JSON.parse(fs.readFileSync("model-config.json"));
 }
 module.exports.process = async (data) => {
-    const modelConfig = getModelConfig(); // n_employees, percent_infected, etc. 
+    const modelConfig = getModelConfig(); // n_employees, percent_infected, etc.
     sleep(1) // Temoorary intense calculation boilerplate TODO REMOVE!!!
     return {success:true, data: {prob: 1, nearPasses: 0.05}};
 };

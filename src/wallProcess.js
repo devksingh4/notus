@@ -1,6 +1,7 @@
 const AirGrid = require('./AirGrid.js').AirGrid;
 const PF = require("./pathfinding.js");
 const glMatrix = require("gl-matrix");
+const polyArea = require("area-polygon")
 
 function airGridFromJSON(data, config, sideLength) {
   console.assert(data.output.unit === "cm", "unsupported unit");
@@ -67,8 +68,71 @@ function airGridFromJSON(data, config, sideLength) {
         const xl = corner0r[1] < corner1r[1] ? corner1r[0] : corner0r[0];
         l1yOvers[i] = [wgt * xs + (1 - wgt) * xl, i];
       }
-      for (var k in Object.keys(l0xOvers)) {
-        // TODO: work on walls
+      // TODO: actually use a real box-clip algo
+      for (var x = 0; x < Math.ceil(width / sideLength); x++) {
+        for (var y = 0; y < Math.ceil(width / sideLength); y++) {
+          try {
+            let wallpoints = []
+            let locc = 0;
+            let locp = [];
+            let rocc = 0;
+            let rocp = [];
+            let tocc = 0;
+            let tocp = [];
+            let bocc = 0;
+            let bocp = [];
+            if (x * sideLength in Object.keys(l0xOvers) && l0xOvers[x * sideLength][1] >= y * sideLength && l0xOvers[x * sideLength][1] <= (y + 1) * sideLength) {
+              wallpoints.push(l0xOvers[x * sideLength])
+              locp.push(l0xOvers[x * sideLength][1])
+            }
+            if (x * sideLength in Object.keys(l1xOvers) && l0xOvers[x * sideLength][1] >= y * sideLength && l1xOvers[x * sideLength][1] <= (y + 1) * sideLength) {
+              wallpoints.push(l1xOvers[x * sideLength])
+              locp.push(l1xOvers[x * sideLength][1])
+            }
+            if (y * sideLength in Object.keys(l1yOvers) && l1yOvers[y * sideLength][0] >= x * sideLength && l1yOvers[y * sideLength][0] <= (x + 1) * sideLength) {
+              wallpoints.push(l1yOvers[y * sideLength])
+              bocp.push(l1yOvers[y * sideLength][0])
+            }
+            if (y * sideLength in Object.keys(l0yOvers) && l0yOvers[y * sideLength][0] >= x * sideLength && l0yOvers[y * sideLength][0] <= (x + 1) * sideLength) {
+              wallpoints.push(l0yOvers[y * sideLength])
+              bocp.push(l0yOvers[y * sideLength][0])
+            }
+            if ((x + 1) * sideLength in Object.keys(l1xOvers) && l1xOvers[(x + 1) * sideLength][1] >= y * sideLength && l1xOvers[(x + 1) * sideLength][1] <= (y + 1) * sideLength) {
+              wallpoints.push(l1xOvers[(x + 1) * sideLength])
+              rocp.push(l1xOvers[(x + 1) * sideLength][1])
+            }
+            if ((x + 1) * sideLength in Object.keys(l0xOvers) && l0xOvers[(x + 1) * sideLength][1] >= y * sideLength && l0xOvers[(x + 1) * sideLength][1] <= (y + 1) * sideLength) {
+              wallpoints.push(l0xOvers[(x + 1) * sideLength])
+              rocp.push(l0xOvers[(x + 1) * sideLength][1])
+            }
+            if ((y + 1) * sideLength in Object.keys(l0yOvers) && l0yOvers[(y + 1) * sideLength][0] >= x * sideLength && l1yOvers[(y + 1) * sideLength][0] <= (x + 1) * sideLength) {
+              wallpoints.push(l1yOvers[(y + 1) * sideLength])
+              tocp.push(l1yOvers[(y + 1) * sideLength][0])
+            }
+            if ((y + 1) * sideLength in Object.keys(l0yOvers) && l0yOvers[(y + 1) * sideLength][0] >= x * sideLength && l0yOvers[(y + 1) * sideLength][0] <= (x + 1) * sideLength) {
+              wallpoints.push(l0yOvers[(y + 1) * sideLength])
+              tocp.push(l0yOvers[(y + 1) * sideLength][0])
+            }
+            if (polyArea(wallpoints) !== 0) {
+              const occa = polyArea(wallpoints);
+              if (locp.length == 2) {
+                locc = Math.abs(locp[1] - locp[0]) / sideLength;
+              }
+              if (rocp.length == 2) {
+                rocc = Math.abs(locp[1] - locp[0]) / sideLength;
+              }
+              if (tocp.length == 2) {
+                tocc = Math.abs(locp[1] - locp[0]) / sideLength;
+              }
+              if (bocp.length == 2) {
+                bocc = Math.abs(locp[1] - locp[0]) / sideLength;
+              }
+              ag.occlude(y, x, tocc, bocc, rocc, locc, occa);
+            }
+          } catch (e) {
+
+          }
+        }
       }
     }
   }
@@ -82,6 +146,7 @@ function airGridFromJSON(data, config, sideLength) {
     const place = ag.getSquareIndsFromCoords(item.x, item.y)
     ag.addOutflow(place[0], place[1], 1000) //third param may need to be changed
   }
+  return ag;
 }
 
 function navgationGridFromJSON(data, sideLength) {
@@ -210,5 +275,5 @@ function navgationGridFromJSON(data, sideLength) {
   }
   return grid
 }
-  module.exports.airGridFromJSON = airGridFromJSON;
-  module.exports.navgationGridFromJSON = navgationGridFromJSON;
+module.exports.airGridFromJSON = airGridFromJSON;
+module.exports.navgationGridFromJSON = navgationGridFromJSON;

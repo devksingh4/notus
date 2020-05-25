@@ -42,6 +42,9 @@ class Person {
             this.airGrid.coughAt(this.x, this.y, 200, directionFacing)
           }
         }
+        if (this.inf !== 0) {
+          this.inf += delta_time;
+        }
         let newVec;
         let cp;
         let step = glMatrix.vec2.create();
@@ -56,7 +59,7 @@ class Person {
             newVec = glMatrix.vec2.fromValues(this.targetx, this.targety);
             cp = glMatrix.vec2.fromValues(this.x, this.y);
             glMatrix.vec2.sub(step, newVec, cp);
-            
+
           }
         }else{
           newVec = glMatrix.vec2.fromValues(this.targetx, this.targety);
