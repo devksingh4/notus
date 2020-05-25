@@ -13,8 +13,7 @@ module.exports.process = async (data) => {
   const fs = require('fs');
   const modelConfig = getModelConfig(); // n_employees, percent_infected, etc.
   let ag = airGridFromJSON(data, modelConfig, 1);
-
-  let pf = new PathFinder(navgationGridFromJSON(data, .1));
+  let pf = new PathFinder(modelConfig, navgationGridFromJSON(data, .1), .1);
   let artsp = []
   let artforgotinf = []
   let arttp = []
