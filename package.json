@@ -1,6 +1,6 @@
 {
   "name": "notus",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Modeling the spread of COVID-19 to create various safer room layouts.",
   "author": "The Notus Team <dev@singhk.dev> (https://github.com/devksingh4/notus)",
   "private": false,

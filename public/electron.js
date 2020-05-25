@@ -15,13 +15,12 @@ function createWindow() {
     minWidth: 800, 
     minHeight: 600
   }});
-  mainWindow.removeMenu()
   if (isDev) {
     mainWindow.loadURL('http://localhost:3000')
-    mainWindow.autoHideMenuBar = false;
+    mainWindow.autoHideMenuBar = true;
   } else {
     mainWindow.loadFile(path.join(__dirname, '../build/index.html'))
-    mainWindow.autoHideMenuBar = true;
+    mainWindow.removeMenu()
   }
   mainWindow.on('closed', () => mainWindow = null);
   mainWindow.webContents.on("new-window", function(event, url) {
