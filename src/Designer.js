@@ -38,7 +38,7 @@ class MyPlanner extends React.Component {
       vizActive: false, 
       etaActive: false,
       iterTime: 1000, //ms
-      iterAmt: 10,
+      iterAmt: 5,
       simData: {overallScore: 0, nearPasses: 0.05}
     }
   }
@@ -79,6 +79,12 @@ class MyPlanner extends React.Component {
       })
     });
     eventEmitter.on("timeTake", (time) => {
+      this.setState({
+        iterTime: time,
+      })
+      eventEmitter.emit("starteta");
+    });
+    eventEmitter.on("starteta", (time) => {
       this.setState({
         etaActive: true,
       })
@@ -126,7 +132,7 @@ class MyPlanner extends React.Component {
               <p>Modeling (this may take some time)</p>
             </div>
             {this.state.etaActive ? <div className="loaderText">
-              <p>{this.state.iterTime} ms, {this.state.iterAmt} count</p>
+              <p>ETA count</p>
             </div> : null}
           </div>
         </div> : null}
