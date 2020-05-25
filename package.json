@@ -140,6 +140,9 @@
       "public/**/*",
       "model-config.json"
     ],
+    "extraFiles": [
+      "model-config.json"
+    ],
     "directories": {
       "buildResources": "assets"
     }
