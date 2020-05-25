@@ -335,7 +335,7 @@ class AirGrid {
       try {
         this.grid[row][col - 1].cough(upd[i][3], this.grid[row][col].getVelocity());
       } catch (e) {}
-      this.grid()[row][col].removeParticles(upd[i][3] + upd[i][2] + upd[i][1] + upd[i][0])
+      this.grid[row][col].removeParticles(upd[i][3] + upd[i][2] + upd[i][1] + upd[i][0])
     }
   }
 
