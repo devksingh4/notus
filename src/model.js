@@ -60,11 +60,12 @@ module.exports.process = async (data) => {
   const dummy = false;
   let rval;
   if (dummy){
+    const pb = Math.random()*.3;
     rval = {
       success: true,
       data: {
-        prob: Math.random(),
-        nearPasses: Math.random(),
+        prob: Math.random()*.3,
+        nearPasses: pb*1.3 + Math.random()*.05,
         airflow: Math.random()
     }
   }
