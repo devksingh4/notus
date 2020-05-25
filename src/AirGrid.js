@@ -55,7 +55,7 @@ class Square {
     let normVel;
     glMatrix.vec2.normalize(normVel, glMatrix.vec2.clone(this.coronaVel));
     let wrVec = glMatrix.Vec2.create();
-    glMatrix.vec2.mul(wrVec, normVel, this.coronaVel.sqrDist() * wrConst * dt);
+    glMatrix.vec2.mul(wrVec, normVel, glMatrix.vec2.sqrLen(this.coronaVel) * wrConst * dt);
     glMatrix.vec2.sub(this.coronaVel, this.coronaVel, wrVec);
     let distAirForce;
     //f=ma, a = dv/dt
@@ -220,7 +220,7 @@ class AirGrid {
       let addOn = glMatrix.vec2.create();
       let dvNorm = glMatrix.vec2.create();
       glMatrix.vec2.normalize(dvNorm, diffVec)
-      glMatrix.vec2.mul(addOn, dvNorm, str / diffVec.sqrDist())
+      glMatrix.vec2.mul(addOn, dvNorm, str / glMatrix.vec2.sqrLen(diffVec))
       glMatrix.vec2.add(outvec, addOn, outvec);
     }
     for (const [coords, str] of Object.entries(this.outflows)) {
@@ -232,7 +232,7 @@ class AirGrid {
       let addOn = glMatrix.vec2.create();
       let dvNorm = glMatrix.vec2.create();
       glMatrix.vec2.normalize(dvNorm, diffVec)
-      glMatrix.vec2.mul(addOn, dvNorm, str / diffVec.sqrDist())
+      glMatrix.vec2.mul(addOn, dvNorm, str / glMatrix.vec2.sqrLen(diffVec))
       glMatrix.vec2.add(outvec, addOn, outvec);
     }
     this.airflowGrid[row][col] = outvec;

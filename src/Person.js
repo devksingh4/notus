@@ -1,7 +1,7 @@
 const AirGrid = require('./AirGrid.js').AirGrid;
 const glMatrix = require('gl-matrix')
 class Person {
-    constructor(nx, ny, ninf, ntargetx, ntargety, nnon_compliant, size, grid){ // coords are in meters, the non_compliant modifier indicates the level of stubborness to anti-plague measures
+    constructor(nx, ny, ninf, ntargetx, ntargety, nnon_compliant, size, airgrid, naviGrid){ // coords are in meters, the non_compliant modifier indicates the level of stubborness to anti-plague measures
         this.x = nx;
         this.y = ny;
         this.inf = ninf;
@@ -9,11 +9,18 @@ class Person {
         this.targety = ntargety;
         this.non_compliant = nnon_compliant;
         this.size = size;
-        this.grid = grid;
+        this.airGrid = airgrid;
+        this.naviGrid = naviGrid;
+        this.directions = naviGrid.navigateTo(this.x, this.y, this.targetx, this.targety);
+        this.maxspeed = 1
+        this.directions.pop();
+        this.current_hold = null;
+
     }
     infect(p_aerosol, d_aerosol){ // p is probability constant for infection, d is density
         var check = Math.random();
-        var chance = (1-p_aerosol)**(this.size * d_aerosol)
+        let spread_const = this.non_compliant ? .3 : .1;
+        var chance = (1-p_aerosol)**(this.size * d_aerosol* spread_const)
         if(check > chance && this.inf === false){
             this.inf = 0
         }
@@ -29,15 +36,50 @@ class Person {
           glMatrix.vec2.sub(directionFacing, tpos, cpos);
           glMatrix.vec2.normalize(directionFacing,directionFacing);
           if (this.non_compliant){
-            this.grid.coughAt(this.x,this.y, 2000, directionFacing)
+            this.airGrid.coughAt(this.x,this.y, 2000, directionFacing)
           }else {
             glMatrix.vec2.mul(directionFacing, .2)
-            this.grid.coughAt(this.x, this.y, 200, directionFacing)
+            this.airGrid.coughAt(this.x, this.y, 200, directionFacing)
           }
         }
-        
-
+        let newVec;
+        let cp;
+        let step = glMatrix.vec2.create();
+        if(this.isWithinErrorOfTarget(.01)){
+          if (this.directions != []){
+            const newCoords = this.directions.pop();
+            newVec = glMatrix.vec2.fromValues(newCoords[0], newCoords[1]);
+            cp = glMatrix.vec2.fromValues(this.x, this.y);
+            glMatrix.vec2.sub(step, newVec, cp);
+          }
+          else{
+            newVec = glMatrix.vec2.fromValues(this.targetx, this.targety);
+            cp = glMatrix.vec2.fromValues(this.x, this.y);
+            glMatrix.vec2.sub(step, newVec, cp);
+            
+          }
+        }else{
+          newVec = glMatrix.vec2.fromValues(this.targetx, this.targety);
+          cp = glMatrix.vec2.fromValues(this.x, this.y);
+          glMatrix.vec2.sub(step, newVec, cp);
+        }
+        if (glMatrix.vec2.sqrLen(step) < this.maxspeed*this.maxspeed*delta_time) {
+          this.x = this.targetx;
+          this.y = this.targety;
+        }else{
+          glMatrix.vec2.normalize(step,step);
+          glMatrix.vec2.mul(step, this.maxspeed*delta_time);
+          let newpos = glMatrix.vec2.create();
+          glMatrix.vec2.add(newpos, step, cp);
+          this.x = newpos[0];
+          this.y = newpos[1];
+        }
     }
+
+    isWithinErrorOfTarget(eps){
+      return Math.abs(this.x-this.targetx) < eps && Math.abs(this.y-this.targety) < eps
+    }
+
     generate_aerosols(p, delta_time){
 
         const x = this.inf / 86400;
@@ -124,10 +166,10 @@ class Person {
 }
 
 class Population {
-    constructor(pop_size, starting_pos, starting_tar, starting_non_compliant, starting_size, grid){
+    constructor(pop_size, starting_pos, starting_tar, starting_non_compliant, starting_size, airGrid, naviGrid){
         this.pop = [];
         for(let i = 0; i < pop_size; i++){
-            this.pop.push(new Person(starting_pos[i][0], starting_pos[i][1], starting_tar[i][0], starting_tar[i][1], starting_non_compliant[i], starting_size[i], grid));
+            this.pop.push(new Person(starting_pos[i][0], starting_pos[i][1], starting_tar[i][0], starting_tar[i][1], starting_non_compliant[i], starting_size[i], airGrid, naviGrid));
         }
     }
     get size(){
