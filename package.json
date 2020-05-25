@@ -107,8 +107,10 @@
     "react-start": "node scripts/start.js",
     "pack": "electron-builder --dir",
     "dist": "electron-builder -wl",
+    "dist-mac": "electron-builder -m",
     "postinstall": "install-app-deps",
-    "predist": "npm run-script build"
+    "predist": "npm run-script build",
+    "predist-mac": "npm run-script build"
   },
   "eslintConfig": {
     "extends": "react-app"
