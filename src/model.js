@@ -1,6 +1,5 @@
 const Population = require('./Person.js').Population;
 const AirGrid = require('./AirGrid.js').AirGrid;
-
 // TODO REMOVE WHEN THERE IS HEFT TO process()!!!
 function sleep(seconds) 
 {
@@ -14,7 +13,7 @@ module.exports.process = async (data) => {
     // let p = new Person(2, 3, 4,5,6,7,8);
     // console.log(p.toString());
     sleep(1) // Temoorary intense calculation boilerplate TODO REMOVE!!!
-    return {success:true, data: {prob: 1, overallScore: 60}};
+    return {success:true, data: {prob: 1, nearPasses: 0.05}};
 };
 function sA(r, x, y){
     var a;

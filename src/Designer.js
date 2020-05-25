@@ -33,7 +33,7 @@ const eventEmitter = new events.EventEmitter();
 class MyPlanner extends React.Component {
   constructor(props) {
     super(props);
-    this.state= {loaderActive: false, vizActive: false, simData: {overallScore: 0}}
+    this.state= {loaderActive: false, vizActive: false, simData: {overallScore: 0, nearPasses: 0.05}}
   }
 
   componentDidMount() {
@@ -76,23 +76,23 @@ class MyPlanner extends React.Component {
   }
 
   render() {
-    let emojiScore;
-    let message;
     let emojiProb;
-    if (this.state.simData.overallScore <= 100 && this.state.simData.overallScore > 70) {
-      emojiScore = <Emoji size={128} text=":smile:" style={{color: "#20CC82", fontSize: "3em"}}/>
-      message = <i>Your office layout does a good job of suppressing the spread of COVID-19!</i>
-    } else if (this.state.simData.overallScore <= 70 && this.state.simData.overallScore > 50) {
-      emojiScore = <Emoji size={128} style={{color: "#ff6700", fontSize: "3em"}} text=":neutral_face:"/>
-      message = <i>While your office layout does an acceptable job of suppressing the spread of COVID-19, improvements could be made.</i>
-    } else {
-      emojiScore = <Emoji size={128} style={{color: "#ff0000", fontSize: "3em"}} text=":frowning:"/>
-      message = <i>Your office layout does not do a good job of suppressing the spread of COVID-19. Improvements must be made.</i>
-    }
-    if (this.state.simData.prob <= 1 && this.state.simData.prob > 0.20) {
+    let messageProb;
+    let emojiNearPasses;
+    let messageNearPasses;
+    if (this.state.simData.prob <= 1 && this.state.simData.prob > 0.01) {
       emojiProb = <Emoji size={128} text=":frowning:" style={{color: "#ff0000", fontSize: "3em"}}/>
+      messageProb = <i>Employees have a high probability of contracting COVID-19 in this arrangement.</i>
     } else {
       emojiProb = <Emoji size={128} text=":smile:" style={{color: "#20CC82", fontSize: "3em"}}/>
+      messageProb = <div><i>Employees have a low probability of contracting COVID-19 in this arrangement.</i></div>
+    }
+    if (this.state.simData.nearPasses <= 0.05) {
+      emojiNearPasses = <Emoji size={128} text=":smile:" style={{color: "#20CC82", fontSize: "3em"}}/>
+      messageNearPasses = <div><i>Employees will not be forced to break social distancing guidelines very often in this arrangement.</i></div>
+    } else {
+      emojiNearPasses = <Emoji size={128} text=":frowning:" style={{color: "#ff0000", fontSize: "3em"}}/>
+      messageNearPasses = <div><i>Employees will be forced to break social distancing guidelines very often in this arrangement.</i></div>
     }
     return (
       <div>
@@ -109,11 +109,11 @@ class MyPlanner extends React.Component {
             <ListGroup variant="flush">
               <ListGroup.Item>
                 <div>
-                  <h3>{emojiScore}Overall Score: {this.state.simData.overallScore}</h3>
-                  {message}
+                  <h3>Results:</h3>
                 </div>
               </ListGroup.Item>
-              <ListGroup.Item>{emojiProb} Employee Probability of Infection: {this.state.simData.prob * 100}%</ListGroup.Item> {/*TODO: Add the actual values.*/}
+              <ListGroup.Item>{emojiProb} Employee Probability of Infection: {this.state.simData.prob * 100}% <br/> {messageProb}</ListGroup.Item> {/*TODO: Add the actual values*/}
+              <ListGroup.Item>{emojiNearPasses} Encounters forced to break social distancing: {this.state.simData.nearPasses * 100}% <br/> {messageNearPasses}</ListGroup.Item> {/*TODO: Add the actual values*/}
               <ListGroup.Item><Button onClick={this.closeViz} style={{backgroundColor: "#005faf", border: 0}}>Close</Button></ListGroup.Item>
             </ListGroup>
           </Container>
