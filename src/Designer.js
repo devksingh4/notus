@@ -38,7 +38,7 @@ class MyPlanner extends React.Component {
       vizActive: false, 
       etaActive: false,
       iterTime: 1000, //ms
-      iterAmt: 10,
+      iterAmt: 27,
       simData: {overallScore: 0, nearPasses: 0.05}
     }
   }
@@ -50,7 +50,7 @@ class MyPlanner extends React.Component {
         etaActive: false
       })
     });
-    eventEmitter.on("stoploader", (metrics) => {
+    eventEmitter.on("stoploader", () => {
       this.setState({
         loaderActive: false,
         etaActive: false
@@ -79,8 +79,10 @@ class MyPlanner extends React.Component {
       })
     });
     eventEmitter.on("timeTake", (time) => {
+      console.log(time)
       this.setState({
         etaActive: true,
+        iterTime: time
       })
     });
   }
