@@ -1,12 +1,19 @@
 const Population = require('./Person.js').Population;
 const AirGrid = require('./AirGrid.js').AirGrid;
+// TODO REMOVE WHEN THERE IS HEFT TO process()!!!
+function sleep(seconds) 
+{
+  var e = new Date().getTime() + (seconds * 1000);
+  while (new Date().getTime() <= e) {}
+}
 
 module.exports.process = async (data) => {
     // let square = new AirGrid.Square(3)
     // console.log(data);
     // let p = new Person(2, 3, 4,5,6,7,8);
     // console.log(p.toString());
-    return {success:false, prob: 0.01};
+    sleep(1) // Temoorary intense calculation boilerplate TODO REMOVE!!!
+    return {success:true, data: {prob: 1, nearPasses: 0.05}};
 };
 function sA(r, x, y){
     var a;
@@ -43,10 +50,10 @@ const calc = (x1, y1, x2, y2, mx, my, r) => {
 
 function sim(config, pop_size){
     let grid = populate(width, height, sideLength, dispersalConst, wr);
-    var population = [];
+    let population = [];
 
-    delta_t = total_t / iters
-    for(i = 0; i < iters; i++){
+    const delta_t = total_t / iters
+    for(let i = 0; i < iters; i++){
         AirGrid.tick(delta_t);
         
     }
