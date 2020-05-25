@@ -113,8 +113,21 @@ class Person {
       this.x = newpos[0];
       this.y = newpos[1];
     }
-    const dens = this.airGrid.getSquareFromCoords(this.x, this.y).getNCoronaParticles();
-    this.infect(this.inf_prob, dens);
+    let pc = 0;
+    const radius = 1;
+    const x0 = this.airGrid.getSquareIndsFromCoords(this.x, this.y)[0]
+    const y0 = this.airGrid.getSquareIndsFromCoords(this.x, this.y)[1]
+    for (let i = -radius; i <= radius; i++) {
+      for (let j = -radius + Math.abs(i); j <= radius - Math.abs(i); j++){
+        try {
+          pc += this.airGrid.getGrid()[i][j].getNCoronaParticles();
+        } catch (e) {
+
+        }
+      }
+    }
+    //const dens = this.airGrid.getSquareFromCoords(this.x, this.y).getNCoronaParticles();
+    this.infect(this.inf_prob, pc);
   }
 
   isWithinErrorOfTarget(eps) {
@@ -198,7 +211,7 @@ class Population {
   get_num_sick() {
     var temp = 0;
     var total = 0;
-    for (let p in this.pop) {
+    for (p in this.pop) {
       if (p.inf > 0) {
         temp++;
       }

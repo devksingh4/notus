@@ -85,5 +85,8 @@ const calc = (x1, y1, x2, y2, mx, my, r) => {
 function tick(t, dt, pop, ag) {
   ag.tick(dt);
   return pop.tick(t, dt);
-
+  for(i = 0; i < pop.size(); i++){
+      var per = pop.get_pop(i);
+      for(s)
+  }
 }
