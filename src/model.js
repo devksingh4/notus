@@ -27,22 +27,24 @@ module.exports.process = async (data) => {
     artss.push(1)
   }
   let pop = new Population(modelConfig.n_employees, artsp, artforgotinf, arttp, artnc, artss, ag, pf, modelConfig.p_infect)
-  const dt = .1
+  const dt = 1
   let npp = 0
   let npt = 0
-  for (let i = 0; i < 1; i += dt) {
+  for (let i = 0; i < 10; i += dt) {
     console.log(`hi ${i}`)
     if (tick(i, dt, pop, ag)) {
       npp++
     }
     npt++
   }
+  console.log(`airflow ${ag.airflowRemovedCount / ag.particleCreatedCount}`)
+  console.log(`intakes ${ag.intakes.toString()}`)
   return {
     success: true,
     data: {
       prob: pop.get_num_sick() / pop.size(),
       nearPasses: npp / npt,
-      airflow: ag.getAirflowRemovedCount / ag.getParticleCreatedCount
+      airflow: ag.airflowRemovedCount / ag.particleCreatedCount
     }
   };
 };

@@ -9,7 +9,9 @@ const mapParallel = (func, data) => {
     return val;
   })
 }
-
+const safeDiv2 = (a, b) => {
+  return b === 0 ? 0 : a / b
+}
 class Square {
   constructor(sideLength) {
     this.nCoronaParticles = 0;
@@ -27,7 +29,6 @@ class Square {
   set removeParticles(nparticles) {
     this.nCoronaParticles -= nparticles;
   }
-
   cough(nparticles, newDirection) {
     let weightedNew = glMatrix.vec2.create();
     let weightedOld = glMatrix.vec2.create();
@@ -40,9 +41,9 @@ class Square {
   }
 
   tickstage0(dt) {
-    const numLeave = Math.round(Math.max(this.coronaVel.len() * dt / this.sideLength, 1) * this.nCoronaParticles);
-    const nUD = Math.floor(numLeave * this.safeDiv((this.coronaVel[1]), (this.coronaVel[0] + this.coronaVel[1])));
-    const nLR = Math.ceil(numLeave * this.safeDiv((this.coronaVel[0]), (this.coronaVel[0] + this.coronaVel[1])));
+    const numLeave = Math.round(Math.max(glMatrix.vec2.len(this.coronaVel) * dt / this.sideLength, 1) * this.nCoronaParticles);
+    const nUD = Math.floor(numLeave * safeDiv2((this.coronaVel[1]), (this.coronaVel[0] + this.coronaVel[1])));
+    const nLR = Math.ceil(numLeave * safeDiv2((this.coronaVel[0]), (this.coronaVel[0] + this.coronaVel[1])));
     if (nUD >= 0 && nLR >= 0) {
       return [nUD, nLR, 0, 0];
     } else if (nUD >= 0) {
@@ -61,22 +62,20 @@ class Square {
 
   tickstage2(dt, wrConst, airForce, halfLife) {
     //f_wr = cv^2, f=ma, a = dv/dt
-    let normVel;
+    let normVel = glMatrix.vec2.create();
     glMatrix.vec2.normalize(normVel, glMatrix.vec2.clone(this.coronaVel));
-    let wrVec = glMatrix.Vec2.create();
+    let wrVec = glMatrix.vec2.create();
     glMatrix.vec2.mul(wrVec, normVel, glMatrix.vec2.sqrLen(this.coronaVel) * wrConst * dt);
     glMatrix.vec2.sub(this.coronaVel, this.coronaVel, wrVec);
-    let distAirForce;
+    let distAirForce = glMatrix.vec2.create();
     //f=ma, a = dv/dt
-    glMatrix.vec2.mul(distAirForce, airForce, this.safediv(dt, this.nCoronaParticles));
+    glMatrix.vec2.mul(distAirForce, airForce, safeDiv2(dt, this.nCoronaParticles));
     glMatrix.vec2.add(this.coronaVel, this.coronaVel, distAirForce);
     //half life is in seconds
     this.nCoronaParticles = Math.floor(Math.pow(2, -dt / halfLife) * this.nCoronaParticles);
     return 0;
   }
-  safeDiv(a, b) {
-    return b === 0 ? 0 : a / b
-  }
+
   toString() {
     return `Has side length ${this.sideLength} with ${this.nCoronaParticles} Coronavirus Particles. Velocity is ${this.coronaVel}.`
   }
@@ -95,8 +94,8 @@ class OccludedSquare extends Square {
 
   tickstage0(dt) {
     const numLeave = Math.max(this.coronaVel.len() * dt / this.sideLength, 1) * this.nCoronaParticles;
-    const nUD = Math.floor(numLeave * this.safeDiv((this.coronaVel[1]), (this.coronaVel[0] + this.coronaVel[1])));
-    const nLR = Math.ceil(numLeave * this.safeDiv((this.coronaVel[0]), (this.coronaVel[0] + this.coronaVel[1])));
+    const nUD = Math.floor(numLeave * safeDiv2((this.coronaVel[1]), (this.coronaVel[0] + this.coronaVel[1])));
+    const nLR = Math.ceil(numLeave * safeDiv2((this.coronaVel[0]), (this.coronaVel[0] + this.coronaVel[1])));
     if (nUD >= 0 && nLR >= 0) {
       const nTop = Math.round(nUD * this.topOcclusion);
       const nRight = Math.round(nLR * this.rightOcclusion);
@@ -130,7 +129,7 @@ class OccludedSquare extends Square {
 
   tickstage1(dt, dispersalConst) {
     const multiplier = (4 - this.leftOcclusion - this.rightOcclusion - this.topOcclusion - this.bottomOcclusion) / 4;
-    const move = dt * dispersalConst * this.safediv(this.nCoronaParticles, (1 - this.areaOcclusion) * multiplier);
+    const move = dt * dispersalConst * safeDiv2(this.nCoronaParticles, (1 - this.areaOcclusion) * multiplier);
     return [Math.floor(move / (1 - this.topOcclusion)), Math.floor(move / (1 - this.rightOcclusion)), Math.floor(move / (1 - this.bottomOcclusion)), Math.floor(move / (1 - this.leftOcclusion))];
   }
 }
@@ -257,7 +256,7 @@ class AirGrid {
         locations.push([i, j])
       }
     }
-    mapParallel(this.calcSquareAirflow, locations);
+    locations.map(this.calcSquareAirflow);
   }
 
   tickCell0 = function(yxdt) {
@@ -291,11 +290,12 @@ class AirGrid {
         locations.push([i, j, dt])
       }
     }
-    const t0upd = mapParallel(this.tickCell0, locations.slice())
+    const t0upd = locations.slice().map((x) => this.tickCell0(x))
     this.updateGrid(t0upd)
-    const t1upd = mapParallel(this.tickCell1, locations.slice())
+    const t1upd = locations.slice().map((x) => this.tickCell1(x))
     this.updateGrid(t1upd)
-    const t2upd = mapParallel(this.tickCell2, locations.slice())
+    const t2upd = locations.slice().map((x) => this.tickCell2(x))
+    this.updateGrid(t2upd)
     this.updateGrid(t2upd)
   }
 
@@ -362,11 +362,11 @@ class AirGrid {
     this.grid[row][col] = new Wall(this.sideLength);
   }
 
-  get getAirflowRemovedCount() {
+  getAirflowRemovedCount() {
     return this.airflowRemovedCount;
   }
 
-  get getParticleCreatedCount() {
+  getParticleCreatedCount() {
     return this.particleCreatedCount;
   }
   getLinearFlow(){
