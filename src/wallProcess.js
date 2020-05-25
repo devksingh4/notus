@@ -2,16 +2,17 @@ const AirGrid = require('./AirGrid.js').AirGrid;
 const PF = require("./pathfinding.js");
 const glMatrix = require("gl-matrix");
 const polyArea = require("area-polygon")
-
+const fs = require('fs')
 function airGridFromJSON(data, config, sideLength) {
-  console.assert(data.output.unit === "cm", "unsupported unit");
-  const width = Math.ceil(data.output.width / 100);
-  const height = Math.ceil(data.output.height / 100);
+  console.assert(data.unit === "cm", "unsupported unit");
+  const width = Math.ceil(data.width / 100);
+  const height = Math.ceil(data.height / 100);
   const cowr = config.cowr;
   const dispersal = config.dispersal;
   const halfLife = config.half_life;
   let ag = new AirGrid(width, height, dispersal, cowr, halfLife);
-  const layer = data.output.layers[data.output.selectedLayer];
+  const layer = data.layers[data.selectedLayer];
+  console.log(layer)
   /*
   for (var line in Object.values(layer.lines)) {
     if (line.type === "wall") {
@@ -151,11 +152,11 @@ function airGridFromJSON(data, config, sideLength) {
 }
 
 function navgationGridFromJSON(data, sideLength) {
-  console.assert(data.output.unit === "cm", "unsupported unit");
-  const width = Math.ceil(data.output.width / 100 / sideLength);
-  const height = Math.ceil(data.output.height / 100 / sideLength);
+  console.assert(data.unit === "cm", "unsupported unit");
+  const width = Math.ceil(data.width / 100 / sideLength);
+  const height = Math.ceil(data.height / 100 / sideLength);
   let grid = PF.grid(width, height);
-  const layer = data.output.layers[data.selectedLayer];
+  const layer = data.layers[data.selectedLayer];
   for (var line in Object.values(layer.lines)) {
     if (line.name === "wall") {
       const thickness = line.properties.thickness.length / 100;
@@ -238,7 +239,7 @@ function navgationGridFromJSON(data, sideLength) {
         grid.setWalkableAt(blx, bly, false);
       }
       for (let hole in line.holes) {
-        const hlobj = data.output.holes[hole];
+        const hlobj = data.holes[hole];
         if (hlobj.name === "Door") {
           const hlwidth = hlobj.properties.width.length;
           let comp1 = glMatrix.vec2.create();

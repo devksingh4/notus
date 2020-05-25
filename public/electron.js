@@ -4,6 +4,7 @@ const path = require('path');
 const isDev = require('electron-is-dev');
 const events = require('events');
 const eventEmitter = new events.EventEmitter();
+const fs = require('fs')
 
 let mainWindow;
 
@@ -63,7 +64,8 @@ app.on('activate', () => {
 ipcMain.on('layout-data', async (event, arg) => {
   event.returnValue = "done"
   eventEmitter.emit("start-loader")
-  const robj = await model.process(arg);
+  const bud = await JSON.parse(arg.output)
+  const robj = await model.process(bud);
   eventEmitter.emit("robj-display", robj)
   if (!robj.success) {
     const options  = {
