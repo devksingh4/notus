@@ -5,11 +5,12 @@ import { Map } from 'immutable';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.css';
-import Card from 'react-bootstrap/Card';
+import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button'
 import './index.css'
 import { ScreenHeader } from './Header'
 import ListGroup from 'react-bootstrap/ListGroup'
+import Emoji from "react-emoji-render";
 
 // import {
 //   Models as PlannerModels,
@@ -32,7 +33,7 @@ const eventEmitter = new events.EventEmitter();
 class MyPlanner extends React.Component {
   constructor(props) {
     super(props);
-    this.state= {loaderActive: false, vizActive: false}
+    this.state= {loaderActive: false, vizActive: false, simData: {overallScore: 0}}
   }
 
   componentDidMount() {
@@ -57,7 +58,7 @@ class MyPlanner extends React.Component {
         this.setState({simData: metrics.data})
         eventEmitter.emit("stoploader");
       }
-    });
+    })
     eventEmitter.on("startviz", () => {
       this.setState({
         vizActive: true,
@@ -75,6 +76,24 @@ class MyPlanner extends React.Component {
   }
 
   render() {
+    let emojiScore;
+    let message;
+    let emojiProb;
+    if (this.state.simData.overallScore <= 100 && this.state.simData.overallScore > 70) {
+      emojiScore = <Emoji size={128} text=":smile:" style={{color: "#20CC82", fontSize: "3em"}}/>
+      message = <i>Your office layout does a good job of suppressing the spread of COVID-19!</i>
+    } else if (this.state.simData.overallScore <= 70 && this.state.simData.overallScore > 50) {
+      emojiScore = <Emoji size={128} style={{color: "#ff6700", fontSize: "3em"}} text=":neutral_face:"/>
+      message = <i>While your office layout does an OK job of suppressing the spread of COVID-19, improvements could be made.</i>
+    } else {
+      emojiScore = <Emoji size={128} style={{color: "#ff0000", fontSize: "3em"}} text=":frowning:"/>
+      message = <i>Your office layout does not do a good job of suppressing the spread of COVID-19. Improvements must be made.</i>
+    }
+    if (this.state.simData.prob <= 1 && this.state.simData.prob > 0.20) {
+      emojiProb = <Emoji size={128} text=":frowning:" style={{color: "#ff0000", fontSize: "3em"}}/>
+    } else {
+      emojiProb = <Emoji size={128} text=":smile:" style={{color: "#20CC82", fontSize: "3em"}}/>
+    }
     return (
       <div>
         <ReactPlanner
@@ -86,16 +105,17 @@ class MyPlanner extends React.Component {
         />
         {this.state.loaderActive ? <div className="loader"><div><div className="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><p className="loaderText">Modeling</p></div></div> : null}
         {this.state.vizActive ? <div className="vizview">
-          <Card className="vizcard">
-            <Card.Header as="h3">Results</Card.Header>
-            <Card.Body>
-              <ListGroup variant="flush">
-                <ListGroup.Item>Employee Probability of Infection: {this.state.simData.prob}</ListGroup.Item>
-                <ListGroup.Item>Some other data here...</ListGroup.Item>
-              </ListGroup>
-            </Card.Body>
+          <Container className="vizcard" style={{backgroundColor: 'white'}}>
+            <div>
+              <h3>{emojiScore}Overall Score: {this.state.simData.overallScore}</h3>
+              {message}
+              <hr></hr>
+            </div>
+            <ListGroup variant="flush">
+              <ListGroup.Item>{emojiProb} Employee Probability of Infection: {this.state.simData.prob}</ListGroup.Item>
+            </ListGroup>
             <Button onClick={this.closeViz} style={{backgroundColor: "#005faf", border: 0}}>Close</Button>
-          </Card>
+          </Container>
         </div> : null}
       </div>
     )
