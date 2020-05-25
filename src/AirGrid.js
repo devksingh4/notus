@@ -26,7 +26,7 @@ class Square {
   get getVelocity() {
     return this.coronaVel;
   }
-  set removeParticles(nparticles) {
+  removeParticles(nparticles) {
     this.nCoronaParticles -= nparticles;
   }
   cough(nparticles, newDirection) {
@@ -200,14 +200,22 @@ class AirGrid {
     row = parseInt(row)
     col = parseInt(col)
     strength = parseInt(strength)
-    Object.defineProperty(this.intakes, [row, col].toString(), {value: strength, writable: true, configurable: true})
+    Object.defineProperty(this.intakes, [row, col].toString(), {
+      value: strength,
+      writable: true,
+      configurable: true
+    })
   }
 
   addOutflow(row, col, strength) {
     row = parseInt(row)
     col = parseInt(col)
     strength = parseInt(strength)
-    Object.defineProperty(this.outflows, [row, col].toString(), {value: strength, writable: true, configurable: true})
+    Object.defineProperty(this.outflows, [row, col].toString(), {
+      value: strength,
+      writable: true,
+      configurable: true
+    })
     this.grid[row][col] = new Outflow(this.sideLength);
   }
 
@@ -267,7 +275,7 @@ class AirGrid {
         locations.push([i, j])
       }
     }
-    mapParallel(this.calcSquareAirflow, locations);
+    locations.map(this.calcSquareAirflow);
   }
 
   tickCell0 = function(yxdt) {
@@ -301,11 +309,11 @@ class AirGrid {
         locations.push([i, j, dt])
       }
     }
-    const t0upd = mapParallel(this.tickCell0, locations.slice())
+    const t0upd = locations.slice().map((x) => this.tickCell0(x))
     this.updateGrid(t0upd)
-    const t1upd = mapParallel(this.tickCell1, locations.slice())
+    const t1upd = locations.slice().map((x) => this.tickCell1(x))
     this.updateGrid(t1upd)
-    const t2upd = mapParallel(this.tickCell2, locations.slice())
+    const t2upd = locations.slice().map((x) => this.tickCell2(x))
     this.updateGrid(t2upd)
   }
 
@@ -313,27 +321,22 @@ class AirGrid {
     let pool = wpool.pool()
     let promises = []
     for (let i = 0; i < upd.length; i++) {
-      promises.push(pool.exec(() => {
-        let col = i % this.grid[0].length;
-        let row = Math.floor(i / this.grid[0].length);
-        try {
-          this.grid[row - 1][col].cough(upd[i][0], this.grid[row][col].getVelocity());
-        } catch (e) {}
-        try {
-          this.grid[row][col + 1].cough(upd[i][1], this.grid[row][col].getVelocity());
-        } catch (e) {}
-        try {
-          this.grid[row + 1][col].cough(upd[i][2], this.grid[row][col].getVelocity());
-        } catch (e) {}
-        try {
-          this.grid[row][col - 1].cough(upd[i][3], this.grid[row][col].getVelocity());
-        } catch (e) {}
-        this.grid()[row][col].removeParticles(upd[i][3] + upd[i][2] + upd[i][1] + upd[i][0]);
-      }));
+      let col = i % this.grid[0].length;
+      let row = Math.floor(i / this.grid[0].length);
+      try {
+        this.grid[row - 1][col].cough(upd[i][0], this.grid[row][col].getVelocity());
+      } catch (e) {}
+      try {
+        this.grid[row][col + 1].cough(upd[i][1], this.grid[row][col].getVelocity());
+      } catch (e) {}
+      try {
+        this.grid[row + 1][col].cough(upd[i][2], this.grid[row][col].getVelocity());
+      } catch (e) {}
+      try {
+        this.grid[row][col - 1].cough(upd[i][3], this.grid[row][col].getVelocity());
+      } catch (e) {}
+      this.grid[row][col].removeParticles(upd[i][3] + upd[i][2] + upd[i][1] + upd[i][0])
     }
-    Promise.all(promises).then((val) => {
-      pool.terminate();
-    });
   }
 
   getSquareFromCoords(x, y) {
@@ -379,7 +382,7 @@ class AirGrid {
   getParticleCreatedCount() {
     return this.particleCreatedCount;
   }
-  getLinearFlow(){
+  getLinearFlow() {
     let out = []
     for (var row in this.grid) {
       out.concat(row)
