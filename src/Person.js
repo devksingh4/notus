@@ -52,9 +52,11 @@ class Person {
     if (this.isWithinErrorOfTarget(.01)) {
       if (this.directions !== []) {
         const newCoords = this.directions.pop();
-        newVec = glMatrix.vec2.fromValues(newCoords[0], newCoords[1]);
-        cp = glMatrix.vec2.fromValues(this.x, this.y);
-        glMatrix.vec2.sub(step, newVec, cp);
+        if (!(newCoords === undefined)) {
+          newVec = glMatrix.vec2.fromValues(newCoords[0], newCoords[1]);
+          cp = glMatrix.vec2.fromValues(this.x, this.y);
+          glMatrix.vec2.sub(step, newVec, cp);
+        }
       } else {
         newVec = glMatrix.vec2.fromValues(this.targetx, this.targety);
         cp = glMatrix.vec2.fromValues(this.x, this.y);
@@ -165,7 +167,7 @@ class Population {
       this.pop.push(new Person(starting_pos[i][0], starting_pos[i][1], starting_inf[i], starting_tar[i][0], starting_tar[i][1], starting_non_compliant[i], starting_size[i], airGrid, naviGrid, infp));
     }
   }
-  get size() {
+  size() {
     return this.pop.length;
   }
   get_pop(index) {
