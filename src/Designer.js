@@ -1,7 +1,7 @@
 import React from 'react';
 import Dimensions from 'react-dimensions'
 import MyCatalog from './catalog/mycatalog';
-import { Map } from 'immutable';
+import { Map, List } from 'immutable';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -84,7 +84,7 @@ class MyPlanner extends React.Component {
       message = <i>Your office layout does a good job of suppressing the spread of COVID-19!</i>
     } else if (this.state.simData.overallScore <= 70 && this.state.simData.overallScore > 50) {
       emojiScore = <Emoji size={128} style={{color: "#ff6700", fontSize: "3em"}} text=":neutral_face:"/>
-      message = <i>While your office layout does an OK job of suppressing the spread of COVID-19, improvements could be made.</i>
+      message = <i>While your office layout does an acceptable job of suppressing the spread of COVID-19, improvements could be made.</i>
     } else {
       emojiScore = <Emoji size={128} style={{color: "#ff0000", fontSize: "3em"}} text=":frowning:"/>
       message = <i>Your office layout does not do a good job of suppressing the spread of COVID-19. Improvements must be made.</i>
@@ -106,15 +106,16 @@ class MyPlanner extends React.Component {
         {this.state.loaderActive ? <div className="loader"><div><div className="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><p className="loaderText">Modeling</p></div></div> : null}
         {this.state.vizActive ? <div className="vizview">
           <Container className="vizcard" style={{backgroundColor: 'white'}}>
-            <div>
-              <h3>{emojiScore}Overall Score: {this.state.simData.overallScore}</h3>
-              {message}
-              <hr></hr>
-            </div>
             <ListGroup variant="flush">
-              <ListGroup.Item>{emojiProb} Employee Probability of Infection: {this.state.simData.prob}</ListGroup.Item>
+              <ListGroup.Item>
+                <div>
+                  <h3>{emojiScore}Overall Score: {this.state.simData.overallScore}</h3>
+                  {message}
+                </div>
+              </ListGroup.Item>
+              <ListGroup.Item>{emojiProb} Employee Probability of Infection: {this.state.simData.prob * 100}%</ListGroup.Item>
+              <ListGroup.Item><Button onClick={this.closeViz} style={{backgroundColor: "#005faf", border: 0}}>Close</Button></ListGroup.Item>
             </ListGroup>
-            <Button onClick={this.closeViz} style={{backgroundColor: "#005faf", border: 0}}>Close</Button>
           </Container>
         </div> : null}
       </div>
