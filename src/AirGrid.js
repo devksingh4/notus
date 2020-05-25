@@ -178,7 +178,7 @@ class AirGrid {
     this.dispersalConst = dispersalConst;
     this.wrConst = wrConst;
     this.halfLife = halfLife;
-    this.sideLength = sideLength; 
+    this.sideLength = sideLength;
   }
 
   get getAirflow() {
@@ -369,7 +369,13 @@ class AirGrid {
   get getParticleCreatedCount() {
     return this.particleCreatedCount;
   }
-
+  getLinearFlow(){
+    out = []
+    for (var row in this.grid) {
+      out.concat(row)
+    }
+    return out
+  }
   toString() {
     return `Has ${this.grid.length} rows and ${this.grid.length[0]} columns with side length ${this.sideLength}. Dispersal Coefficient is ${this.dispersalConst} and Coefficient of Wind Resistance is ${this.wrConst}`
   }
