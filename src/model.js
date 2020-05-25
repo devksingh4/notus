@@ -24,7 +24,7 @@ module.exports.process = async (data) => {
   const height = Math.ceil(data.height / 100);
   for (let i = 0; i < modelConfig.n_employees; i++) {
     artsp.push([width*Math.random(), height*Math.random()])
-    artforgotinf.push(Math.random()*100 < modelConfig.percent_infected ? 1: 0)
+    artforgotinf.push(Math.random()*100 < modelConfig.percent_infected ? 100: 0)
     arttp.push([1, 0])
     artnc.push(Math.random()*100 < modelConfig.percent_noncompliant)
     artss.push(1)
@@ -60,8 +60,8 @@ module.exports.process = async (data) => {
   return {
     success: true,
     data: {
-      prob: 100,
-      nearPasses: 0,
+      prob: pop.get_num_sick() / pop.size(),
+      nearPasses: npp / npt,
       airflow: ag.airflowRemovedCount / ag.particleCreatedCount
     }
   };

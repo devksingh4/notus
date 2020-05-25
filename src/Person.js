@@ -218,7 +218,7 @@ class Population {
       }
       total++;
     }
-    return temp / total;
+    return temp;
   }
 }
 
