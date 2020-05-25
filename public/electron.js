@@ -15,6 +15,7 @@ function createWindow() {
     minWidth: 800, 
     minHeight: 600
   }});
+  mainWindow.removeMenu()
   if (isDev) {
     mainWindow.loadURL('http://localhost:3000')
     mainWindow.autoHideMenuBar = false;

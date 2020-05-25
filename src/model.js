@@ -1,18 +1,18 @@
 const Population = require('./Person.js').Population;
 const AirGrid = require('./AirGrid.js').AirGrid;
 const wallProcess = require('./wallProcess.js')
+const fs = require('fs');
 // TODO REMOVE WHEN THERE IS HEFT TO process()!!!
 function sleep(seconds)
 {
   var e = new Date().getTime() + (seconds * 1000);
   while (new Date().getTime() <= e) {}
 }
-
+function getModelConfig() {
+    return JSON.parse(fs.readFileSync("model-config.json"));
+}
 module.exports.process = async (data) => {
-    // let square = new AirGrid.Square(3)
-    // console.log(data);
-    // let p = new Person(2, 3, 4,5,6,7,8);
-    // console.log(p.toString());
+    const modelConfig = getModelConfig(); // n_employees, percent_infected, etc. 
     sleep(1) // Temoorary intense calculation boilerplate TODO REMOVE!!!
     return {success:true, data: {prob: 1, nearPasses: 0.05}};
 };
