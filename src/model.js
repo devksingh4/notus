@@ -4,7 +4,8 @@ const PathFinder = require('./pathfinding.js').PathFinder
 const airGridFromJSON = require('./wallProcess.js').airGridFromJSON
 const navgationGridFromJSON = require('./wallProcess.js').navgationGridFromJSON
 const fs = require('fs');
-const ipcRenderer = require('ipcRenderer')
+const events = require('events');
+const eventEmitter = new events.EventEmitter();
 
 function getModelConfig() {
   return JSON.parse(fs.readFileSync("model-config.json"));
@@ -41,7 +42,7 @@ module.exports.process = async (data) => {
     npt++
     if (i === 0) {
       const endTime = new Date();
-      ipcRenderer.sendSync('timeTake', {data: Math.abs(startTime - endTime)})
+      eventEmitter.emit("timeTake", {data: Math.abs(startTime - endTime)})
     }
   }
   console.log(`airflow ${ag.airflowRemovedCount / ag.particleCreatedCount}`)
