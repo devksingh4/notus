@@ -197,20 +197,31 @@ class AirGrid {
   }
 
   addIntake(row, col, strength) {
-    this.intakes[[row, col]] = strength;
+    row = parseInt(row)
+    col = parseInt(col)
+    strength = parseInt(strength)
+    Object.defineProperty(this.intakes, [row, col].toString(), {value: strength, writable: true, configurable: true})
   }
 
   addOutflow(row, col, strength) {
-    this.outflows[[row, col]] = strength;
+    row = parseInt(row)
+    col = parseInt(col)
+    strength = parseInt(strength)
+    Object.defineProperty(this.outflows, [row, col].toString(), {value: strength, writable: true, configurable: true})
     this.grid[row][col] = new Outflow(this.sideLength);
   }
 
   remIntake(row, col) {
-    delete this.intakes[[row, col]];
+    row = parseInt(row)
+    col = parseInt(col)
+    delete this.intakes[[row, col].toString()];
+    this.grid[row][col] = new Square(this.sideLength);
   }
 
   remOutflow(row, col) {
-    delete this.outflows[[row, col]]
+    row = parseInt(row)
+    col = parseInt(col)
+    delete this.outflows[[row, col].toString()]
     this.grid[row][col] = new Square(this.sideLength);
   }
 
@@ -256,7 +267,7 @@ class AirGrid {
         locations.push([i, j])
       }
     }
-    locations.map(this.calcSquareAirflow);
+    mapParallel(this.calcSquareAirflow, locations);
   }
 
   tickCell0 = function(yxdt) {
@@ -290,11 +301,11 @@ class AirGrid {
         locations.push([i, j, dt])
       }
     }
-    const t0upd = locations.slice().map((x) => this.tickCell0(x))
+    const t0upd = mapParallel(this.tickCell0, locations.slice())
     this.updateGrid(t0upd)
-    const t1upd = locations.slice().map((x) => this.tickCell1(x))
+    const t1upd = mapParallel(this.tickCell1, locations.slice())
     this.updateGrid(t1upd)
-    const t2upd = locations.slice().map((x) => this.tickCell2(x))
+    const t2upd = mapParallel(this.tickCell2, locations.slice())
     this.updateGrid(t2upd)
   }
 
