@@ -58,8 +58,9 @@ module.exports.process = async (data) => {
   console.log(`airflow ${ag.airflowRemovedCount / ag.particleCreatedCount}`)
   console.log(`intakes ${ag.intakes.toString()}`)
   const dummy = false;
+  let rval;
   if (dummy){
-    return{
+    rval = {
       success: true,
       data: {
         prob: Math.random(),
@@ -67,14 +68,17 @@ module.exports.process = async (data) => {
         airflow: Math.random()
     }
   }
-  return {
+} else {
+
+  rval = {
     success: true,
     data: {
       prob: pop.get_num_sick() / pop.size(),
       nearPasses: npp / npt,
       airflow: ag.airflowRemovedCount / ag.particleCreatedCount
     }}
-  };
+  }
+  return rval;
 };
 
 function sA(r, x, y) {
