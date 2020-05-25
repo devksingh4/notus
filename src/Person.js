@@ -176,7 +176,7 @@ class Population {
     return this.pop.splice(index, 1);
   }
   tick(time, dt) {
-    for (let i = 0; i < this.size(); i++) {
+    for (let i = 0; i < this.size; i++) {
       this.pop[i].tick(time, dt);
     }
     for (var i in this.pop) {

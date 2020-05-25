@@ -31,7 +31,7 @@ module.exports.process = async (data) => {
   let npp = 0
   let npt = 0
   for (var i = 0; i < 28800; i += dt) {
-    if (tick(i, dt, pop, pf)) {
+    if (tick(i, dt, pop, ag)) {
       npp++
     }
     npt++
