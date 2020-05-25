@@ -27,7 +27,7 @@ class Person {
     }
   }
   tick(time, delta_time) { // function called every time increment
-    const cough_limit = this.generate_aerosols(1, delta_time);
+    const cough_limit = this.generate_aerosols(10, delta_time);
     const roll = Math.random();
     if (roll < cough_limit) {
       //non-compliants don't wear masks. TODO: allow user to change these #s
@@ -37,10 +37,10 @@ class Person {
       glMatrix.vec2.sub(directionFacing, tpos, cpos);
       glMatrix.vec2.normalize(directionFacing, directionFacing);
       if (this.non_compliant) {
-        this.airGrid.coughAt(this.x, this.y, 10000, directionFacing)
+        this.airGrid.coughAt(this.x, this.y, 100000, directionFacing)
       } else {
         glMatrix.vec2.mul(directionFacing, .2)
-        this.airGrid.coughAt(this.x, this.y, 1000, directionFacing)
+        this.airGrid.coughAt(this.x, this.y, 10000, directionFacing)
       }
     }
     if (this.inf !== 0) {
