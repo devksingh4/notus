@@ -48,7 +48,7 @@ module.exports.process = async (data) => {
       eventEmitter.emit("timeTake", {data: Math.abs(startTime - endTime)})
     }
   }
-  for (let i = 0; i < 27; i += dt) {
+  for (let i = 0; i < 20; i += dt) {
     console.log(`hi ${i}`)
     if (tick(i, dt, pop, ag)) {
       npp++
