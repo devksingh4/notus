@@ -112,7 +112,7 @@ export default class DesignerTutorial extends Component {
           <Card.Text>Start the simulator by clicking the icon highlighted above.</Card.Text>
           <Card.Text>After a short loading screen, Notus will display metrics produced by the simulation.</Card.Text>
           <Card.Img src={designer9} style={{marginLeft: 'auto', marginRight: 'auto', marginBottom: 20, objectFit: 'contain'}}></Card.Img>
-          <Card.Text>These metrics may help you improve the layout of your rooms against the spread of COVID-19.</Card.Text>
+          <Card.Text>These metrics may help you improve the layout of your rooms to prevent the spread of COVID-19.</Card.Text>
         </Card.Body>
       </Card>
       <br/>
