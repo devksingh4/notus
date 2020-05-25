@@ -213,7 +213,7 @@ class Population {
     var temp = 0;
     var total = 0;
     for (var i = 0; i < this.pop.length; i++) {
-      temp += this.pop.length[i].inf > 0 ? 1 : 0;
+      temp += this.pop[i].inf > 0 ? 1 : 0;
     }
     return temp;
   }
