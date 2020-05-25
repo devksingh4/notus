@@ -155,7 +155,7 @@ function navgationGridFromJSON(data, sideLength) {
   const width = Math.ceil(data.output.width / 100 / sideLength);
   const height = Math.ceil(data.output.height / 100 / sideLength);
   let grid = PF.grid(width, height);
-  const layer = data.output.layers[data.selectedLayer];
+  const layer = data.output.layers[data.output.selectedLayer];
   for (var line in Object.values(layer.lines)) {
     if (line.name === "wall") {
       const thickness = line.properties.thickness.length / 100;
