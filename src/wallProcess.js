@@ -139,11 +139,11 @@ function airGridFromJSON(data, config, sideLength) {
   }*/
   for (let i = 0; i < Object.values(layer.items).length; i++) {
     if (Object.values(layer.items).name === "Air intake") {
-      const place = ag.getSquareIndsFromCoords(Object.values(layer.items)[i].x, Object.values(layer.items)[i].y)
+      const place = ag.getSquareIndsFromCoords(Object.values(layer.items)[i].x/100, Object.values(layer.items)[i].y/100)
       ag.addIntake(place[0], place[1], 1000) //third param may need to be changed
     }
     if (Object.values(layer.items)[i].name === "Air Outflow") {
-      const place = ag.getSquareIndsFromCoords(Object.values(layer.items)[i].x, Object.values(layer.items)[i].y)
+      const place = ag.getSquareIndsFromCoords(Object.values(layer.items)[i].x/100, Object.values(layer.items)[i].y/100)
       ag.addOutflow(place[0], place[1], 1000) //third param may need to be changed
   }
 
