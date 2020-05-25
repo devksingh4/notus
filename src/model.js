@@ -6,6 +6,7 @@ const navgationGridFromJSON = require('./wallProcess.js').navgationGridFromJSON
 const fs = require('fs');
 const events = require('events');
 const eventEmitter = new events.EventEmitter();
+exports.eventEmitter = eventEmitter;
 
 function getModelConfig() {
   return JSON.parse(fs.readFileSync("model-config.json"));

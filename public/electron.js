@@ -29,7 +29,7 @@ function createWindow() {
     shell.openExternal(url);
   });
 
-  eventEmitter.on('timeTake', (data) => {
+  model.eventEmitter.on('timeTake', (data) => {
     mainWindow.webContents.send('iterTime',data)
   });
 
