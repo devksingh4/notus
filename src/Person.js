@@ -127,6 +127,17 @@ class Population {
             this.pop[i].tick();
         }
     }
+    get_num_sick(){
+        var temp = 0;
+        var total = 0;
+        for(p in this.pop){
+            if(p.inf > 0){
+                temp++;
+            }
+            total++;
+        }
+        return temp/total;
+    }
 }
 
 module.exports.Person = Person;

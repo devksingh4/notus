@@ -11,7 +11,9 @@ function createWindow() {
   mainWindow = new BrowserWindow({width: 900, height: 680,   webPreferences: {
     nodeIntegration: true,
     allowRendererProcessReuse: true,
-    icon: path.join(__dirname, 'assets/icons/png/64x64.png')
+    icon: path.join(__dirname, 'assets/icons/png/64x64.png'), 
+    minWidth: 800, 
+    minHeight: 600
   }});
   if (isDev) {
     mainWindow.loadURL('http://localhost:3000')
@@ -26,8 +28,12 @@ function createWindow() {
     shell.openExternal(url);
   });
 
-  eventEmitter.on('robj-display', (probability) => {
-    mainWindow.webContents.send('probInfect',probability)
+  eventEmitter.on('robj-display', (data) => {
+    mainWindow.webContents.send('probInfect',data)
+  });
+
+  eventEmitter.on('start-loader', () => {
+    mainWindow.webContents.send('startloadscreen')
   });
 }
 
@@ -54,9 +60,11 @@ app.on('activate', () => {
   }
 });
 
-
 ipcMain.on('layout-data', async (event, arg) => {
-  const robj = await model.process(arg.output);
+  event.returnValue = "done"
+  eventEmitter.emit("start-loader")
+  const robj = await model.process(arg);
+  eventEmitter.emit("robj-display", robj)
   if (!robj.success) {
     const options  = {
       buttons: ["OK"],
@@ -64,6 +72,4 @@ ipcMain.on('layout-data', async (event, arg) => {
      }
      await dialog.showMessageBox(mainWindow, options, () => {})
   }
-  eventEmitter.emit("robj-display", robj)
-  event.returnValue = "done"
 });

@@ -9,6 +9,7 @@ import {
 import Home from './Home';
 import Designer from './Designer';
 import Configurator from './Configurator';
+import DesignerTutorial from './DesignerTutorial';
 
 
 ReactDOM.render(
@@ -18,6 +19,7 @@ ReactDOM.render(
         <Route path="/" exact     component={ Home } />
         <Route path="/designer"     component={ Designer } />
         <Route path="/configurator"     component={ Configurator } />
+        <Route path="/designertutorial"     component={ DesignerTutorial } />
       </div>
     </HashRouter>
   </React.StrictMode>,

@@ -15,8 +15,8 @@ export class Bricks extends Component {
         group.push(<Link key={`${this.props.props[i].name.toLowerCase()}.Link`} to={this.props.props[i].name.toLowerCase()}>
           <Card key={`${this.props.props[i].name.toLowerCase()}`} style={{margin: 20}}>
             <Card.Body>
-              <Card.Title key={this.props.props[i].name.toLowerCase().Title} style={{color: '#005faf'}}>{this.props.props[i].name}</Card.Title>
-              <Card.Text key={this.props.props[i].name.toLowerCase().Text} style={{color: '#005faf'}}>Enter the room {this.props.props[i].name.toLowerCase()}.</Card.Text>
+              <Card.Title key={this.props.props[i].name.toLowerCase().Title} style={{color: '#005faf'}}>{this.props.props[i].name.replace(/([A-Z])/g, ' $1')}</Card.Title>
+              <Card.Text key={this.props.props[i].name.toLowerCase().Text} style={{color: '#005faf'}}>{this.props.props[i].description}</Card.Text>
             </Card.Body>
           </Card>
         </Link>)

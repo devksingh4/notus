@@ -41,7 +41,6 @@ export default class Configurator extends Component {
     if (e.target.value === "" && !this.state.submitted) {
       this.asyncAlert("No values can be empty.")
       this.setState({[e.target.id]: this.default[e.target.id]})
-      console.log(e.target.id)
       return false; 
     }
     if (parseInt(e.target.min, 10) > parseInt(e.target.value, 10) || parseInt(e.target.max, 10) < parseInt(e.target.value, 10)) {
@@ -56,7 +55,7 @@ export default class Configurator extends Component {
       <div className="Configurator">
       <ScreenHeader name="Configurator"></ScreenHeader>
       <Container>
-        <Card style={{padding: 20, margin: 20, backgroundColor: '#28292d'}}>
+        <Card style={{padding: 20, margin: 20, backgroundColor: '#28292d', borderStyle: 'hidden'}}>
         <Form onBlur={this.validateData}>
         <Form.Group style={whiteText}>
           <Form.Label>Number of employees</Form.Label>
