@@ -48,6 +48,7 @@
     "jest-environment-jsdom-fourteen": "1.0.1",
     "jest-resolve": "24.9.0",
     "jest-watch-typeahead": "0.4.2",
+    "jsxgraph": "^1.0.0",
     "mini-css-extract-plugin": "0.9.0",
     "optimize-css-assets-webpack-plugin": "5.0.3",
     "path": "^0.12.7",
@@ -125,7 +126,7 @@
       "category": "Office",
       "icon": "assets/icons/mac/icon.icns"
     },
-    "dmg" : {
+    "dmg": {
       "icon": "assets/icons/mac/icon.icns"
     },
     "linux": {

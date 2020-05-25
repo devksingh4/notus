@@ -1,5 +1,7 @@
+const AirGrid = require('./AirGrid.js').AirGrid;
+const glMatrix = require('gl-matrix')
 class Person {
-    constructor(nx, ny, ninf, ntargetx, ntargety, nnon_compliant, size){ // coords are in meters, the non_compliant modifier indicates the level of stubborness to anti-plague measures
+    constructor(nx, ny, ninf, ntargetx, ntargety, nnon_compliant, size, grid){ // coords are in meters, the non_compliant modifier indicates the level of stubborness to anti-plague measures
         this.x = nx;
         this.y = ny;
         this.inf = ninf;
@@ -7,6 +9,7 @@ class Person {
         this.targety = ntargety;
         this.non_compliant = nnon_compliant;
         this.size = size;
+        this.grid = grid;
     }
     infect(p_aerosol, d_aerosol){ // p is probability constant for infection, d is density
         var check = Math.random();
@@ -15,8 +18,25 @@ class Person {
             this.inf = 0
         }
     }
-    tick(delta_time){ // function called every time increment
+    tick(time, delta_time){ // function called every time increment
+        const cough_limit = this.generate_aerosols(1/10, delta_time);
+        const roll = Math.random();
+        if(roll < cough_limit){
+          //non-compliants don't wear masks. TODO: allow user to change this
+          let directionFacing = glMatrix.vec2.create();
+          let cpos = glMatrix.vec2.fromValues(this.x, this.y);
+          let tpos = glMatrix.vec2.fromValues(this.targetx, this.targety);
+          glMatrix.vec2.sub(directionFacing, tpos, cpos);
+          glMatrix.vec2.normalize(directionFacing,directionFacing);
+          if (this.non_compliant){
+            this.grid.coughAt(this.x,this.y, 2000, directionFacing)
+          }else {
+            glMatrix.vec2.mul(directionFacing, .2)
+            this.grid.coughAt(this.x, this.y, 200, directionFacing)
+          }
+        }
         
+
     }
     generate_aerosols(p, delta_time){
 
@@ -104,10 +124,10 @@ class Person {
 }
 
 class Population {
-    constructor(pop_size, starting_pos, starting_tar, starting_non_compliant, starting_size){
+    constructor(pop_size, starting_pos, starting_tar, starting_non_compliant, starting_size, grid){
         this.pop = [];
         for(let i = 0; i < pop_size; i++){
-            this.pop.push(new Person(starting_pos[i][0], starting_pos[i][1], starting_tar[i][0], starting_tar[i][1], starting_non_compliant[i], starting_size[i]));
+            this.pop.push(new Person(starting_pos[i][0], starting_pos[i][1], starting_tar[i][0], starting_tar[i][1], starting_non_compliant[i], starting_size[i], grid));
         }
     }
     get size(){
@@ -122,15 +142,15 @@ class Population {
     remove(index){
         return this.pop.splice(index, 1);
     }
-    tick(dt){
+    tick(time, dt){
         for(let i = 0; i < this.size(); i++){
-            this.pop[i].tick();
+            this.pop[i].tick(time, dt);
         }
     }
     get_num_sick(){
         var temp = 0;
         var total = 0;
-        for(p in this.pop){
+        for(let p in this.pop){
             if(p.inf > 0){
                 temp++;
             }
