@@ -1,5 +1,5 @@
 const AirGrid = require('./AirGrid.js').AirGrid;
-const PF = require("pathfinding")
+const PF = require("pathfinding");
 const glMatrix = require("gl-matrix");
 
 function airGridFromJSON(data, config, sideLength) {
@@ -78,7 +78,7 @@ function airGridFromJSON(data, config, sideLength) {
       ag.addIntake(place[0], place[1], 1000) //third param may need to be changed
     }
   }
-  if (item.name === "Air outflow") {
+  if (item.name === "Air Outflow") {
     const place = ag.getSquareIndsFromCoords(item.x, item.y)
     ag.addOutflow(place[0], place[1], 1000) //third param may need to be changed
   }
@@ -91,7 +91,7 @@ function navgationGridFromJSON(data, sideLength) {
   let grid = PF.grid(width, height);
   const layer = data.output.layers[data.selectedLayer];
   for (var line in Object.values(layer.lines)) {
-    if (line.type === "wall") {
+    if (line.name === "wall") {
       const thickness = line.properties.thickness.length / 100;
       const v0info = layer.vertices[line.vertices[0]];
       const pt0 = glMatrix.fromValues(v0info.x / 100, v0info.y / 100);
@@ -146,6 +146,7 @@ function navgationGridFromJSON(data, sideLength) {
         const xl = corner0r[1] < corner1r[1] ? corner1r[0] : corner0r[0];
         l1yOvers[i] = [wgt * xs + (1 - wgt) * xl, i];
       }
+
       for (let k in Object.keys(l0xOvers)) {
         const blx = Math.round(k / sideLength);
         const bly = Math.floor(l0xOvers[k]);
@@ -170,9 +171,44 @@ function navgationGridFromJSON(data, sideLength) {
         grid.setWalkableAt(blx, bly - 1, false);
         grid.setWalkableAt(blx, bly, false);
       }
+      for (let hole in line.holes) {
+        const hlobj = data.output.holes[hole];
+        if (hlobj.name === "Door") {
+          const hlwidth = hlobj.properties.width.length;
+          let comp1 = glMatrix.vec2.create();
+          let comp2 = glMatrix.vec2.create();
+          let hlcenter = glMatrix.vec2.create();
+          glMatrix.vec2.mul(comp1, pt0, hlobj.offset);
+          glMatrix.vec2.mul(comp2, pt1, 1 - hlobj.offset);
+          glMatrix.vec2.add(hlcenter, comp1, comp2);
+          let cornera = glMatrix.vec2.create();
+          let cornerb = glMatrix.vec2.create();
+          let cornerc = glMatrix.vec2.create();
+          let cornerd = glMatrix.vec2.create();
+          let widthComp = glMatrix.vec2.clone(wallDir)
+          glMatrix.vec2.mul(widthComp, widthComp, hlwidth / 2);
+          glMatrix.vec2.add(cornera, hlcenter, widthComp);
+          glMatrix.vec2.add(cornerb, hlcenter, widthComp);
+          glMatrix.vec2.sub(cornerc, hlcenter, widthComp);
+          glMatrix.vec2.sub(cornerd, hlcenter, widthComp);
+          glMatrix.vec2.add(cornera, cornera, wallOrtho);
+          glMatrix.vec2.sub(cornerb, cornerb, wallOrtho);
+          glMatrix.vec2.add(cornerc, cornerc, wallOrtho);
+          glMatrix.vec2.sub(cornerd, cornerd, wallOrtho);
+          let minx = Math.min(cornera[0], cornerb[0], cornerc[0], cornerd[0]);
+          let maxx = Math.max(cornera[0], cornerb[0], cornerc[0], cornerd[0]);
+          let miny = Math.min(cornera[1], cornerb[1], cornerc[1], cornerd[1]);
+          let maxy = Math.max(cornera[1], cornerb[1], cornerc[1], cornerd[1]);
+          for (let x = Math.floor(minx / sideLength); x < Math.ceil(maxx / sideLength); x++) {
+            for (let y = Math.floor(miny / sideLength); x < Math.ceil(maxy / sideLength); y++) {
+              grid.setWalkableAt(x, y, true);
+            }
+          }
+        }
+      }
     }
   }
   return grid
 }
-module.exports.airGridFromJSON = airGridFromJSON;
-module.exports.navgationGridFromJSON = navgationGridFromJSON;
+  module.exports.airGridFromJSON = airGridFromJSON;
+  module.exports.navgationGridFromJSON = navgationGridFromJSON;

@@ -63,6 +63,7 @@ class Square {
     glMatrix.vec2.add(this.coronaVel, this.coronaVel, distAirForce);
     //half life is in seconds
     this.nCoronaParticles = Math.floor(Math.pow(2, -dt / halfLife) * this.nCoronaParticles);
+    return 0;
   }
   safeDiv(a, b) {
     return b === 0 ? 0 : a / b
@@ -139,7 +140,9 @@ class Wall extends OccludedSquare {
 
 class Outflow extends Square {
   tickstage2(dt) {
+    const cp = this.nCoronaParticles;
     this.nCoronaParticles = 0;
+    return cp;
   }
 }
 
@@ -151,6 +154,7 @@ class AirGrid {
     this.airflowGrid = [];
     this.intakes = {};
     this.outflows = {};
+    this.airflowRemovedCount = 0;
     for (let i = 0; i < nh; i++) {
       let newSquares = [];
       let newAir = [];
@@ -263,7 +267,8 @@ class AirGrid {
     const y = yxdt[0];
     const x = yxdt[1];
     const dt = yxdt[2];
-    return this.grid[y][x].tickstage2(dt, this.wrConst, this.airflowGrid[y][x], this.halfLife);
+    const ret =  this.grid[y][x].tickstage2(dt, this.wrConst, this.airflowGrid[y][x], this.halfLife);
+    return ret;
   }
 
   tick(dt) {
@@ -340,6 +345,10 @@ class AirGrid {
     this.grid[row][col] = new Wall(this.sideLength);
   }
 
+  get getAirflowRemovedCount(){
+    return this.airflowRemovedCount;
+  }
+  
   toString() {
     return `Has ${this.grid.length} rows and ${this.grid.length[0]} columns with side length ${this.sideLength}. Dispersal Coefficient is ${this.dispersalConst} and Coefficient of Wind Resistance is ${this.wrConst}`
   }
