@@ -33,18 +33,27 @@ const eventEmitter = new events.EventEmitter();
 class MyPlanner extends React.Component {
   constructor(props) {
     super(props);
-    this.state= {loaderActive: false, vizActive: false, simData: {overallScore: 0, nearPasses: 0.05}}
+    this.state= {
+      loaderActive: false, 
+      vizActive: false, 
+      etaActive: false,
+      iterTime: 1000, //ms
+      iterAmt: 10,
+      simData: {overallScore: 0, nearPasses: 0.05}
+    }
   }
 
   componentDidMount() {
     eventEmitter.on("startloader", () => {
       this.setState({
         loaderActive: true,
+        etaActive: false
       })
     });
     eventEmitter.on("stoploader", (metrics) => {
       this.setState({
         loaderActive: false,
+        etaActive: false
       })
       eventEmitter.emit("startviz")
     });
@@ -52,7 +61,7 @@ class MyPlanner extends React.Component {
       if (!metrics.success) {
         this.setState({
           loaderActive: false,
-          vizActive: false,
+          vizActive: false
         })
       } else {
         this.setState({simData: metrics.data})
@@ -67,6 +76,11 @@ class MyPlanner extends React.Component {
     eventEmitter.on("stopviz", () => {
       this.setState({
         vizActive: false,
+      })
+    });
+    eventEmitter.on("timeTake", (time) => {
+      this.setState({
+        etaActive: true,
       })
     });
   }
@@ -161,5 +175,10 @@ ipcRenderer.on('probInfect', (event, metrics) => {
 ipcRenderer.on('startloadscreen', (event) => {
   eventEmitter.emit("startloader")
 })
+
+ipcRenderer.on('iterTime', (event, time) => {
+  eventEmitter.emit("timeTake", time)
+})
+
 
 export default Designer;

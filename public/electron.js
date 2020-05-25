@@ -29,6 +29,10 @@ function createWindow() {
     shell.openExternal(url);
   });
 
+  eventEmitter.on('timeTake', (data) => {
+    mainWindow.webContents.send('iterTime',data)
+  });
+
   eventEmitter.on('robj-display', (data) => {
     mainWindow.webContents.send('probInfect',data)
   });
