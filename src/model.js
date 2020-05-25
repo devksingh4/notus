@@ -32,7 +32,7 @@ module.exports.process = async (data) => {
   const dt = 1
   let npp = 0
   let npt = 0
-  for (let i = 0; i < 10; i += dt) {
+  for (let i = 0; i < 1; i+=dt){
     let startTime;
     if (i === 0) {
       startTime = new Date();
@@ -46,6 +46,13 @@ module.exports.process = async (data) => {
       const endTime = new Date();
       eventEmitter.emit("timeTake", {data: Math.abs(startTime - endTime)})
     }
+  }
+  for (let i = 0; i < 1000; i += dt) {
+    console.log(`hi ${i}`)
+    if (tick(i, dt, pop, ag)) {
+      npp++
+    }
+    npt++
   }
   console.log(`airflow ${ag.airflowRemovedCount / ag.particleCreatedCount}`)
   console.log(`intakes ${ag.intakes.toString()}`)
