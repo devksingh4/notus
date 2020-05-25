@@ -57,6 +57,16 @@ module.exports.process = async (data) => {
   }
   console.log(`airflow ${ag.airflowRemovedCount / ag.particleCreatedCount}`)
   console.log(`intakes ${ag.intakes.toString()}`)
+  const dummy = false;
+  if (dummy){
+    return{
+      success: true,
+      data: {
+        prob: Math.random(),
+        nearPasses: Math.random(),
+        airflow: Math.random()
+    }
+  }
   return {
     success: true,
     data: {
