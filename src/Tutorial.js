@@ -18,11 +18,11 @@ import designer7 from './tutorial-images/designer7.png';
 import designer8 from './tutorial-images/designer8.png';
 import designer9 from './tutorial-images/designer9.png';
 
-export default class DesignerTutorial extends Component {
+export default class Tutorial extends Component {
   render() {
     return (
-      <div className="DesignerTutorial">
-      <ScreenHeader name="Designer Tutorial"></ScreenHeader>
+      <div className="Tutorial">
+      <ScreenHeader name="Tutorial"></ScreenHeader>
       <Container>
       <br/>
       <Card bg='light'>
