@@ -24,7 +24,7 @@ module.exports.process = async (data) => {
   const height = Math.ceil(data.height / 100);
   for (let i = 0; i < modelConfig.n_employees; i++) {
     artsp.push([width*Math.random(), height*Math.random()])
-    artforgotinf.push(Math.random()*100 < modelConfig.percent_infected)
+    artforgotinf.push(Math.random()*100 < modelConfig.percent_infected ? 1: 0)
     arttp.push([1, 0])
     artnc.push(Math.random()*100 < modelConfig.percent_noncompliant)
     artss.push(1)
