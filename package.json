@@ -108,7 +108,7 @@
     "pack": "electron-builder --dir",
     "dist": "electron-builder -wl",
     "dist-mac": "electron-builder -m",
-    "postinstall": "install-app-deps",
+    "postinstall": "electron-builder install-app-deps",
     "predist": "npm run-script build",
     "predist-mac": "npm run-script build"
   },
