@@ -332,6 +332,10 @@ class AirGrid {
     return [xloc, yloc];
   }
 
+  coughAt(x,y,nparticles, vel){
+    let square = this.getSquareFromCoords(x,y);
+    square.cough(nparticles, vel);
+}
   occlude(row, col, top, bottom, right, left, area) {
     const vel = this.grid[row][col].coronaVel;
     const nP = this.grid[row][col].nCoronaParticles;
@@ -348,7 +352,7 @@ class AirGrid {
   get getAirflowRemovedCount(){
     return this.airflowRemovedCount;
   }
-  
+
   toString() {
     return `Has ${this.grid.length} rows and ${this.grid.length[0]} columns with side length ${this.sideLength}. Dispersal Coefficient is ${this.dispersalConst} and Coefficient of Wind Resistance is ${this.wrConst}`
   }

@@ -1,7 +1,8 @@
 const Population = require('./Person.js').Population;
 const AirGrid = require('./AirGrid.js').AirGrid;
+const wallProcess = require('./wallProcess.js')
 // TODO REMOVE WHEN THERE IS HEFT TO process()!!!
-function sleep(seconds) 
+function sleep(seconds)
 {
   var e = new Date().getTime() + (seconds * 1000);
   while (new Date().getTime() <= e) {}
@@ -39,26 +40,17 @@ function sA(r, x, y){
     return a;
 }
 /*
-Given P_rect_top_left(x1, y1), P_rect_bottom_right(x2, y2), 
-P_circle_center(mx, my) and radius(r), calc(x1, y1, x2, y2, mx, my, r) 
+Given P_rect_top_left(x1, y1), P_rect_bottom_right(x2, y2),
+P_circle_center(mx, my) and radius(r), calc(x1, y1, x2, y2, mx, my, r)
 returns the area of intersection.
 */
-const calc = (x1, y1, x2, y2, mx, my, r) => { 
+const calc = (x1, y1, x2, y2, mx, my, r) => {
     x1-=mx; x2-=mx; y1-=my; y2-=my;
 	return sA(r, x2, y1) - sA(r, x1, y1) - sA(r, x2, y2) + sA(r, x1, y2);
 }
 
-function sim(config, pop_size){
-    let grid = populate(width, height, sideLength, dispersalConst, wr);
-    let population = [];
+function tick(t, dt, pop, ag){
+  pop.tick(t,dt);
+  ag.tick(dt);
 
-    const delta_t = total_t / iters
-    for(let i = 0; i < iters; i++){
-        AirGrid.tick(delta_t);
-        
-    }
-}
-
-function populate(width, height, sideLength, dispersalConst, wr){
-    return new AirGrid(width, height, sideLength, dispersalConst, wr);
 }
