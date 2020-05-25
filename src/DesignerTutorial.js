@@ -31,7 +31,7 @@ export default class DesignerTutorial extends Component {
           <Card.Img src={notushead} style={{marginLeft: 'auto', marginRight: 'auto', marginBottom: 20, objectFit: 'contain'}}></Card.Img>
           <Card.Title>What is Notus?</Card.Title>
           <Card.Text>
-            <i>Notus is a tools that helps rate office layouts on the spread of COVID-19.</i>
+            <i>Notus is a tool that helps rate office layouts on the spread of COVID-19.</i>
             <p>
               These office layouts are defined by you, the user. Notus uses intuitive room-planning
               tools and a powerful Monte Carlo simulator to give you relevant results.
@@ -81,19 +81,19 @@ export default class DesignerTutorial extends Component {
             by clicking the highlighted region above.
             </Card.Text>
           <Card.Text>Click on the locations on the grid where you want segments of wall to be located.
-            A area surrounded by wall automatically becomes a room.
+            An area surrounded by wall automatically becomes a room.
           </Card.Text>
           <Card.Img src={designer3} style={{marginLeft: 'auto', marginRight: 'auto', marginBottom: 20, objectFit: 'contain'}}></Card.Img>
           <Card.Text>To exit from the construction of walls, press the escape key.</Card.Text>
           <Card.Text>You may use the Notus catalog to add other elements, such as doors, windows, desks, 
             and air intakes and outflows. Note that windows are modeled as objects that are permeable to 
-            COVID-19, so do not draw windows in locations where they are permanantly closed.
+            COVID-19, so do not draw windows in locations where they are permanently closed.
           </Card.Text>
           <Card.Img src={designer4} style={{marginLeft: 'auto', marginRight: 'auto', marginBottom: 20, objectFit: 'contain'}}></Card.Img>
-          <Card.Text>Lay out the rest of your rooms with elements from the Notus catalog.</Card.Text>
-          <Card.Text>Sometimes it may be necesary to rotate an element.</Card.Text>
+          <Card.Text>Populate the rest of your rooms with elements from the Notus catalog.</Card.Text>
+          <Card.Text>Sometimes it may be necessary to rotate an element.</Card.Text>
           <Card.Img src={designer5} style={{marginLeft: 'auto', marginRight: 'auto', marginBottom: 20, objectFit: 'contain'}}></Card.Img>
-          <Card.Text>In order to do this, press the espace key after placing the element. A gizmo will 
+          <Card.Text>In order to do this, press the escape key after placing the element. A gizmo will 
             appear, which is highlighted above. Click and drag the gizmo in order to rotate the element.
           </Card.Text>
           <Card.Title>Viewing the room in 3D</Card.Title>
@@ -102,10 +102,10 @@ export default class DesignerTutorial extends Component {
           <Card.Text>In order to use it, click the <i>3D</i> icon, which is highlighted above.</Card.Text>
           <Card.Img src={designer7} style={{marginLeft: 'auto', marginRight: 'auto', marginBottom: 20, objectFit: 'contain'}}></Card.Img>
           <Card.Text>You can navigate the 3D view by using the left mouse button to orbit, the right 
-            mouse button to pan, and the middle mouse button or scrollwheel to zoom.
+            mouse button to pan, and the middle mouse button or scroll wheel to zoom.
           </Card.Text>
           <Card.Title>Modeling the spread</Card.Title>
-          <Card.Text>Running the the Notus Monte Carlo simulator is done through the room designer.</Card.Text>
+          <Card.Text>Running the Notus Monte Carlo simulator is done through the room designer.</Card.Text>
           <Card.Img src={designer8} style={{marginLeft: 'auto', marginRight: 'auto', marginBottom: 20, objectFit: 'contain'}}></Card.Img>
           <Card.Text>Start the simulator by clicking the icon highlighted above.</Card.Text>
           <Card.Text>After a short loading screen, Notus will display metrics produced by the simulation.</Card.Text>
