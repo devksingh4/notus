@@ -34,8 +34,7 @@ class PathFinder {
     return [xloc, yloc];
   }
   navigateTo(xc, yc, xg, yg) {
-
-    var finder = new PF.AStarFinder({
+    const finder = new PF.AStarFinder({
       allowDiagonal: true,
       heuristic: PF.Heuristic.euclidean
     });

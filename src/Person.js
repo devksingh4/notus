@@ -176,6 +176,7 @@ class Person {
 class Population {
   constructor(pop_size, starting_pos, starting_inf, starting_tar, starting_non_compliant, starting_size, airGrid, naviGrid, infp) {
     this.pop = [];
+    pop_size = parseInt(pop_size);
     for (let i = 0; i < pop_size; i++) {
       this.pop.push(new Person(starting_pos[i][0], starting_pos[i][1], starting_inf[i], starting_tar[i][0], starting_tar[i][1], starting_non_compliant[i], starting_size[i], airGrid, naviGrid, infp));
     }

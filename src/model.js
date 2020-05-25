@@ -10,7 +10,6 @@ function getModelConfig() {
   return JSON.parse(fs.readFileSync("model-config.json"));
 }
 module.exports.process = async (data) => {
-  const fs = require('fs');
   const modelConfig = getModelConfig(); // n_employees, percent_infected, etc.
   let ag = airGridFromJSON(data, modelConfig, 1);
   let pf = new PathFinder(modelConfig, navgationGridFromJSON(data, .1), .1);
@@ -20,7 +19,7 @@ module.exports.process = async (data) => {
   let artnc = []
   let artss = []
   for (var i = 0; i < modelConfig.n_employees; i++) {
-    artsp.push([0, 0])
+    artsp.push([40*Math.random(), 40*Math.random()])
     artforgotinf.push(Math.random() < modelConfig.percent_infected / 100)
     arttp.push([1, 0])
     artnc.push(Math.random() < modelConfig.percent_noncompliant / 100)
