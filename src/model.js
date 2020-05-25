@@ -18,8 +18,10 @@ module.exports.process = async (data) => {
   let arttp = []
   let artnc = []
   let artss = []
+  const width = Math.ceil(data.width / 100);
+  const height = Math.ceil(data.height / 100);
   for (var i = 0; i < modelConfig.n_employees; i++) {
-    artsp.push([40*Math.random(), 40*Math.random()])
+    artsp.push([width*Math.random(), height*Math.random()])
     artforgotinf.push(Math.random() < modelConfig.percent_infected / 100)
     arttp.push([1, 0])
     artnc.push(Math.random() < modelConfig.percent_noncompliant / 100)
