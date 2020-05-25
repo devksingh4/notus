@@ -200,14 +200,22 @@ class AirGrid {
     row = parseInt(row)
     col = parseInt(col)
     strength = parseInt(strength)
-    Object.defineProperty(this.intakes, [row, col].toString(), {value: strength, writable: true, configurable: true})
+    Object.defineProperty(this.intakes, [row, col].toString(), {
+      value: strength,
+      writable: true,
+      configurable: true
+    })
   }
 
   addOutflow(row, col, strength) {
     row = parseInt(row)
     col = parseInt(col)
     strength = parseInt(strength)
-    Object.defineProperty(this.outflows, [row, col].toString(), {value: strength, writable: true, configurable: true})
+    Object.defineProperty(this.outflows, [row, col].toString(), {
+      value: strength,
+      writable: true,
+      configurable: true
+    })
     this.grid[row][col] = new Outflow(this.sideLength);
   }
 
@@ -313,27 +321,22 @@ class AirGrid {
     let pool = wpool.pool()
     let promises = []
     for (let i = 0; i < upd.length; i++) {
-      promises.push(pool.exec(() => {
-        let col = i % this.grid[0].length;
-        let row = Math.floor(i / this.grid[0].length);
-        try {
-          this.grid[row - 1][col].cough(upd[i][0], this.grid[row][col].getVelocity());
-        } catch (e) {}
-        try {
-          this.grid[row][col + 1].cough(upd[i][1], this.grid[row][col].getVelocity());
-        } catch (e) {}
-        try {
-          this.grid[row + 1][col].cough(upd[i][2], this.grid[row][col].getVelocity());
-        } catch (e) {}
-        try {
-          this.grid[row][col - 1].cough(upd[i][3], this.grid[row][col].getVelocity());
-        } catch (e) {}
-        this.grid()[row][col].removeParticles(upd[i][3] + upd[i][2] + upd[i][1] + upd[i][0]);
-      }));
+      let col = i % this.grid[0].length;
+      let row = Math.floor(i / this.grid[0].length);
+      try {
+        this.grid[row - 1][col].cough(upd[i][0], this.grid[row][col].getVelocity());
+      } catch (e) {}
+      try {
+        this.grid[row][col + 1].cough(upd[i][1], this.grid[row][col].getVelocity());
+      } catch (e) {}
+      try {
+        this.grid[row + 1][col].cough(upd[i][2], this.grid[row][col].getVelocity());
+      } catch (e) {}
+      try {
+        this.grid[row][col - 1].cough(upd[i][3], this.grid[row][col].getVelocity());
+      } catch (e) {}
+      this.grid()[row][col].removeParticles(upd[i][3] + upd[i][2] + upd[i][1] + upd[i][0])
     }
-    Promise.all(promises).then((val) => {
-      pool.terminate();
-    });
   }
 
   getSquareFromCoords(x, y) {
@@ -379,7 +382,7 @@ class AirGrid {
   getParticleCreatedCount() {
     return this.particleCreatedCount;
   }
-  getLinearFlow(){
+  getLinearFlow() {
     let out = []
     for (var row in this.grid) {
       out.concat(row)
