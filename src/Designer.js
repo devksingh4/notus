@@ -113,7 +113,7 @@ class MyPlanner extends React.Component {
                   {message}
                 </div>
               </ListGroup.Item>
-              <ListGroup.Item>{emojiProb} Employee Probability of Infection: {this.state.simData.prob * 100}%</ListGroup.Item>
+              <ListGroup.Item>{emojiProb} Employee Probability of Infection: {this.state.simData.prob * 100}%</ListGroup.Item> {/*TODO: Add the actual values.*/}
               <ListGroup.Item><Button onClick={this.closeViz} style={{backgroundColor: "#005faf", border: 0}}>Close</Button></ListGroup.Item>
             </ListGroup>
           </Container>
