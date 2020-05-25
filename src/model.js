@@ -60,8 +60,8 @@ module.exports.process = async (data) => {
   return {
     success: true,
     data: {
-      prob: pop.get_num_sick() / pop.size(),
-      nearPasses: npp / npt,
+      prob: 100,
+      nearPasses: 0,
       airflow: ag.airflowRemovedCount / ag.particleCreatedCount
     }
   };
