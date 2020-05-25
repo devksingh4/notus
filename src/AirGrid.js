@@ -267,7 +267,7 @@ class AirGrid {
         locations.push([i, j])
       }
     }
-    mapParallel(this.calcSquareAirflow, locations);
+    locations.map(this.calcSquareAirflow);
   }
 
   tickCell0 = function(yxdt) {
@@ -301,11 +301,11 @@ class AirGrid {
         locations.push([i, j, dt])
       }
     }
-    const t0upd = mapParallel(this.tickCell0, locations.slice())
+    const t0upd = locations.slice().map((x) => this.tickCell0(x))
     this.updateGrid(t0upd)
-    const t1upd = mapParallel(this.tickCell1, locations.slice())
+    const t1upd = locations.slice().map((x) => this.tickCell1(x))
     this.updateGrid(t1upd)
-    const t2upd = mapParallel(this.tickCell2, locations.slice())
+    const t2upd = locations.slice().map((x) => this.tickCell2(x))
     this.updateGrid(t2upd)
   }
 
