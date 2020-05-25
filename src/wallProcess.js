@@ -1,5 +1,5 @@
 const AirGrid = require('./AirGrid.js').AirGrid;
-const PF = require("./pathfinding.js");
+const PF = require("pathfinding");
 const glMatrix = require("gl-matrix");
 const polyArea = require("area-polygon")
 const fs = require('fs')
@@ -155,7 +155,7 @@ function navgationGridFromJSON(data, sideLength) {
   console.assert(data.unit === "cm", "unsupported unit");
   const width = Math.ceil(data.width / 100 / sideLength);
   const height = Math.ceil(data.height / 100 / sideLength);
-  let grid = PF.Grid(width, height);
+  let grid = new PF.Grid(width, height);
   const layer = data.layers[data.selectedLayer];
   for (var line in Object.values(layer.lines)) {
     if (line.name === "wall") {

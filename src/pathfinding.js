@@ -41,7 +41,7 @@ class PathFinder {
     });
     const start = this.getSquareIndsFromCoords(xc, yc);
     const end = this.getSquareIndsFromCoords(xg, yg);
-    const path = finder.find_path(start[0], start[1], end[0], end[1], this.grid)
+    const path = finder.findPath(start[0], start[1], end[0], end[1], this.grid)
     let coordTargets = []
     for (var i = 0; i < path.length; i++) {
       coordTargets.push(this.getCoordsFromIndices(path[i][0], path[i][1]));

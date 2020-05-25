@@ -151,48 +151,6 @@ class Person {
       throw new Error("somehow Person.inf was negative");
     }
   }
-  get x() {
-    return this.x;
-  }
-  get y() {
-    return this.y;
-  }
-  get inf() {
-    return this.inf;
-  }
-  get targetx() {
-    return this.targetx;
-  }
-  get targety() {
-    return this.targety;
-  }
-  get non_compliant() {
-    return this.non_compliant;
-  }
-  get size() {
-    return this.size;
-  }
-  set x(nx) {
-    this.x = nx;
-  }
-  set y(ny) {
-    this.y = ny;
-  }
-  set inf(ninf) {
-    this.inf = ninf;
-  }
-  set targetx(ntargetx) {
-    this.targetx = ntargetx;
-  }
-  set targety(ntargety) {
-    this.targety = ntargety;
-  }
-  set non_compliant(n_non_compliant) {
-    this.non_compliant = n_non_compliant;
-  }
-  set size(nsize) {
-    this.size = nsize;
-  }
   toString() {
     return `${this.x}, ${this.y}, ${this.inf}, ${this.targetx}, ${this.targety}, ${this.non_compliant}, ${this.size}`;
   }
