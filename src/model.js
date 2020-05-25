@@ -31,6 +31,7 @@ module.exports.process = async (data) => {
   let npp = 0
   let npt = 0
   for (let i = 0; i < 1000; i += dt) {
+    console.log(`hi ${i}`)
     if (tick(i, dt, pop, ag)) {
       npp++
     }
@@ -87,6 +88,6 @@ function tick(t, dt, pop, ag) {
   return pop.tick(t, dt);
   for(i = 0; i < pop.size(); i++){
       var per = pop.get_pop(i);
-      for(s)
+      for(s)  
   }
 }
