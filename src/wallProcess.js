@@ -12,6 +12,7 @@ function airGridFromJSON(data, config, sideLength) {
   const halfLife = config.half_life;
   let ag = new AirGrid(width, height, dispersal, cowr, halfLife);
   const layer = data.output.layers[data.selectedLayer];
+  /*
   for (var line in Object.values(layer.lines)) {
     if (line.type === "wall") {
       const thickness = line.properties.thickness.length / 100;
@@ -40,7 +41,6 @@ function airGridFromJSON(data, config, sideLength) {
 
       let l0xOvers = {};
       let l0yOvers = {};
-
       for (let i = Math.floor(Math.min(corner0l[0], corner1l[0]) / sideLength) + sideLength; i <= Math.max(corner0l[0], corner1l[0]); i += sideLength) {
         const wgt = (i - Math.min(corner0l[0], corner1l[0])) / (Math.max(corner0l[0], corner1l[0]) - Math.min(corner0l[0], corner1l[0]));
         const ys = corner0l[0] > corner1l[0] ? corner1l[1] : corner0l[1];
@@ -135,16 +135,17 @@ function airGridFromJSON(data, config, sideLength) {
         }
       }
     }
-  }
-  for (var item in Object.values(layer.items)) {
+  }*/
+  for (let item in Object.values(layer.items)) {
     if (item.name === "Air intake") {
       const place = ag.getSquareIndsFromCoords(item.x, item.y)
       ag.addIntake(place[0], place[1], 1000) //third param may need to be changed
     }
+    if (item.name === "Air Outflow") {
+      const place = ag.getSquareIndsFromCoords(item.x, item.y)
+      ag.addOutflow(place[0], place[1], 1000) //third param may need to be changed
   }
-  if (item.name === "Air Outflow") {
-    const place = ag.getSquareIndsFromCoords(item.x, item.y)
-    ag.addOutflow(place[0], place[1], 1000) //third param may need to be changed
+
   }
   return ag;
 }
