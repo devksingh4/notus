@@ -370,7 +370,7 @@ class AirGrid {
     return this.particleCreatedCount;
   }
   getLinearFlow(){
-    out = []
+    let out = []
     for (var row in this.grid) {
       out.concat(row)
     }

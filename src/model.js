@@ -30,7 +30,7 @@ module.exports.process = async (data) => {
   const dt = .1
   let npp = 0
   let npt = 0
-  for (let i = 0; i < 1000; i += dt) {
+  for (let i = 0; i < 1; i += dt) {
     console.log(`hi ${i}`)
     if (tick(i, dt, pop, ag)) {
       npp++
