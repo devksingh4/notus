@@ -24,9 +24,9 @@ module.exports.process = async (data) => {
   const height = Math.ceil(data.height / 100);
   for (let i = 0; i < modelConfig.n_employees; i++) {
     artsp.push([width*Math.random(), height*Math.random()])
-    artforgotinf.push(Math.random() < modelConfig.percent_infected / 100)
+    artforgotinf.push(Math.random()*100 < modelConfig.percent_infected)
     arttp.push([1, 0])
-    artnc.push(Math.random() < modelConfig.percent_noncompliant / 100)
+    artnc.push(Math.random()*100 < modelConfig.percent_noncompliant)
     artss.push(1)
   }
   let pop = new Population(modelConfig.n_employees, artsp, artforgotinf, arttp, artnc, artss, ag, pf, modelConfig.p_infect)
