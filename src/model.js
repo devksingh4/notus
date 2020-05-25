@@ -11,11 +11,8 @@ function getModelConfig() {
 }
 module.exports.process = async (data) => {
   const fs = require('fs');
-  fs.writeFileSync('hello1.txt', 'hi0');
   const modelConfig = getModelConfig(); // n_employees, percent_infected, etc.
-  fs.writeFileSync('hello1.txt', 'hi1');
   let ag = airGridFromJSON(data, modelConfig, 1);
-  fs.writeFileSync('hello1.txt', 'hi2');
 
   let pf = new PathFinder(navgationGridFromJSON(data, .1));
   let artsp = []
