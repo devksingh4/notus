@@ -103,7 +103,7 @@ class MyPlanner extends React.Component {
           plugins={plugins}
           stateExtractor={state => state.get('react-planner-electron')}
         />
-        {this.state.loaderActive ? <div className="loader"><div><div className="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><p className="loaderText">Modeling</p></div></div> : null}
+        {this.state.loaderActive ? <div className="loader"><div><div className="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><p className="loaderText">Modeling (this may take some time)</p></div></div> : null}
         {this.state.vizActive ? <div className="vizview">
           <Container className="vizcard" style={{backgroundColor: 'white'}}>
             <ListGroup variant="flush">
