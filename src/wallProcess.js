@@ -155,7 +155,7 @@ function navgationGridFromJSON(data, sideLength) {
   console.assert(data.unit === "cm", "unsupported unit");
   const width = Math.ceil(data.width / 100 / sideLength);
   const height = Math.ceil(data.height / 100 / sideLength);
-  let grid = PF.grid(width, height);
+  let grid = PF.Grid(width, height);
   const layer = data.layers[data.selectedLayer];
   for (var line in Object.values(layer.lines)) {
     if (line.name === "wall") {
