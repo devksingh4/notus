@@ -210,8 +210,7 @@ class Population {
     return true;
   }
   get_num_sick() {
-    var temp = 0;
-    var total = 0;
+    let temp = 0;
     for (var i = 0; i < this.pop.length; i++) {
       temp += this.pop.length[i].inf > 0 ? 1 : 0;
     }
