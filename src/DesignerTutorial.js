@@ -31,9 +31,9 @@ export default class DesignerTutorial extends Component {
           <Card.Img src={notushead} style={{marginLeft: 'auto', marginRight: 'auto', marginBottom: 20, objectFit: 'contain'}}></Card.Img>
           <Card.Title>What is Notus?</Card.Title>
           <Card.Text>
-            <i>Notus is a tool that helps rate office layouts on the spread of COVID-19.</i>
+            <i>Notus is a tool that provides insight on how effective various office layouts are in preventing the spread of COVID-19.</i>
             <p>
-              These office layouts are defined by you. Notus uses intuitive room-planning
+              These office layouts are drawn by you. Notus uses intuitive room-planning
               tools and a powerful Monte Carlo simulator to give you relevant results.
             </p>
           </Card.Text>
@@ -43,7 +43,9 @@ export default class DesignerTutorial extends Component {
       <Card bg='light'>
         <Card.Header as="h5">Configuring Notus</Card.Header>
         <Card.Body>
-          <Card.Text>The Notus Monte Carlo simulation in configured in the Configurator screen.</Card.Text>
+          <Card.Text>
+          <i>While Notus will work without configuration, configuring Notus allows you to achieve optimal results.</i> <br/>
+          The Notus Monte Carlo simulation in configured in the Configurator screen.</Card.Text>
           <Card.Img src={selectconfig} style={{marginLeft: 'auto', marginRight: 'auto', marginBottom: 20, objectFit: 'contain'}}></Card.Img>
           <Card.Text>Enter the Configurator by clicking the highlighted region above.</Card.Text>
           <Card.Title>Basic Configuration</Card.Title>
