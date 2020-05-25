@@ -1,7 +1,7 @@
 import React from 'react';
 import Dimensions from 'react-dimensions'
 import MyCatalog from './catalog/mycatalog';
-import { Map, List } from 'immutable';
+import { Map } from 'immutable';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.css';
