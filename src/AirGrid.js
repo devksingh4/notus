@@ -26,7 +26,7 @@ class Square {
   get getVelocity() {
     return this.coronaVel;
   }
-  set removeParticles(nparticles) {
+  removeParticles(nparticles) {
     this.nCoronaParticles -= nparticles;
   }
   cough(nparticles, newDirection) {
