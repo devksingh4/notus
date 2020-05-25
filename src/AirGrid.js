@@ -197,20 +197,31 @@ class AirGrid {
   }
 
   addIntake(row, col, strength) {
-    this.intakes[[row, col]] = strength;
+    row = parseInt(row)
+    col = parseInt(col)
+    strength = parseInt(strength)
+    Object.defineProperty(this.intakes, [row, col].toString(), {value: strength, writable: true, configurable: true})
   }
 
   addOutflow(row, col, strength) {
-    this.outflows[[row, col]] = strength;
+    row = parseInt(row)
+    col = parseInt(col)
+    strength = parseInt(strength)
+    Object.defineProperty(this.outflows, [row, col].toString(), {value: strength, writable: true, configurable: true})
     this.grid[row][col] = new Outflow(this.sideLength);
   }
 
   remIntake(row, col) {
-    delete this.intakes[[row, col]];
+    row = parseInt(row)
+    col = parseInt(col)
+    delete this.intakes[[row, col].toString()];
+    this.grid[row][col] = new Square(this.sideLength);
   }
 
   remOutflow(row, col) {
-    delete this.outflows[[row, col]]
+    row = parseInt(row)
+    col = parseInt(col)
+    delete this.outflows[[row, col].toString()]
     this.grid[row][col] = new Square(this.sideLength);
   }
 
