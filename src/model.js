@@ -73,7 +73,7 @@ module.exports.process = async (data) => {
       prob: pop.get_num_sick() / pop.size(),
       nearPasses: npp / npt,
       airflow: ag.airflowRemovedCount / ag.particleCreatedCount
-    }
+    }}
   };
 };
 
