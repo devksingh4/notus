@@ -30,14 +30,26 @@ const { ipcRenderer } = window.require('electron')
 const events = require('events');
 const eventEmitter = new events.EventEmitter();
 
+function msToTime(duration) {
+  let milliseconds = parseInt((duration % 1000) / 100),
+    seconds = Math.floor((duration / 1000) % 60),
+    minutes = Math.floor((duration / (1000 * 60)) % 60),
+    hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+
+  hours = (hours < 10) ? "0" + hours : hours;
+  minutes = (minutes < 10) ? "0" + minutes : minutes;
+  seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+  return "The Monte Carlo simulation will take about " + hours + " hours, " + minutes + " minutes, and " + seconds + " seconds.";
+}
+
 class MyPlanner extends React.Component {
   constructor(props) {
     super(props);
     this.state= {
       loaderActive: false, 
       vizActive: false, 
-      etaActive: false,
-      iterTime: 1000, //ms
+      iterMessage: "ETA",
       iterAmt: 5,
       simData: {overallScore: 0, nearPasses: 0.05}
     }
@@ -47,13 +59,12 @@ class MyPlanner extends React.Component {
     eventEmitter.on("startloader", () => {
       this.setState({
         loaderActive: true,
-        etaActive: false
+        iterMessage: "Calculating Time Estimate... This will take time."
       })
     });
     eventEmitter.on("stoploader", (metrics) => {
       this.setState({
         loaderActive: false,
-        etaActive: false
       })
       eventEmitter.emit("startviz")
     });
@@ -80,13 +91,7 @@ class MyPlanner extends React.Component {
     });
     eventEmitter.on("timeTake", (time) => {
       this.setState({
-        iterTime: time,
-      })
-      eventEmitter.emit("starteta");
-    });
-    eventEmitter.on("starteta", (time) => {
-      this.setState({
-        etaActive: true,
+        iterMessage: msToTime(time.data * this.state.iterAmt),
       })
     });
   }
@@ -129,11 +134,11 @@ class MyPlanner extends React.Component {
               <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
             </div>
             <div className="loaderText">
-              <p>Modeling (this may take some time)</p>
+              <p>Modeling</p>
             </div>
-            {this.state.etaActive ? <div className="loaderText">
-              <p>ETA count</p>
-            </div> : null}
+            <div className="loaderText">
+              <p>{this.state.iterMessage}</p>
+            </div>
           </div>
         </div> : null}
         {this.state.vizActive ? <div className="vizview">
