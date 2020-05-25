@@ -26,7 +26,7 @@ function Home() {
           props={[
             { name: "Designer", description: "Enter the room designer" },
             { name: "Configurator", description: "Set the number of employees, social distance, and other aspects of the model" },
-            { name: "DesignerTutorial", description: "Learn how to use Notus" }]}
+            { name: "Tutorial", description: "Learn how to use Notus" }]}
         />
       </Container>
     </div>
