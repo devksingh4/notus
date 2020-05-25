@@ -102,10 +102,12 @@ class Person {
       this.x = this.targetx;
       this.y = this.targety;
     } else {
-      glMatrix.vec2.normalize(step, step);
-      glMatrix.vec2.mul(step, this.maxspeed * delta_time);
+      let stepNorm = glMatrix.vec2.create()
+      glMatrix.vec2.normalize(stepNorm, step);
+      let sD = glMatrix.vec2.create()
+      sD = glMatrix.vec2.fromValues(stepNorm[0]*this.maxspeed*delta_time, stepNorm[1]*this.maxspeed*delta_time);
       let newpos = glMatrix.vec2.create();
-      glMatrix.vec2.add(newpos, step, cp);
+      glMatrix.vec2.add(newpos, sD, cp);
       this.x = newpos[0];
       this.y = newpos[1];
     }

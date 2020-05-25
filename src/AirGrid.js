@@ -17,7 +17,7 @@ class Square {
     this.sideLength = sideLength;
   }
 
-  get getNCoronaParticles() {
+  getNCoronaParticles() {
     return this.nCoronaParticles;
   }
 
@@ -178,6 +178,7 @@ class AirGrid {
     this.dispersalConst = dispersalConst;
     this.wrConst = wrConst;
     this.halfLife = halfLife;
+    this.sideLength = sideLength; 
   }
 
   get getAirflow() {
