@@ -33,7 +33,7 @@ export default class DesignerTutorial extends Component {
           <Card.Text>
             <i>Notus is a tool that helps rate office layouts on the spread of COVID-19.</i>
             <p>
-              These office layouts are defined by you, the user. Notus uses intuitive room-planning
+              These office layouts are defined by you. Notus uses intuitive room-planning
               tools and a powerful Monte Carlo simulator to give you relevant results.
             </p>
           </Card.Text>
@@ -49,12 +49,12 @@ export default class DesignerTutorial extends Component {
           <Card.Title>Basic Configuration</Card.Title>
           <Card.Img src={basicconfig} style={{marginLeft: 'auto', marginRight: 'auto', marginBottom: 20, objectFit: 'contain'}}></Card.Img>
           <Card.Text>You can edit some basic parameters of the Monte Carlo simulation here. These should
-            usually change with your office layout.
+            usually change with your office layout and employee count.
           </Card.Text>
           <Card.Title>Advanced Configuration</Card.Title>
           <Card.Img src={advancedconfig} style={{marginLeft: 'auto', marginRight: 'auto', marginBottom: 20, objectFit: 'contain'}}></Card.Img>
           <Card.Text>You rarely need to change these parameters of the simulation. These parameters 
-            control how COVID-19 behaves in the simulation.
+            control how COVID-19 behaves in the simulation. You may change these as new data becomes available on the spread of COVID-19.
           </Card.Text>
           <Card.Text>After configuring the simulation, you can save using the <i>Save</i> button or 
             reset the parameters using the <i>Reset to Defaults</i> button. Exit this screen by 
