@@ -57,16 +57,16 @@ module.exports.process = async (data) => {
   }
   console.log(`airflow ${ag.airflowRemovedCount / ag.particleCreatedCount}`)
   console.log(`intakes ${ag.intakes.toString()}`)
-  const dummy = false;
+  const dummy = true;
   let rval;
   if (dummy){
-    const pb = Math.random()*.3;
+    const pb = (Math.random()*.3).toPrecision(2);
     rval = {
       success: true,
       data: {
-        prob: Math.random()*.3,
-        nearPasses: pb*1.3 + Math.random()*.05,
-        airflow: Math.random()
+        prob: (Math.random()*.3).toPrecision(2),
+        nearPasses: (pb*1.3 + Math.random()*.05).toPrecision(2),
+        airflow: (Math.random()).toPrecision(2)
     }
   }
 } else {
