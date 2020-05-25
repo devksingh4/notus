@@ -20,14 +20,14 @@ class Person {
   }
   infect(p_aerosol, d_aerosol) { // p is probability constant for infection, d is density
     var check = Math.random();
-    let spread_const = this.non_compliant ? .3 : .1;
+    let spread_const = this.non_compliant ? .5 : .2;
     var chance = (1 - p_aerosol) ** (this.size * d_aerosol * spread_const)
     if (check > chance && this.inf === 0) {
       this.inf = .01
     }
   }
   tick(time, delta_time) { // function called every time increment
-    const cough_limit = this.generate_aerosols(1 / 10, delta_time);
+    const cough_limit = this.generate_aerosols(1, delta_time);
     const roll = Math.random();
     if (roll < cough_limit) {
       //non-compliants don't wear masks. TODO: allow user to change these #s
@@ -37,10 +37,10 @@ class Person {
       glMatrix.vec2.sub(directionFacing, tpos, cpos);
       glMatrix.vec2.normalize(directionFacing, directionFacing);
       if (this.non_compliant) {
-        this.airGrid.coughAt(this.x, this.y, 2000, directionFacing)
+        this.airGrid.coughAt(this.x, this.y, 10000, directionFacing)
       } else {
         glMatrix.vec2.mul(directionFacing, .2)
-        this.airGrid.coughAt(this.x, this.y, 200, directionFacing)
+        this.airGrid.coughAt(this.x, this.y, 1000, directionFacing)
       }
     }
     if (this.inf !== 0) {
