@@ -155,6 +155,7 @@ class AirGrid {
     this.intakes = {};
     this.outflows = {};
     this.airflowRemovedCount = 0;
+    this.particleCreatedCount = 0;
     for (let i = 0; i < nh; i++) {
       let newSquares = [];
       let newAir = [];
@@ -267,7 +268,8 @@ class AirGrid {
     const y = yxdt[0];
     const x = yxdt[1];
     const dt = yxdt[2];
-    const ret =  this.grid[y][x].tickstage2(dt, this.wrConst, this.airflowGrid[y][x], this.halfLife);
+    const ret = this.grid[y][x].tickstage2(dt, this.wrConst, this.airflowGrid[y][x], this.halfLife);
+    this.airflowRemovedCount += ret;
     return ret;
   }
 
@@ -332,10 +334,11 @@ class AirGrid {
     return [xloc, yloc];
   }
 
-  coughAt(x,y,nparticles, vel){
-    let square = this.getSquareFromCoords(x,y);
+  coughAt(x, y, nparticles, vel) {
+    let square = this.getSquareFromCoords(x, y);
+    this.particleCreatedCount += nparticles;
     square.cough(nparticles, vel);
-}
+  }
   occlude(row, col, top, bottom, right, left, area) {
     const vel = this.grid[row][col].coronaVel;
     const nP = this.grid[row][col].nCoronaParticles;
@@ -349,8 +352,12 @@ class AirGrid {
     this.grid[row][col] = new Wall(this.sideLength);
   }
 
-  get getAirflowRemovedCount(){
+  get getAirflowRemovedCount() {
     return this.airflowRemovedCount;
+  }
+
+  get getParticleCreatedCount() {
+    return this.particleCreatedCount;
   }
 
   toString() {
