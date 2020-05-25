@@ -199,7 +199,7 @@ class Population {
     }
     for (var i in this.pop) {
       for (var j in this.pop) {
-        const ep = 2
+        const ep = .5
         if (Math.abs(i.x - j.x) < ep && Math.abs(i.y - j.y) < ep) {
           if (i.targetx != j.targetx && i.targety != j.targety) {
             return false;
