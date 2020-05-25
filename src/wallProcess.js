@@ -1,5 +1,5 @@
 const AirGrid = require('./AirGrid.js').AirGrid;
-const PF = require("pathfinding");
+const PF = require("./pathfinding.js");
 const glMatrix = require("gl-matrix");
 
 function airGridFromJSON(data, config, sideLength) {
