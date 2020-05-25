@@ -296,7 +296,6 @@ class AirGrid {
     this.updateGrid(t1upd)
     const t2upd = locations.slice().map((x) => this.tickCell2(x))
     this.updateGrid(t2upd)
-    this.updateGrid(t2upd)
   }
 
   updateGrid(upd) {
