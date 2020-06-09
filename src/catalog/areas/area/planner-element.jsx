@@ -1,4 +1,4 @@
-import {ElementsFactories} from 'react-planner-electron';
+import {ElementsFactories} from 'react-planner-gotron';
 
 let info = {
   title: 'area',

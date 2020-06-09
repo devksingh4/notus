@@ -24,7 +24,7 @@ import {
   reducer as PlannerReducer,
   ReactPlanner,
   Plugins as PlannerPlugins,
-} from 'react-planner-electron';
+} from 'react-planner-gotron';
 
 const { ipcRenderer } = window.require('electron')
 const events = require('events');
@@ -126,7 +126,7 @@ class MyPlanner extends React.Component {
           height={this.props.containerHeight}
           catalog={MyCatalog}
           plugins={plugins}
-          stateExtractor={state => state.get('react-planner-electron')}
+          stateExtractor={state => state.get('react-planner-gotron')}
         />
         {this.state.loaderActive ? <div className="loader">
           <div>
@@ -164,13 +164,13 @@ const EnhancedPlanner = Dimensions({ elementResize: true, className: 'react-dime
 
 //define state
 let AppState = Map({
-  'react-planner-electron': new PlannerModels.State()
+  'react-planner-gotron': new PlannerModels.State()
 });
 
 //define reducer
 let reducer = (state, action) => {
   state = state || AppState;
-  state = state.update('react-planner-electron', plannerState => PlannerReducer(plannerState, action));
+  state = state.update('react-planner-gotron', plannerState => PlannerReducer(plannerState, action));
   return state;
 };
 
@@ -178,7 +178,7 @@ let store = createStore(reducer, null, window.devToolsExtension ? window.devTool
 
 let plugins = [
   PlannerPlugins.Keyboard(),
-  PlannerPlugins.Autosave('react-planner-electron_v0'),
+  PlannerPlugins.Autosave('react-planner-gotron_v0'),
 ];
 function Designer() {
   return (

@@ -8,7 +8,9 @@
   "main": "public/electron.js",
   "extends": null,
   "dependencies": {
-    "@babel/core": "7.9.0",
+    "@babel/core": "^7.10.2",
+    "@babel/preset-env": "^7.10.2",
+    "@babel/preset-react": "^7.10.1",
     "@svgr/webpack": "4.3.3",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
@@ -18,7 +20,7 @@
     "area-polygon": "^1.0.1",
     "babel-eslint": "10.1.0",
     "babel-jest": "^24.9.0",
-    "babel-loader": "8.1.0",
+    "babel-loader": "^8.1.0",
     "babel-plugin-named-asset-import": "^0.3.6",
     "babel-preset-react-app": "^9.1.2",
     "bootstrap": "^4.5.0",
@@ -68,7 +70,7 @@
     "react-dom": "^16.13.1",
     "react-emoji-render": "^1.2.4",
     "react-icons": "^3.10.0",
-    "react-planner-electron": "2.1.2",
+    "react-planner-gotron": "2.2.3",
     "react-redux": "5.0.7",
     "react-router-dom": "^5.1.2",
     "reactstrap": "^8.4.1",
@@ -97,21 +99,12 @@
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.19.0",
-    "foreman": "^3.0.1"
+    "foreman": "^3.0.1",
+    "webpack-cli": "^3.3.11"
   },
   "scripts": {
-    "start": "nf start -p 3000",
-    "build": "node scripts/build.js",
-    "test": "node scripts/test.js --env=jsdom",
-    "electron": "electron .",
-    "electron-start": "node src/start-react",
-    "react-start": "node scripts/start.js",
-    "pack": "electron-builder --dir",
-    "dist": "electron-builder -wl",
-    "dist-mac": "electron-builder -m",
-    "postinstall": "electron-builder install-app-deps",
-    "predist": "npm run-script build",
-    "predist-mac": "npm run-script build"
+    "start": "webpack --mode development",
+    "build": "webpack --mode production"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -211,7 +204,11 @@
   },
   "babel": {
     "presets": [
-      "react-app"
+      "@babel/preset-env",
+      "@babel/preset-react"
+    ],
+    "plugins": [
+      "@babel/plugin-proposal-class-properties"
     ]
   }
 }

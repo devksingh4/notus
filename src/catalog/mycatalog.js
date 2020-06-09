@@ -1,4 +1,4 @@
-import {Catalog} from 'react-planner-electron';
+import {Catalog} from 'react-planner-gotron';
 
 import * as Areas from './areas/area/planner-element.jsx';
 import * as Lines from './lines/wall/planner-element.jsx';
