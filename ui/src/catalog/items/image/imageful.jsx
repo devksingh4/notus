@@ -134,7 +134,7 @@ export default class ImageFul extends Component {
     document.removeEventListener('mousemove-planner-event', this.onMouseMove);
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props.imageUri !== nextProps.imageUri) {
       let img = new Image;
       img.src = nextProps.imageUri;

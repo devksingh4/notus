@@ -12,7 +12,7 @@ export default class Configurator extends Component {
     super(props)
     this.default = {n_employees: 20, percent_infected: 5, percent_noncompliant: 5, social_distance: 6, p_infect: 1, cowr: .47, dispersal: .1, half_life: 360, n_cough: 1000, v_cough: 1};
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.setDefaults();
     return true; 
   }
